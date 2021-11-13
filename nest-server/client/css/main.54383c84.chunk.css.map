@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,mCACI,WAAY,CACZ,WAAY,CACZ,6BACJ,CAEA,qCACI,eACJ","file":"main.54383c84.chunk.css","sourcesContent":["#components-layout-demo-side .logo {\n    height: 32px;\n    margin: 16px;\n    background: rgba(255, 255, 255, 0.3);\n}\n\n.site-layout .site-layout-background {\n    background: #fff;\n}\n"]}

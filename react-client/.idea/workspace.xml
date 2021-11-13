@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e124ba1-46a2-4a54-a774-0e1e7dfa8a50" name="Changes" comment="" />
+    <list default="true" id="9e124ba1-46a2-4a54-a774-0e1e7dfa8a50" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.54383c84.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.54383c84.chunk.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.c9b06b50.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.c9b06b50.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.c9b06b50.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.63758814.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.63758814.chunk.js.map" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="20s7DIDK7c7bv0BSKOoxDjsNnLQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -29,6 +39,11 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin" />
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src" />
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\adminArea" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -38,7 +53,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636821319487</updated>
-      <workItem from="1636821320882" duration="2690000" />
+      <workItem from="1636821320882" duration="7879000" />
     </task>
     <servers />
   </component>
