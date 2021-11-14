@@ -2,11 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Role {
+  id: Int!
+  name: RoleName!
+  users: [User!]!
+}
+
+enum RoleName {
+  admin
+  moderator
+  customer
+}
+
 type User {
   id: Int!
   email: String!
   firstName: String!
   lastName: String!
+  roles: [Role!]!
 }
 
 type AuthResponse {
@@ -15,9 +28,21 @@ type AuthResponse {
 }
 
 type Query {
-  users: [User!]!
+  users(getUsersInput: GetUsersInput!): [User!]!
   user(id: Int!): User!
+  roles(getRolesInput: GetRolesInput!): [Role!]!
+  role(id: Int!): Role!
   me: User!
+}
+
+input GetUsersInput {
+  take: Int!
+  skip: Int!
+}
+
+input GetRolesInput {
+  take: Int!
+  skip: Int!
 }
 
 type Mutation {

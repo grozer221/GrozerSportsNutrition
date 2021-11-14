@@ -1,15 +1,16 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { webcrypto } from 'crypto';
-import { genSalt, hash } from 'bcrypt';
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { hash } from 'bcrypt';
+import { Role } from '../roles/role.entity';
+import { usersConstants } from './users.constants';
 
-export enum Role {
-    CUSTOMER = 'customer',
-    ADMIN = 'admin',
-    EDITOR = 'editor'
-}
+// export enum Role {
+//     CUSTOMER = 'customer',
+//     ADMIN = 'admin',
+//     EDITOR = 'editor'
+// }
 
-@Entity()
+@Entity(usersConstants.tableName)
 @ObjectType()
 export class User {
     @PrimaryGeneratedColumn()
@@ -31,12 +32,17 @@ export class User {
     @Field()
     lastName: string;
 
-    @Column({
-        type: 'enum',
-        enum: Role,
-        default: Role.CUSTOMER,
-    })
-    role: Role;
+    // @Column({
+    //     type: 'enum',
+    //     enum: Role,
+    //     default: Role.CUSTOMER,
+    // })
+    // role: Role;
+
+    @ManyToMany(type => Role, role => role.users)
+    @JoinTable()
+    @Field(type => [Role])
+    roles: Role[];
 
     @BeforeInsert()
     async hashPassword() {

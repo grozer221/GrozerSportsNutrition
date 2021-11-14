@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e124ba1-46a2-4a54-a774-0e1e7dfa8a50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../nest-server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nest-server/src/roles/dto/get-roles.input.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/strategies/jwt.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/strategies/jwt.strategy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/decorators/current-user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.decorators.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/schema.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/dto/register-user.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/dto/register.input.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +60,7 @@
       <updated>1636821319487</updated>
       <workItem from="1636821320882" duration="7879000" />
       <workItem from="1636877743184" duration="1459000" />
+      <workItem from="1636909465039" duration="608000" />
     </task>
     <servers />
   </component>

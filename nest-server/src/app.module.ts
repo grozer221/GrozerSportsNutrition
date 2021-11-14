@@ -6,11 +6,12 @@ import { join } from 'path';
 import { TypeOrmCoreModule } from '@nestjs/typeorm/dist/typeorm-core.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
     imports: [
         GraphQLModule.forRoot({
-            autoSchemaFile: join(process.cwd(), 'src/schema.gql')
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
         }),
         TypeOrmCoreModule.forRoot({
             type: 'mysql',
@@ -20,14 +21,15 @@ import { AuthModule } from './auth/auth.module';
             password: '',
             database: 'grozer-sports-nutrition',
             entities: ['dist/**/*.entity{.ts,.js}'],
-            synchronize: true
+            synchronize: true,
         }),
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'client'),
             exclude: ['/api*'],
         }),
         UsersModule,
-        AuthModule
+        AuthModule,
+        RolesModule,
     ],
     providers: [AppService],
 })
