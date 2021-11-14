@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { TypeOrmCoreModule } from '@nestjs/typeorm/dist/typeorm-core.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -25,7 +26,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
             rootPath: join(__dirname, '..', 'client'),
             exclude: ['/api*'],
         }),
-        UsersModule
+        UsersModule,
+        AuthModule
     ],
     providers: [AppService],
 })

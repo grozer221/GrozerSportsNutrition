@@ -9,16 +9,28 @@ type User {
   lastName: String!
 }
 
+type AuthResponse {
+  user: User!
+  accessToken: String!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  me: User!
 }
 
 type Mutation {
-  register(registerUserInput: RegisterUserInput!): User!
+  login(loginInput: LoginInput!): AuthResponse!
+  register(registerInput: RegisterInput!): AuthResponse!
 }
 
-input RegisterUserInput {
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
   email: String!
   password: String!
   firstName: String!

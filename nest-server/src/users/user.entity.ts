@@ -1,5 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { webcrypto } from 'crypto';
+import { genSalt, hash } from 'bcrypt';
 
 export enum Role {
     CUSTOMER = 'customer',
@@ -32,17 +34,14 @@ export class User {
     @Column({
         type: 'enum',
         enum: Role,
-        default: Role.CUSTOMER
+        default: Role.CUSTOMER,
     })
     role: Role;
 
-    // @Column()
-    // @Field(type => Int)
-    // roleId: number;
-    //
-    // @ManyToOne(type => Role, role => role.users)
-    // @Field(type => Role)
-    // role: Role;
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await hash(this.password, 10);
+    }
 }
 
 

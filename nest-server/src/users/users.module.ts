@@ -10,8 +10,10 @@ import { User } from './user.entity';
     ],
     providers: [
         UsersService,
-        UsersResolver
-    ]
+        UsersResolver,
+    ],
+    exports: [UsersService],
 })
+
 export class UsersModule {
 }

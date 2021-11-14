@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { RegisterUserInput } from './dto/register-user.input';
+import { RegisterInput } from '../auth/dto/register.input';
 
 @Resolver(of => User)
 export class UsersResolver {
@@ -25,10 +25,10 @@ export class UsersResolver {
         return await this.userService.findOne(id);
     }
 
-    @Mutation(returns => User)
-    register(
-      @Args('registerUserInput') registerUserInput: RegisterUserInput
-    ): Promise<User> {
-        return this.userService.register(registerUserInput);
-    }
+    // @Mutation(returns => User)
+    // register(
+    //   @Args('registerUserInput') registerUserInput: RegisterInput
+    // ): Promise<User> {
+    //     return this.userService.register(registerUserInput);
+    // }
 }

@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e124ba1-46a2-4a54-a774-0e1e7dfa8a50" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.54383c84.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.54383c84.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.c9b06b50.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.c9b06b50.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.c9b06b50.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.63758814.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.63758814.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/schema.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/dto/register-user.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/dto/register.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +22,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="20s7DIDK7c7bv0BSKOoxDjsNnLQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -54,6 +57,7 @@
       <option name="presentableId" value="Default" />
       <updated>1636821319487</updated>
       <workItem from="1636821320882" duration="7879000" />
+      <workItem from="1636877743184" duration="1459000" />
     </task>
     <servers />
   </component>
@@ -70,5 +74,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
