@@ -27,12 +27,19 @@ type AuthResponse {
   accessToken: String!
 }
 
+type Product {
+  id: Int!
+  name: String!
+}
+
 type Query {
-  users(getUsersInput: GetUsersInput!): [User!]!
-  user(id: Int!): User!
-  roles(getRolesInput: GetRolesInput!): [Role!]!
-  role(id: Int!): Role!
-  me: User!
+  getUsers(getUsersInput: GetUsersInput!): [User!]!
+  getUser(id: Int!): User!
+  getRoles(getRolesInput: GetRolesInput!): [Role!]!
+  getRole(id: Int!): Role!
+  me: AuthResponse!
+  getProducts(getProductsInput: GetProductsInput!): [Product!]!
+  getProduct(id: Int!): Product!
 }
 
 input GetUsersInput {
@@ -45,9 +52,17 @@ input GetRolesInput {
   skip: Int!
 }
 
+input GetProductsInput {
+  take: Int!
+  skip: Int!
+}
+
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
   register(registerInput: RegisterInput!): AuthResponse!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  removeProduct(id: Int!): Boolean!
 }
 
 input LoginInput {
@@ -60,4 +75,13 @@ input RegisterInput {
   password: String!
   firstName: String!
   lastName: String!
+}
+
+input CreateProductInput {
+  name: String!
+}
+
+input UpdateProductInput {
+  id: Int!
+  name: String!
 }

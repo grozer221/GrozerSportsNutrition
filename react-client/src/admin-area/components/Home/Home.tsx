@@ -6,7 +6,7 @@ export const Home: FC = () => {
     return (
         <>
             <div>HOME</div>
-            <Link to={'/users'}>users</Link>
+            <Link to={'/'}>client site</Link>
         </>
     );
 }

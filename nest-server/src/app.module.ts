@@ -7,6 +7,7 @@ import { TypeOrmCoreModule } from '@nestjs/typeorm/dist/typeorm-core.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { RolesModule } from './roles/roles.module';
         UsersModule,
         AuthModule,
         RolesModule,
+        ProductsModule,
     ],
     providers: [AppService],
 })

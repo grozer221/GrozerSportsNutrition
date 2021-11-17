@@ -8,12 +8,17 @@ import {AppHeader} from "../Header/AppHeader";
 import {AppBreadcrumb} from "../Breadcrumb/AppBreadcrumb";
 import {Navigate, Route, Routes,} from "react-router-dom";
 import {Home} from "../Home/Home";
-import {Users} from "../Users/Users";
+import {UsersController} from "../Users/UsersController";
+import s from './AppLayout.module.css';
+import {UsersIndex} from "../Users/UsersIndex/UsersIndex";
 import {Error} from "../Error/Error";
+import { ProductsController } from "../Products/ProductsController";
+import { CategoriesController } from "../Categories/CategoriesController";
 
 const {Content} = Layout;
 
-export const AppLayout: FC = () => {
+export const AdminLayout: FC = () => {
+    console.log('AppLayout')
     const isAuth = useSelector(s_getIsAuth);
 
     if (!isAuth)
@@ -26,11 +31,13 @@ export const AppLayout: FC = () => {
                 <AppHeader/>
                 <Content style={{margin: '0 16px'}}>
                     <AppBreadcrumb/>
-                    <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
+                    <div className={s.siteLayoutBackground}>
                         <Routes>
-                            <Route path={'/admin'} element={<Home/>}/>
-                            <Route path={'/admin/users'} element={<Users/>}/>
-                            <Route path={'/admin*'} element={<Error/>}/>
+                            <Route path={'/'} element={<Home/>}/>
+                            <Route path={'products/*'} element={ <ProductsController/>}/>
+                            <Route path={'categories/*'} element={ <CategoriesController/>}/>
+                            <Route path={'users/*'} element={ <UsersController/>}/>
+                            <Route path={'*'} element={<Error/>}/>
                         </Routes>
                     </div>
                 </Content>

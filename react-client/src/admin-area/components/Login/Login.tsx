@@ -1,12 +1,35 @@
 import React, {FC} from "react";
 import s from './Login.module.css';
-import {Form, Input, Button, Checkbox} from 'antd';
+import {Form, Input, Button, Checkbox, Badge} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {s_getIsAuth} from "../../../redux/auth-selectors";
+import {useMutation} from "@apollo/client";
+import {LoginData, LoginVars, LOGIN_MUTATION} from "../../GraphQL/auth-mutation";
+import {actions} from "../../../redux/auth-reducer";
 
 export const Login: FC = () => {
-    const onFinish = (values: { email: string, password: string }) => {
+    const dispatch = useDispatch();
+    const isAuth = useSelector(s_getIsAuth);
+    const [login, {
+        data,
+        loading,
+        error
+    }] = useMutation<LoginData, LoginVars>(LOGIN_MUTATION);
+
+    if (isAuth)
+        return <Navigate to={'/admin'}/>
+
+    const onFinish = async (values: { email: string, password: string, remember: boolean }) => {
         console.log('Received values of form: ', values);
+        const response = await login({variables: {loginInput: {email: values.email, password: values.password}}});
+        console.log(response)
+        if (response.data && !response.errors) {
+            localStorage.setItem('token', response.data.login.accessToken)
+            dispatch(actions.setAuthData(response.data.login, true));
+        } else
+            console.log('error:', error)
     };
 
     return (
@@ -16,6 +39,7 @@ export const Login: FC = () => {
             initialValues={{remember: true}}
             onFinish={onFinish}
         >
+            <h2 className={s.title}>Admin Panel</h2>
             <Form.Item
                 name="email"
                 rules={[{required: true, message: 'Please input your Email!'}]}

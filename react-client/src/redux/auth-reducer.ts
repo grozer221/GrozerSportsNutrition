@@ -25,6 +25,11 @@ export const actions = {
     } as const),
 }
 
+export const logout = (): ThunkType => async (dispatch) => {
+    localStorage.removeItem('token');
+    dispatch(actions.setAuthData(null, false));
+}
+
 export default authReducer;
 
 export type InitialStateType = typeof initialState;

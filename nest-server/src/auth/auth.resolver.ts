@@ -31,12 +31,13 @@ export class AuthResolver {
         return authResponse;
     }
 
-    // @Roles(RoleName.admin)
-    // @UseGuards(GqlAuthGuard, RolesGuard)
-    @Query(returns => User)
+    @Query(returns => AuthResponse)
     @UseGuards(GqlAuthGuard)
-    async me(@CurrentUser() user: User): Promise<User> {
-        return await this.usersService.getByIdAsync(user.id);
+    async me(@CurrentUser() user: User): Promise<AuthResponse> {
+        const authResponse = new AuthResponse();
+        authResponse.user = await this.usersService.getByIdAsync(user.id);
+        authResponse.accessToken = await this.authService.login(user.id, user.email, user.roles);
+        return authResponse;
     }
 
     @Mutation(returns => AuthResponse)

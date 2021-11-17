@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Args, Int, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { RolesService } from './roles.service';
 import { Role } from './role.entity';
 import { User } from '../users/user.entity';
@@ -15,14 +15,14 @@ export class RolesResolver {
     }
 
     @Query(() => [Role])
-    async roles(
+    async getRoles(
         @Args('getRolesInput', { type: () => GetRolesInput }) getRolesInput: GetRolesInput,
     ) {
         return await this.rolesService.getAsync(getRolesInput.take, getRolesInput.skip);
     }
 
     @Query(() => Role)
-    async role(@Args('id', { type: () => Int }) id: number) {
+    async getRole(@Args('id', { type: () => Int }) id: number) {
         return await this.rolesService.getByIdAsync(id);
     }
 }

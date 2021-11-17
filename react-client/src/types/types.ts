@@ -1,7 +1,12 @@
-export enum Role {
-    CUSTOMER = 'customer',
-    ADMIN = 'admin',
-    EDITOR = 'editor'
+export enum RoleName {
+    admin = 'admin',
+    moderator = 'moderator',
+    customer = 'customer',
+}
+
+export type Role = {
+    id: number,
+    name: RoleName,
 }
 
 export type User = {
@@ -9,7 +14,16 @@ export type User = {
     email: string,
     firstName: string,
     lastName: string,
-    role: Role,
+    roles: Role[],
 }
 
-export type Auth = User & { token: string }
+export type Auth = {
+    user: User,
+    accessToken: string
+}
+
+export type Product = {
+    id: number,
+    name: string,
+}
+
