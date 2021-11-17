@@ -2,51 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersController.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client-area/Layout/ClientLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/.eslintrc.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/2.a95be28f.chunk.css" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/css/2.a95be28f.chunk.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.78d562ef.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.78d562ef.chunk.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.1fdd382a.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.1fdd382a.chunk.css.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.7098a446.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.7098a446.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.7098a446.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.93888dd4.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.93888dd4.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/runtime-main.6c5ba1a6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/js/runtime-main.6c5ba1a6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/dto/get-roles.input.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/role.entity.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/roles.constants.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/roles.decorators.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/roles.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/roles.resolver.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/roles.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/schema.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.54e6dae0.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.54e6dae0.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.54e6dae0.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.12bda3fd.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.12bda3fd.chunk.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Breadcrumb/AppBreadcrumb.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Breadcrumb/AppBreadcrumb.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Header/AppHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Header/AppHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Home/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AppLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Login/Login.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Login/Login.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/Users.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/Users.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/Layout/AppLayout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/auth-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/auth-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductCreate/ProductCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductCreate/ProductCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsController.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +28,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="210sH0Tr6zeqjGWxbaGHPl59vEa" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -66,7 +48,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/admin-area/components/Products" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
+    <property name="ts.external.directory.path" value="D:\Projects\GrozerSportsNutrition\react-client\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Products" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -77,7 +68,22 @@
       <option name="presentableId" value="Default" />
       <updated>1637089254237</updated>
       <workItem from="1637089256307" duration="46000" />
+      <workItem from="1637137299854" duration="8959000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
