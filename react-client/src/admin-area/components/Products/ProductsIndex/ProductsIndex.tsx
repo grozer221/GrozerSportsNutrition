@@ -48,7 +48,7 @@ export const ProductsIndex: FC = () => {
                     </li>
                 ))}
             </ul>
-            {/*<ProductRemove visible={visibleRemove}*/}
+            {/*<FilesRemove visible={visibleRemove}*/}
             {/*               productId={productRemove?.id}*/}
             {/*               productName={productRemove?.name}*/}
             {/*               setVisible={setVisibleRemove}/>*/}

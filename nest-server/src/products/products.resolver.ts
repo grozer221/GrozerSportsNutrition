@@ -44,7 +44,7 @@ export class ProductsResolver {
     @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => Boolean)
-    async removeProduct(@Args('id', { type: () => Int }) id: number): Promise<Boolean> {
+    async removeProduct(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
         await this.productsService.removeAsync(id);
         return true;
     }

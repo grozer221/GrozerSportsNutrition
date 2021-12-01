@@ -32,6 +32,15 @@ type Product {
   name: String!
 }
 
+type File {
+  id: Int!
+  originalName: String!
+  mimetype: String!
+  destination: String!
+  fileName: String!
+  size: Int!
+}
+
 type Query {
   getUsers(getUsersInput: GetUsersInput!): [User!]!
   getUser(id: Int!): User!
@@ -40,6 +49,8 @@ type Query {
   me: AuthResponse!
   getProducts(getProductsInput: GetProductsInput!): [Product!]!
   getProduct(id: Int!): Product!
+  getFiles(getFilesInput: GetFilesInput!): [File!]!
+  getFile(id: Int!): File!
 }
 
 input GetUsersInput {
@@ -57,12 +68,20 @@ input GetProductsInput {
   skip: Int!
 }
 
+input GetFilesInput {
+  take: Int!
+  skip: Int!
+}
+
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
   register(registerInput: RegisterInput!): AuthResponse!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: Int!): Boolean!
+  createFile(createFileInput: CreateFileInput!): File!
+  updateFile(updateFileInput: UpdateFileInput!): File!
+  removeFile(id: Int!): Boolean!
 }
 
 input LoginInput {
@@ -84,4 +103,21 @@ input CreateProductInput {
 input UpdateProductInput {
   id: Int!
   name: String!
+}
+
+input CreateFileInput {
+  originalName: String!
+  mimetype: String!
+  destination: String!
+  fileName: String!
+  size: Int!
+}
+
+input UpdateFileInput {
+  id: Int!
+  originalName: String!
+  mimetype: String!
+  destination: String!
+  fileName: String!
+  size: Int!
 }

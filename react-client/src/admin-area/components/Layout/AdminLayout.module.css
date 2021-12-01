@@ -1,0 +1,19 @@
+.layout {
+    height: 100vh;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+    gap: 16px;
+}
+
+.siteLayoutBackground {
+    background: white;
+    padding: 24px;
+    min-height: 360px;
+    position: relative;
+    flex-grow: 1;
+    overflow-y: scroll;
+}

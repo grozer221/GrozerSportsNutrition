@@ -27,3 +27,12 @@ export type Product = {
     name: string,
 }
 
+export type FileType = {
+    id: number,
+    originalName: string,
+    mimetype: string,
+    destination: string,
+    fileName: string,
+    size: number,
+}
+

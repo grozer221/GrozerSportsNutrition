@@ -14,7 +14,7 @@ type Props = {
     setVisible: (flag: boolean) => void
 }
 
-// export const ProductRemove: FC<Props> = ({visible, productId, productName, setVisible}) => {
+// export const FilesRemove: FC<Props> = ({visible, productId, productName, setVisible}) => {
 //     const [removeProduct] = useMutation<ProductRemoveData, ProductRemoveVars>(PRODUCT_REMOVE_MUTATION);
 //
 //     const [confirmLoading, setConfirmLoading] = useState(false);

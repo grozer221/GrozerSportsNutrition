@@ -8,6 +8,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { ProductsModule } from './products/products.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
     imports: [
@@ -25,6 +26,11 @@ import { ProductsModule } from './products/products.module';
             synchronize: true,
         }),
         ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'static'),
+            exclude: ['/api*'],
+            serveRoot: '/static',
+        }),
+        ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'client'),
             exclude: ['/api*'],
         }),
@@ -32,8 +38,11 @@ import { ProductsModule } from './products/products.module';
         AuthModule,
         RolesModule,
         ProductsModule,
+        FilesModule,
     ],
-    providers: [AppService],
+    providers: [
+        AppService,
+    ],
 })
 
 export class AppModule {

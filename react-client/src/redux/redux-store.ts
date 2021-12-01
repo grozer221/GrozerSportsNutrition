@@ -1,10 +1,12 @@
 import {Action, applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import authReducer from './auth-reducer';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import filesReducer from './files-reducer';
 
 let rootReducer = combineReducers({
     auth: authReducer,
-})
+    files: filesReducer,
+});
 
 type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>;

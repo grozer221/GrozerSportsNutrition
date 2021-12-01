@@ -10,6 +10,7 @@ import {LoginData, LoginVars, LOGIN_MUTATION} from "../../GraphQL/auth-mutation"
 import {actions} from "../../../redux/auth-reducer";
 
 export const Login: FC = () => {
+    console.log('admin login form');
     const dispatch = useDispatch();
     const isAuth = useSelector(s_getIsAuth);
     const [login, {
