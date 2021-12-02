@@ -9,6 +9,8 @@ import {PlusOutlined} from '@ant-design/icons';
 import s from './FilesCreate.module.css';
 import {actions, upload} from '../../../../redux/files-reducer';
 import {s_getLoading, s_getUploadedFiles} from '../../../../redux/files.selectors';
+import {Simulate} from 'react-dom/test-utils';
+
 
 export const FilesCreate: FC = () => {
     const dispatch = useDispatch();
@@ -27,9 +29,11 @@ export const FilesCreate: FC = () => {
                 const response = await createFile({
                     variables: {createFileInput: {...file}},
                 });
+                if (response.errors)
+                    console.log(response.errors);
             });
-            navigate('..');
             dispatch(actions.setUploadedFiles([]));
+            navigate('..');
         }
     }, [uploadedFiles]);
 

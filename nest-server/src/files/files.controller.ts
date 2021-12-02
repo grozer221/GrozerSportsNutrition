@@ -4,6 +4,7 @@ import { diskStorage } from 'multer';
 
 @Controller('api/files')
 export class FilesController {
+
     @Post('upload')
     @UseInterceptors(
         FilesInterceptor('files[]', 20, {
@@ -17,17 +18,16 @@ export class FilesController {
         }),
     )
     uploadFile(@UploadedFiles() files) {
-        console.log(files);
-        const resultFiles = files.map(file => ({
-            originalName: file.originalname,
-            mimetype: file.mimetype,
-            destination: file.destination,
-            fileName: file.filename,
-            size: file.size,
-        }));
         return {
             result: true,
-            files: resultFiles,
+            files: files.map(file => ({
+                originalName: file.originalname,
+                mimetype: file.mimetype,
+                destination: file.destination,
+                fileName: file.filename,
+                size: file.size,
+            })),
         };
     }
+
 }

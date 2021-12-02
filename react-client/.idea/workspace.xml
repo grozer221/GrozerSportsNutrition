@@ -2,49 +2,43 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../nest-server/src/files/dto/create-file.input.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/2.a95be28f.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/2.a95be28f.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.03c3fc70.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.03c3fc70.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.465ef640.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.465ef640.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.465ef640.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.a8f2479b.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.a8f2479b.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/runtime-main.6c5ba1a6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/runtime-main.6c5ba1a6.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/admin-area/components/ButtonsVUD/ButtonsVUR.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/file.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/file.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/roles/role.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/roles/role.entity.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/schema.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/static/files/19c8ede552e85e1f10a0533a17e127f46_Screenshot_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/static/files/b7783fa2636b4ede6d42be8da8d64c61_photo_2021-08-09_22-43-37.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/files-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/files-mutation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/files-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/files-query.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Breadcrumb/AppBreadcrumb.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Breadcrumb/AppBreadcrumb.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AppLayout.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate/FilesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate/FilesCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex/FilesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex/FilesIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesView/FilesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesView/FilesView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductCreate/ProductCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductCreate/ProductCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductRemove/ProductRemove.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductRemove/ProductRemove.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/redux-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/redux-store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -69,7 +63,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/admin-area/GraphQL" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/admin-area/components/ButtonsVUD" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
     <property name="ts.external.directory.path" value="D:\Projects\GrozerSportsNutrition\react-client\node_modules\typescript\lib" />
@@ -77,6 +72,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\ButtonsVUD" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\GraphQL" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Products" />
@@ -99,7 +95,8 @@
       <workItem from="1637488787350" duration="15953000" />
       <workItem from="1637610725786" duration="375000" />
       <workItem from="1637613331445" duration="423000" />
-      <workItem from="1638353211965" duration="24546000" />
+      <workItem from="1638353211965" duration="25313000" />
+      <workItem from="1638437988582" duration="12787000" />
     </task>
     <servers />
   </component>

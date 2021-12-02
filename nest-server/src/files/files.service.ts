@@ -12,6 +12,10 @@ export class FilesService {
     ) {
     }
 
+    async getTotalAsync(): Promise<number> {
+        return await this.filesRepository.count();
+    }
+
     async addAsync(createFileInput: CreateFileInput): Promise<File> {
         const file = this.filesRepository.create(createFileInput);
         return await this.filesRepository.save(file);

@@ -50,7 +50,7 @@ export const AppMenu: FC = () => {
                 <Menu.Item key="70" icon={<SettingOutlined/>}>
                     Settings
                 </Menu.Item>
-                <Menu.Item key="70" icon={<UserOutlined/>}>
+                <Menu.Item key="80" icon={<UserOutlined/>}>
                     <Link to={'/'}>Client site</Link>
                 </Menu.Item>
             </Menu>

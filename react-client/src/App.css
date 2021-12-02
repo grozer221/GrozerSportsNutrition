@@ -26,28 +26,7 @@ a {
     border-radius: 20px;
 }
 
-/*=== button remove ===*/
-.buttonRemove {
-    background-color: white;
-}
 
-/*.buttonRemove span {*/
-/*    transition: .5s all ease;*/
-/*}*/
-
-/*.buttonRemove:hover span {*/
-/*    background-color: #adafbd;*/
-/*}*/
-
-.buttonRemove svg {
-    color: white;
-    transition: .5s all ease;
-}
-
-.buttonRemove:hover svg,
-.buttonRemove span:hover svg {
-    color: red;
-}
 
 
 

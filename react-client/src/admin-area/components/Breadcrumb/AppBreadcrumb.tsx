@@ -9,7 +9,7 @@ export const AppBreadcrumb: FC = () => {
 
     return (
         <Breadcrumb>
-            {modules.map(module => <Breadcrumb.Item>{module}</Breadcrumb.Item>)}
+            {modules.map((module, i) => <Breadcrumb.Item key={i}>{module}</Breadcrumb.Item>)}
         </Breadcrumb>
     );
 };

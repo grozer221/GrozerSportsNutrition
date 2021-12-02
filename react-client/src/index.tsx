@@ -11,8 +11,9 @@ import {
 } from "@apollo/client";
 
 const client = new ApolloClient({
-    uri: '/graphql',
-    credentials: 'include',
+    //uri: '/graphql',
+    uri: 'http://localhost:3001/graphql',
+    // credentials: 'include',
     cache: new InMemoryCache(),
     headers: {
         authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : "",

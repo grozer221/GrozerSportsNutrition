@@ -1,7 +1,8 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { productsConstants } from './products.constants';
 
-@Entity()
+@Entity(productsConstants.tableName)
 @ObjectType()
 export class Product {
     @PrimaryGeneratedColumn()
@@ -11,4 +12,10 @@ export class Product {
     @Column({ unique: true })
     @Field()
     name: string;
+
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    updatedAt: Date;
 }

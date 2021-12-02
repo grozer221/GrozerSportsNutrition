@@ -1,5 +1,14 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { hash } from 'bcrypt';
 import { Role } from '../roles/role.entity';
 import { usersConstants } from './users.constants';
@@ -32,17 +41,16 @@ export class User {
     @Field()
     lastName: string;
 
-    // @Column({
-    //     type: 'enum',
-    //     enum: Role,
-    //     default: Role.CUSTOMER,
-    // })
-    // role: Role;
-
     @ManyToMany(type => Role, role => role.users)
     @JoinTable()
     @Field(type => [Role])
     roles: Role[];
+
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    updatedAt: Date;
 
     @BeforeInsert()
     async hashPassword() {

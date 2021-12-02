@@ -1,6 +1,7 @@
 import React from 'react';
 import {Avatar, Table} from 'antd';
 import {DeleteOutlined} from '@ant-design/icons';
+import {urls} from '../../api/api';
 
 type Props = {
     files: File[],
@@ -23,7 +24,7 @@ export const PinnedFiles: React.FC<Props> = ({loading, files, setFiles}) => {
                 const regex = file.type.match(/image/);
                 return (
                     <Avatar shape={'square'} size={48}
-                            src={regex && regex.length ? URL.createObjectURL(file) : '/static/images/file.png'}
+                            src={regex && regex.length ? URL.createObjectURL(file) : urls.server + 'static/images/file.png'}
                             alt={file.name}/>
                 );
 
@@ -40,12 +41,12 @@ export const PinnedFiles: React.FC<Props> = ({loading, files, setFiles}) => {
             key: 'size',
         },
         {
-            title: 'Action',
-            key: 'action',
+            title: 'Actions',
+            key: 'actions',
             render: (text: any, file: File) => (
-                <button className={'buttonRemove'} onClick={() => clickRemoveHandler(file)}>
-                    <Avatar size={24} icon={<DeleteOutlined/>}/>
-                </button>
+                <div className={'buttonRemove'} onClick={() => clickRemoveHandler(file)}>
+                    <Avatar size={28} icon={<DeleteOutlined/>}/>
+                </div>
             ),
         },
     ];

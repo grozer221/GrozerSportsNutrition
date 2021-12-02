@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { User } from '../users/user.entity';
 import { rolesConstants } from './roles.constants';
 
@@ -30,4 +30,10 @@ export class Role {
     @ManyToMany(type => User, user => user.roles)
     @Field(type => [User])
     users: User[];
+
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    updatedAt: Date;
 }

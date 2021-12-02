@@ -1,0 +1,9 @@
+1) add readed/unreaded messages + count unread messages++++++++++++++++++
+2) fix delete dialog++++++++++++++
+3) fix step back from messages to dialogs on phone version++++++++++++
+4) fix name on pinned files to message+++++++++++++++++++++
+5) fix when 1 ava on profile++++++++++++++
+6) add search dialogs
+7) add delete/edit messages
+8) fix make message read when div dont have scroll
+9) fix time message

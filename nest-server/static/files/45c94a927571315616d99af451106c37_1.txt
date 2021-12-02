@@ -1,0 +1,24 @@
+public static HubConnection connection;
+
+        public Form1()
+        {
+            InitializeComponent();
+            string url = "https://localhost:44301/socket/localhost";
+            connection = new HubConnectionBuilder()
+                .WithUrl(url)
+                .WithAutomaticReconnect()
+                .Build();
+            connection.StartAsync().Wait();
+            connection.On("ReceiveMessage", (string messateText) =>
+            {
+                this.Text = messateText;
+            });
+
+            connection.On("ReceiveVideo", (byte[] bytes) =>
+            {
+                using (var ms = new MemoryStream(bytes))
+                {
+                    pictureBox1.Image = new Bitmap(ms);
+                }
+            });
+        }

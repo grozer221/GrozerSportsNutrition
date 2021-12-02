@@ -14,6 +14,10 @@ import { FilesModule } from './files/files.module';
     imports: [
         GraphQLModule.forRoot({
             autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            cors: {
+                origin: 'http://localhost:3000',
+                credentials: true,
+            },
         }),
         TypeOrmCoreModule.forRoot({
             type: 'mysql',

@@ -17,5 +17,13 @@ export const CREATE_FILE_MUTATION = gql`
             id
         }
     }
+`;
 
+export type RemoveFileData = {}
+export type RemoveFileVars = { id: number }
+
+export const REMOVE_FILE_MUTATION = gql`
+    mutation RemoveFile($id: Int!){
+        removeFile(id: $id)
+    }
 `;

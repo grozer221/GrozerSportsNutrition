@@ -41,6 +41,11 @@ type File {
   size: Int!
 }
 
+type GetFilesResponse {
+  files: [File!]!
+  total: Int!
+}
+
 type Query {
   getUsers(getUsersInput: GetUsersInput!): [User!]!
   getUser(id: Int!): User!
@@ -49,7 +54,7 @@ type Query {
   me: AuthResponse!
   getProducts(getProductsInput: GetProductsInput!): [Product!]!
   getProduct(id: Int!): Product!
-  getFiles(getFilesInput: GetFilesInput!): [File!]!
+  getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
   getFile(id: Int!): File!
 }
 
