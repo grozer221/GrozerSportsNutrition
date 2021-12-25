@@ -6,7 +6,7 @@ export type GetUsersVars = { getUsersInput: getUsersInput }
 
 type getUsersInput = { take: number, skip: number }
 
-export const GET_USER_QUERY = gql`
+export const GET_USERS_QUERY = gql`
     query GetUsers($getUsersInput: GetUsersInput!){
         getUsers(getUsersInput: $getUsersInput){
             id

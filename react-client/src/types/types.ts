@@ -29,10 +29,11 @@ export type Product = {
 
 export type FileType = {
     id: number,
+    filePath: string,
+    fileImage: string,
     originalName: string,
     mimetype: string,
     destination: string,
     fileName: string,
     size: number,
 }
-

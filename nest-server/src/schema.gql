@@ -32,12 +32,19 @@ type Product {
   name: String!
 }
 
+type GetProductsResponse {
+  products: [Product!]!
+  total: Int!
+}
+
 type File {
   id: Int!
   originalName: String!
   mimetype: String!
   destination: String!
   fileName: String!
+  filePath: String!
+  fileImage: String!
   size: Int!
 }
 
@@ -52,10 +59,11 @@ type Query {
   getRoles(getRolesInput: GetRolesInput!): [Role!]!
   getRole(id: Int!): Role!
   me: AuthResponse!
-  getProducts(getProductsInput: GetProductsInput!): [Product!]!
+  getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
   getProduct(id: Int!): Product!
   getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
   getFile(id: Int!): File!
+  getFileByName(fileName: String!): File!
 }
 
 input GetUsersInput {
@@ -76,6 +84,8 @@ input GetProductsInput {
 input GetFilesInput {
   take: Int!
   skip: Int!
+  likeOriginalName: String!
+  likeMimetype: String!
 }
 
 type Mutation {

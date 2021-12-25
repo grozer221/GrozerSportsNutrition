@@ -36,11 +36,12 @@ export const actions = {
 };
 
 export const upload = (files: File[]): ThunkType => async (dispatch) => {
+    dispatch(actions.setLoading(true));
     let data = await filesAPI.upload(files);
     if (data.result === true) {
         dispatch(actions.setUploadedFiles(data.files));
-        dispatch(actions.setLoading(false));
     }
+    dispatch(actions.setLoading(false));
 };
 
 export default filesReducer;

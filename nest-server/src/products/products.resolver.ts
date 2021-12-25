@@ -9,17 +9,21 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { GetProductsInput } from './dto/get-products.input';
+import { GetProductsResponse } from './dto/get-products.response';
 
 @Resolver(() => Product)
 export class ProductsResolver {
     constructor(private readonly productsService: ProductsService) {
     }
 
-    @Query(() => [Product])
+    @Query(() => GetProductsResponse)
     async getProducts(
         @Args('getProductsInput', { type: () => GetProductsInput }) getProductsInput: GetProductsInput,
-    ): Promise<Product[]> {
-        return await this.productsService.getAsync(getProductsInput.take, getProductsInput.skip);
+    ): Promise<GetProductsResponse> {
+        const response = new GetProductsResponse();
+        response.products = await this.productsService.getAsync(getProductsInput.take, getProductsInput.skip);
+        response.total = await this.productsService.getTotalAsync();
+        return response;
     }
 
     @Query(() => Product)

@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
-import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../../GraphQL/products-query';
-import {Loading} from '../../../../components/Loading/Loading';
+import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
+import {Loading} from '../../../components/Loading/Loading';
 
 export const ProductView: FC = () => {
     const params = useParams();

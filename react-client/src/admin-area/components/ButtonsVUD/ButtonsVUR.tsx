@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import {Link} from 'react-router-dom';
-import {Avatar} from 'antd';
+import {Avatar, Popconfirm} from 'antd';
 import {DeleteOutlined, EyeOutlined, FormOutlined} from '@ant-design/icons';
 import s from './ButtonsVUR.module.css';
 
 type Props = {
+    viewUrlA?: string,
     viewUrl?: string,
     onView?: () => void,
     updateUrl?: string,
@@ -13,7 +14,7 @@ type Props = {
     onRemove?: () => void,
 }
 
-export const ButtonsVUR: FC<Props> = ({viewUrl, updateUrl, removeUrl, onView, onUpdate, onRemove}) => {
+export const ButtonsVUR: FC<Props> = ({viewUrlA, viewUrl, updateUrl, removeUrl, onView, onUpdate, onRemove}) => {
     return (
         <>
             <div className={s.buttonsVUR}>
@@ -21,8 +22,11 @@ export const ButtonsVUR: FC<Props> = ({viewUrl, updateUrl, removeUrl, onView, on
                     <div className={s.buttonView} onClick={onView}>
                         <Avatar size={28} icon={<EyeOutlined/>}/>
                     </div>
-                    : viewUrl &&
-                    <Link to={viewUrl} className={s.buttonView}>
+                    : viewUrlA
+                        ? <a href={viewUrlA} target={'blank'} className={s.buttonView}>
+                            <Avatar size={28} icon={<EyeOutlined/>}/>
+                        </a>
+                        : viewUrl && <Link to={viewUrl} className={s.buttonView}>
                         <Avatar size={28} icon={<EyeOutlined/>}/>
                     </Link>
                 }
@@ -36,9 +40,17 @@ export const ButtonsVUR: FC<Props> = ({viewUrl, updateUrl, removeUrl, onView, on
                     </Link>
                 }
                 {onRemove ?
-                    <div className={s.buttonRemove} onClick={onRemove}>
-                        <Avatar size={28} icon={<DeleteOutlined/>}/>
-                    </div>
+                    <Popconfirm
+                        title="Are you sure that you want to delete?"
+                        onConfirm={onRemove}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <div className={s.buttonRemove}>
+                            <Avatar size={28} icon={<DeleteOutlined/>}/>
+                        </div>
+                    </Popconfirm>
+
                     : removeUrl &&
                     <Link to={removeUrl} className={s.buttonRemove}>
                         <Avatar size={28} icon={<DeleteOutlined/>}/>

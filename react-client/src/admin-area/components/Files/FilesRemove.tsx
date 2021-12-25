@@ -1,10 +1,10 @@
 import React, {FC, useState} from 'react';
-import {ModalWindow} from '../../../../components/Modal/ModalWindow';
+import {ModalWindow} from '../../../components/Modal/ModalWindow';
 import {useMutation} from '@apollo/client';
-import {FilesView} from '../FilesView/FilesView';
+import {FilesView} from './FilesView';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {Button} from 'antd';
-import {Error} from '../../Error/Error';
+import {Error} from '../Error/Error';
 
 type Props = {
     visible: boolean,

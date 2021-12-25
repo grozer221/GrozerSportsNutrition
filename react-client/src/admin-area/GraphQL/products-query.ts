@@ -1,18 +1,23 @@
 import {gql} from '@apollo/client';
 import {Product} from '../../types/types';
 
-export type GetProductsData = { getProducts: Product[] }
-export type GetProductsVars = { getProductsInput: getProductsInput }
+export type GetProductsData = { getProducts: getProductsObject }
+type getProductsObject = { products: Product[], total: number }
 
+export type GetProductsVars = { getProductsInput: getProductsInput }
 type getProductsInput = { take: number, skip: number }
 
 export const GET_PRODUCTS_QUERY = gql`
-    query GetProducts($getProductsInput: GetProductsInput!){
-        getProducts(getProductsInput: $getProductsInput){
-            id
-            name
+    query GetProducts($getProductsInput: GetProductsInput!) {
+        getProducts(getProductsInput: $getProductsInput) {
+            products {
+                id
+                name
+            }
+            total
         }
     }
+
 `;
 
 export type GetProductData = { getProduct: Product }

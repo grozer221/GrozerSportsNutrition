@@ -2,10 +2,10 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Button, Form, Input} from 'antd';
 import React, {FC} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {PRODUCT_UPDATE_MUTATION, ProductUpdateData, ProductUpdateVars} from '../../../GraphQL/products-mutation';
+import {UPDATE_PRODUCT_MUTATION, UpdateProductsData, UpdateProductsVars} from '../../GraphQL/products-mutation';
 import s from './ProductUpdate.module.css';
-import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../../GraphQL/products-query';
-import {Loading} from '../../../../components/Loading/Loading';
+import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
+import {Loading} from '../../../components/Loading/Loading';
 
 export const ProductUpdate: FC = () => {
     const params = useParams();
@@ -14,7 +14,7 @@ export const ProductUpdate: FC = () => {
         GET_PRODUCT_QUERY,
         {variables: {id: params.id ? parseInt(params.id) : 0}},
     );
-    const [createProduct] = useMutation<ProductUpdateData, ProductUpdateVars>(PRODUCT_UPDATE_MUTATION);
+    const [createProduct] = useMutation<UpdateProductsData, UpdateProductsVars>(UPDATE_PRODUCT_MUTATION);
     const navigate = useNavigate();
 
     if (!params.id)

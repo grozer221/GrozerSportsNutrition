@@ -48,7 +48,9 @@ export const AppMenu: FC = () => {
                     </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="70" icon={<SettingOutlined/>}>
-                    Settings
+                    <Link to={'/admin/settings'}>
+                        Settings
+                    </Link>
                 </Menu.Item>
                 <Menu.Item key="80" icon={<UserOutlined/>}>
                     <Link to={'/'}>Client site</Link>

@@ -1,22 +1,20 @@
 import {Avatar, Button, Form} from 'antd';
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_FILE_MUTATION, CreateFileData, CreateFileVars} from '../../../GraphQL/files-mutation';
+import {CREATE_FILES_MUTATION, CreateFilesData, CreateFilesVars} from '../../GraphQL/files-mutation';
 import {useMutation} from '@apollo/client';
 import {useDispatch, useSelector} from 'react-redux';
-import {PinnedFiles} from '../../../../components/PinnedFiles/PinnedFiles';
+import {PinnedFiles} from '../../../components/PinnedFiles/PinnedFiles';
 import {PlusOutlined} from '@ant-design/icons';
 import s from './FilesCreate.module.css';
-import {actions, upload} from '../../../../redux/files-reducer';
-import {s_getLoading, s_getUploadedFiles} from '../../../../redux/files.selectors';
-import {Simulate} from 'react-dom/test-utils';
-
+import {actions, upload} from '../../../redux/files-reducer';
+import {s_getLoading, s_getUploadedFiles} from '../../../redux/files.selectors';
 
 export const FilesCreate: FC = () => {
     const dispatch = useDispatch();
     const [createFile, {
         loading,
-    }] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION);
+    }] = useMutation<CreateFilesData, CreateFilesVars>(CREATE_FILES_MUTATION);
     const navigate = useNavigate();
     const [files, setFiles] = useState([] as File[]);
     const uploadedFiles = useSelector(s_getUploadedFiles);
@@ -39,20 +37,15 @@ export const FilesCreate: FC = () => {
 
     const onFinish = async () => {
         if (files.length) {
-            dispatch(actions.setLoading(true));
             dispatch(upload(files));
         }
     };
 
     const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
-            files && files.length > 0
-                ? setFiles([...Array.from(files), ...Array.from(e.target.files)])
-                : setFiles(Array.from(e.target.files));
+            setFiles([...files, ...Array.from(e.target.files)]);
         }
     };
-
-    console.log(files);
 
     return (
         <Form name="createFile" onFinish={onFinish}>

@@ -33,10 +33,7 @@ export class FilesResolver {
     async getFiles(
         @Args('getFilesInput', { type: () => GetFilesInput }) getFilesInput: GetFilesInput,
     ): Promise<GetFilesResponse> {
-        const response = new GetFilesResponse();
-        response.files = await this.filesService.getAsync(getFilesInput.take, getFilesInput.skip);
-        response.total = await this.filesService.getTotalAsync();
-        return response;
+        return await this.filesService.getAsync(getFilesInput.take, getFilesInput.skip, getFilesInput.likeOriginalName, getFilesInput.likeMimetype);
     }
 
     @Roles(RoleName.admin)
@@ -44,6 +41,13 @@ export class FilesResolver {
     @Query(() => File)
     async getFile(@Args('id', { type: () => Int }) id: number): Promise<File> {
         return await this.filesService.getByIdAsync(id);
+    }
+
+    @Roles(RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Query(() => File)
+    async getFileByName(@Args('fileName', { type: () => String }) fileName: string): Promise<File> {
+        return await this.filesService.getByNameAsync(fileName);
     }
 
     @Roles(RoleName.admin)

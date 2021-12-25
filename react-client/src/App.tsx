@@ -25,8 +25,6 @@ export const App: FC = () => {
             setIsInitialised(true);
     }, [data, error]);
 
-    console.log(loading, !isInitialised, error?.graphQLErrors, error?.message);
-
     if (loading || !isInitialised)
         return <Loading/>;
 

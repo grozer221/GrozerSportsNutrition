@@ -1,11 +1,11 @@
 import React, {FC, useState} from 'react';
-import {ModalWindow} from '../../../../components/Modal/ModalWindow';
+import {ModalWindow} from '../../../components/Modal/ModalWindow';
 import {useMutation} from '@apollo/client';
-import {PRODUCT_REMOVE_MUTATION, ProductRemoveData, ProductRemoveVars} from '../../../GraphQL/products-mutation';
-import {ProductView} from '../ProductView/ProductView';
+import {REMOVE_PRODUCTS_MUTATION, RemoveProductsData, RemoveProductsVars} from '../../GraphQL/products-mutation';
+import {ProductView} from './ProductView';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {Button} from 'antd';
-import {Error} from '../../Error/Error';
+import {Error} from '../Error/Error';
 
 type Props = {
     visible: boolean,
@@ -52,9 +52,9 @@ type Props = {
 //     );
 // };
 
-export const ProductRemove: FC = () => {
+export const ProductsRemove: FC = () => {
     const params = useParams();
-    const [removeProduct, {loading}] = useMutation<ProductRemoveData, ProductRemoveVars>(PRODUCT_REMOVE_MUTATION);
+    const [removeProduct, {loading}] = useMutation<RemoveProductsData, RemoveProductsVars>(REMOVE_PRODUCTS_MUTATION);
     const navigate = useNavigate();
 
     if (!params || !params.id)

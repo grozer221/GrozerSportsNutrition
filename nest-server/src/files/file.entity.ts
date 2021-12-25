@@ -27,6 +27,12 @@ export class File {
     @Field()
     fileName: string;
 
+    @Field()
+    filePath: string;
+
+    @Field()
+    fileImage: string;
+
     @Column('int')
     @Field(type => Int)
     size: number;

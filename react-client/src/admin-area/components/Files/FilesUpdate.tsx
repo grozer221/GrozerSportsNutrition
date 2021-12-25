@@ -3,8 +3,8 @@ import {Button, Form, Input} from 'antd';
 import React, {FC} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import s from './FilesUpdate.module.css';
-import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../../GraphQL/products-query';
-import {Loading} from '../../../../components/Loading/Loading';
+import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
+import {Loading} from '../../../components/Loading/Loading';
 
 export const FilesUpdate: FC = () => {
     const params = useParams();

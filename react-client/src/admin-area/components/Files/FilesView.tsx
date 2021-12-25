@@ -1,11 +1,10 @@
 import React, {FC} from 'react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
-import {Loading} from '../../../../components/Loading/Loading';
+import {Loading} from '../../../components/Loading/Loading';
 import {Avatar, Card} from 'antd';
 import s from './FilesView.module.css';
-import {GET_FILE_QUERY, GetFileData, GetFileVars} from '../../../GraphQL/files-query';
-import {urls} from '../../../../api/api';
+import {GET_FILE_QUERY, GetFileData, GetFileVars} from '../../GraphQL/files-query';
 import {DeleteOutlined, FormOutlined} from '@ant-design/icons';
 
 const {Meta} = Card;
@@ -35,7 +34,7 @@ export const FilesView: FC = () => {
                     <Avatar
                         shape={'square'}
                         size={300}
-                        src={urls.server + data?.getFile.destination + '/' + data?.getFile.fileName}
+                        src={data?.getFile.filePath}
                     />
                 }
                 actions={[

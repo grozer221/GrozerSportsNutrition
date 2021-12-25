@@ -1,0 +1,14 @@
+.photosAdd{
+    display: flex;
+    gap: 10px;
+}
+
+.wrapperLoading{
+    position: relative;
+    width: 0;
+    margin-left: -10px;
+}
+
+.labelFile{
+    cursor: pointer;
+}

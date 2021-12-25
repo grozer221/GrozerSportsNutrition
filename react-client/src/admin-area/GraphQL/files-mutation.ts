@@ -1,8 +1,8 @@
 import {FileType} from '../../types/types';
 import {gql} from '@apollo/client';
 
-export type CreateFileData = { createFile: FileType[] }
-export type CreateFileVars = { createFileInput: createFileInput }
+export type CreateFilesData = { filesCreate: FileType[] }
+export type CreateFilesVars = { createFileInput: createFileInput }
 
 export type createFileInput = {
     originalName: string;
@@ -11,7 +11,7 @@ export type createFileInput = {
     fileName: string;
     size: number;
 }
-export const CREATE_FILE_MUTATION = gql`
+export const CREATE_FILES_MUTATION = gql`
     mutation CreateFile($createFileInput: CreateFileInput!) {
         createFile(createFileInput: $createFileInput) {
             id
@@ -19,10 +19,10 @@ export const CREATE_FILE_MUTATION = gql`
     }
 `;
 
-export type RemoveFileData = {}
-export type RemoveFileVars = { id: number }
+export type RemoveFilesData = {}
+export type RemoveFilesVars = { id: number }
 
-export const REMOVE_FILE_MUTATION = gql`
+export const REMOVE_FILES_MUTATION = gql`
     mutation RemoveFile($id: Int!){
         removeFile(id: $id)
     }

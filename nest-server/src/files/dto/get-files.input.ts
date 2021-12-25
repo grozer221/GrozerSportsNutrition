@@ -11,4 +11,10 @@ export class GetFilesInput {
     @Min(0)
     @Field(type => Int)
     skip: number;
+
+    @Field()
+    likeOriginalName: string;
+
+    @Field()
+    likeMimetype: string;
 }

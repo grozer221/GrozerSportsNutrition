@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {Error} from '../Error/Error';
-import {FilesCreate} from './FilesCreate/FilesCreate';
-import {FilesIndex} from './FilesIndex/FilesIndex';
-import {FilesUpdate} from './FilesUpdate/FilesUpdate';
-import {FilesView} from './FilesView/FilesView';
-import {FilesRemove} from './FilesRemove/FilesRemove';
+import {FilesCreate} from './FilesCreate';
+import {FilesIndex} from './FilesIndex';
+import {FilesUpdate} from './FilesUpdate';
+import {FilesView} from './FilesView';
+import {FilesRemove} from './FilesRemove';
 
 export const FilesController: FC = () => {
     return (
