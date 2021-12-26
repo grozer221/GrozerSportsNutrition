@@ -25,6 +25,7 @@ export type Auth = {
 export type Product = {
     id: number,
     name: string,
+    isShown: boolean,
 }
 
 export type FileType = {

@@ -29,6 +29,7 @@ type AuthResponse {
 
 type Product {
   id: Int!
+  isShown: Boolean!
   name: String!
 }
 
@@ -118,6 +119,7 @@ input CreateProductInput {
 input UpdateProductInput {
   id: Int!
   name: String!
+  isShown: Boolean!
 }
 
 input CreateFileInput {

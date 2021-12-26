@@ -6,4 +6,6 @@ export class UpdateProductInput {
     id: number;
     @Field()
     name: string;
+    @Field(() => Boolean)
+    isShown: boolean;
 }

@@ -20,7 +20,7 @@ import {
 import {Loading} from '../../../components/Loading/Loading';
 import {actions} from '../../../redux/files-reducer';
 
-type Photo = File & { isUploaded: boolean }
+type Photo = (File & { isUploaded: boolean })
 
 export const ProductsCreate: FC = () => {
     const [createProduct, {
@@ -86,7 +86,8 @@ export const ProductsCreate: FC = () => {
             fileName: value,
         });
         console.log(selectedFile);
-        // setPhotos([...photos, {...selectedFile.data.getFileByName, isUploaded: false}]);
+        // @ts-ignore
+        setPhotos([...photos, {...selectedFile.data.getFileByName, isUploaded: false} as Photo]);
         dispatch(actions.setLoading(false));
     };
 

@@ -11,6 +11,7 @@ export const CREATE_PRODUCTS_MUTATION = gql`
         createProduct(createProductInput: $createProductInput){
             id
             name
+            isShown
         }
     }
 `;
@@ -18,11 +19,12 @@ export const CREATE_PRODUCTS_MUTATION = gql`
 export type UpdateProductsData = { updateProduct: Product }
 export type UpdateProductsVars = { updateProductInput: Product }
 
-export const UPDATE_PRODUCT_MUTATION = gql`
+export const UPDATE_PRODUCTS_MUTATION = gql`
     mutation UpdateProduct($updateProductInput: UpdateProductInput!){
         updateProduct(updateProductInput: $updateProductInput){
             id
             name
+            isShown
         }
     }
 `;

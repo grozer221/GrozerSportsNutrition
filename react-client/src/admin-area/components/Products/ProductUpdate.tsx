@@ -2,7 +2,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Button, Form, Input} from 'antd';
 import React, {FC} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {UPDATE_PRODUCT_MUTATION, UpdateProductsData, UpdateProductsVars} from '../../GraphQL/products-mutation';
+import {UPDATE_PRODUCTS_MUTATION, UpdateProductsData, UpdateProductsVars} from '../../GraphQL/products-mutation';
 import s from './ProductUpdate.module.css';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
 import {Loading} from '../../../components/Loading/Loading';
@@ -14,7 +14,7 @@ export const ProductUpdate: FC = () => {
         GET_PRODUCT_QUERY,
         {variables: {id: params.id ? parseInt(params.id) : 0}},
     );
-    const [createProduct] = useMutation<UpdateProductsData, UpdateProductsVars>(UPDATE_PRODUCT_MUTATION);
+    const [createProduct] = useMutation<UpdateProductsData, UpdateProductsVars>(UPDATE_PRODUCTS_MUTATION);
     const navigate = useNavigate();
 
     if (!params.id)
@@ -27,13 +27,13 @@ export const ProductUpdate: FC = () => {
         console.log(error);
 
     const onFinish = async (values: { id: number, name: string }) => {
-        console.log('Received values of form: ', values);
-        const response = await createProduct({variables: {updateProductInput: {...values}}});
-        console.log(response);
-        if (response.data && !response.errors) {
-            navigate('..');
-        } else
-            console.log('error:', response.errors);
+        // console.log('Received values of form: ', values);
+        // const response = await createProduct({variables: {updateProductInput: {...values}}});
+        // console.log(response);
+        // if (response.data && !response.errors) {
+        //     navigate('..');
+        // } else
+        //     console.log('error:', response.errors);
     };
 
     return (

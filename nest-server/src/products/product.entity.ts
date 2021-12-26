@@ -9,6 +9,10 @@ export class Product {
     @Field(() => Int)
     id: number;
 
+    @Column('boolean', {default: true})
+    @Field(() => Boolean)
+    isShown: boolean;
+
     @Column({ unique: true })
     @Field()
     name: string;

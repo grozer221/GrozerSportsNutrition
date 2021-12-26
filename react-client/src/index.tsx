@@ -1,22 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './App';
-import {BrowserRouter} from "react-router-dom";
-import store from "./redux/redux-store";
+import {BrowserRouter} from 'react-router-dom';
+import store from './redux/redux-store';
 import {Provider} from 'react-redux';
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-} from "@apollo/client";
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import {baseURL} from './api/api';
+import {schema} from './schema';
 
 const client = new ApolloClient({
     //uri: '/graphql',
-    uri: 'http://localhost:3001/graphql',
-    // credentials: 'include',
+    uri: baseURL + '/graphql',
     cache: new InMemoryCache(),
     headers: {
-        authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : "",
+        authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : '',
     },
     defaultOptions: {
         watchQuery: {
@@ -27,7 +24,8 @@ const client = new ApolloClient({
             fetchPolicy: 'no-cache',
             errorPolicy: 'all',
         },
-    }
+    },
+    typeDefs: schema,
 });
 
 ReactDOM.render(
@@ -40,5 +38,5 @@ ReactDOM.render(
             </BrowserRouter>
         </Provider>
     </React.StrictMode>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );

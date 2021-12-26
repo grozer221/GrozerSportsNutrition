@@ -13,7 +13,7 @@ import { FilesModule } from './files/files.module';
 @Module({
     imports: [
         GraphQLModule.forRoot({
-            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            autoSchemaFile: join(process.cwd(), 'static/schema.gql'),
             cors: {
                 origin: 'http://localhost:3000',
                 credentials: true,

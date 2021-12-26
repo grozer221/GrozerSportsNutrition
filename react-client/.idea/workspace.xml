@@ -2,68 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../nest-server/src/utills/response.file.convert.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.2fcd339f.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.2fcd339f.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.f4495405.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.f4495405.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.f4495405.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.bd63b124.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.bd63b124.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/dto/get-files.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/dto/get-files.input.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/file.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/file.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/schema.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/utills/file.save.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/dto/update-product.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/dto/update-product.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/files-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/files-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/files-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/files-query.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/users-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/users-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/ButtonsVUD/ButtonsVUR.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/ButtonsVUD/ButtonsVUR.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Error/Error.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Error/Error.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate/FilesCreate.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate/FilesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex/FilesIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex/FilesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesRemove/FilesRemove.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesRemove.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesUpdate/FilesUpdate.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesUpdate.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesUpdate/FilesUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesView/FilesView.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesView.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesView/FilesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductCreate/ProductCreate.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductCreate/ProductCreate.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductRemove/ProductRemove.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsRemove.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate/ProductUpdate.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate/ProductUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductView/ProductView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex/ProductsIndex.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersIndex/UsersIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersIndex/UsersIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/files-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/files-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +113,7 @@
       <workItem from="1640205471302" duration="608000" />
       <workItem from="1640334147262" duration="11271000" />
       <workItem from="1640418974513" duration="16182000" />
+      <workItem from="1640515402326" duration="8611000" />
     </task>
     <servers />
   </component>
