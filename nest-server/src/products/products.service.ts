@@ -1,15 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './product.entity';
+import { FilesService } from '../files/files.service';
+import { filesConstants } from '../files/files.constants';
+import { File } from '../files/file.entity';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class ProductsService {
+    origin;
+
     constructor(
         @InjectRepository(Product) private productsRepository: Repository<Product>,
+        private readonly filesService: FilesService,
+        @Inject(REQUEST) private readonly request: Request,
     ) {
+        // @ts-ignore
+        const rawHeaders: string[] = this.request.req.rawHeaders;
+        // @ts-ignore
+        this.origin = this.request.req.protocol + '://' + rawHeaders[rawHeaders.indexOf('Host') + 1];
+    }
+
+    async getFilesByProductId(id: number): Promise<File[]> {
+        const product = await this.productsRepository.findOneOrFail(id, {
+            relations: [filesConstants.tableName],
+        });
+        return product.files;
     }
 
     async getTotalAsync(): Promise<number> {
@@ -17,7 +37,9 @@ export class ProductsService {
     }
 
     async createAsync(createProductInput: CreateProductInput): Promise<Product> {
-        const product = this.productsRepository.create(createProductInput);
+        const { filesIds, ...rest } = createProductInput;
+        const product = this.productsRepository.create(rest);
+        product.files = await this.filesService.getByIdsAsync(filesIds);
         return await this.productsRepository.save(product);
     }
 
@@ -30,7 +52,9 @@ export class ProductsService {
     }
 
     async updateAsync(updateProductInput: UpdateProductInput): Promise<Product> {
-        return await this.productsRepository.save(updateProductInput);
+        const { filesIds, ...rest } = updateProductInput;
+        rest.files = await this.filesService.getByIdsAsync(filesIds);
+        return await this.productsRepository.save(rest);
     }
 
     async removeAsync(id: number): Promise<Product> {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Avatar, Table} from 'antd';
 import {ButtonsVUR} from '../../admin-area/components/ButtonsVUD/ButtonsVUR';
+import s from './PinnedFiles.module.css';
 
 type Props = {
     files: File[],
@@ -11,8 +12,8 @@ type Props = {
 export const PinnedFiles: React.FC<Props> = ({loading, files, setFiles}) => {
 
     const clickRemoveHandler = (fileRemove: File) => {
-        files = files.filter(file => file !== fileRemove);
-        setFiles(files);
+        const newFiles = files.filter(file => file !== fileRemove);
+        setFiles(newFiles);
     };
 
     const columns = [

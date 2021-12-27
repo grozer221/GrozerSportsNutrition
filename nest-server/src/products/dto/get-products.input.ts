@@ -5,10 +5,10 @@ import { Max, Min } from 'class-validator';
 export class GetProductsInput {
     @Min(1)
     @Max(20)
-    @Field(type => Int)
+    @Field(() => Int)
     take: number;
 
     @Min(0)
-    @Field(type => Int)
+    @Field(() => Int)
     skip: number;
 }

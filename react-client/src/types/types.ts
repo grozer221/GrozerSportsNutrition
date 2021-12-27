@@ -19,13 +19,22 @@ export type User = {
 
 export type Auth = {
     user: User,
-    accessToken: string
+    accessToken: string,
 }
 
-export type Product = {
+export type ProductWithoutFiles = {
     id: number,
     name: string,
     isShown: boolean,
+    quantity: number,
+    priceUAH: number,
+    description: string,
+    characteristics: Characteristic[],
+    user: User,
+}
+
+export type Product = ProductWithoutFiles & {
+    files: FileType[],
 }
 
 export type FileType = {
@@ -37,4 +46,9 @@ export type FileType = {
     destination: string,
     fileName: string,
     size: number,
+}
+
+export type Characteristic = {
+    name: string,
+    value: string,
 }

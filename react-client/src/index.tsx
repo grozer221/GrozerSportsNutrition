@@ -11,7 +11,7 @@ import {schema} from './schema';
 const client = new ApolloClient({
     //uri: '/graphql',
     uri: baseURL + '/graphql',
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({addTypename: false}),
     headers: {
         authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : '',
     },

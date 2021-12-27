@@ -14,6 +14,34 @@ enum RoleName {
   customer
 }
 
+type File {
+  id: Int!
+  originalName: String!
+  mimetype: String!
+  destination: String!
+  fileName: String!
+  filePath: String!
+  fileImage: String!
+  size: Int!
+  products: [Product!]!
+}
+
+type Characteristic {
+  name: String!
+  value: String!
+}
+
+type Product {
+  id: Int!
+  isShown: Boolean!
+  name: String!
+  quantity: Float!
+  priceUAH: Float!
+  description: String!
+  characteristics: [Characteristic!]
+  files: [File!]!
+}
+
 type User {
   id: Int!
   email: String!
@@ -27,30 +55,13 @@ type AuthResponse {
   accessToken: String!
 }
 
-type Product {
-  id: Int!
-  isShown: Boolean!
-  name: String!
+type GetFilesResponse {
+  files: [File!]!
+  total: Int!
 }
 
 type GetProductsResponse {
   products: [Product!]!
-  total: Int!
-}
-
-type File {
-  id: Int!
-  originalName: String!
-  mimetype: String!
-  destination: String!
-  fileName: String!
-  filePath: String!
-  fileImage: String!
-  size: Int!
-}
-
-type GetFilesResponse {
-  files: [File!]!
   total: Int!
 }
 
@@ -113,13 +124,29 @@ input RegisterInput {
 }
 
 input CreateProductInput {
+  isShown: Boolean!
   name: String!
+  filesIds: [Float!]!
+  quantity: Float!
+  priceUAH: Float!
+  description: String!
+  characteristics: [CharacteristicInputType!]
+}
+
+input CharacteristicInputType {
+  name: String!
+  value: String!
 }
 
 input UpdateProductInput {
   id: Int!
-  name: String!
   isShown: Boolean!
+  name: String!
+  filesIds: [Float!]!
+  quantity: Float!
+  priceUAH: Float!
+  description: String!
+  characteristics: [CharacteristicInputType!]
 }
 
 input CreateFileInput {

@@ -7,11 +7,10 @@ import { File } from './file.entity';
 import { GetFilesResponse } from './dto/get-files.response';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
-import { ResponseFileConvert } from '../utills/response.file.convert';
 
 @Injectable({ scope: Scope.REQUEST })
 export class FilesService {
-    origin;
+    origin: string;
 
     constructor(
         @InjectRepository(File) private filesRepository: Repository<File>,
@@ -21,6 +20,17 @@ export class FilesService {
         const rawHeaders: string[] = this.request.req.rawHeaders;
         // @ts-ignore
         this.origin = this.request.req.protocol + '://' + rawHeaders[rawHeaders.indexOf('Host') + 1];
+    }
+
+    getFilePath(file: File): string {
+        return this.origin + file.destination.substr(1) + '/' + file.fileName;
+    }
+
+    getFileImage(file: File): string {
+        if (file.mimetype.match(/image/)?.length)
+            return this.origin + file.destination.substr(1) + '/' + file.fileName;
+        else
+            return this.origin + '/static/images/file.png';
     }
 
     async getTotalAsync(): Promise<number> {
@@ -48,31 +58,34 @@ export class FilesService {
                 mimetype: Like(`%${likeMimetype}%`),
             },
         });
-        getFilesResponse.files = files.map(file => ResponseFileConvert(this.origin, file));
+        getFilesResponse.files = files;
         getFilesResponse.total = filesCount.length;
-        // @ts-ignore
-        console.log(this.request.req);
         return getFilesResponse;
     }
 
     async getByIdAsync(id: number): Promise<File> {
-        const file = await this.filesRepository.findOneOrFail(id);
-        return ResponseFileConvert(this.origin, file);
+        return await this.filesRepository.findOneOrFail(id);
+    }
+
+    async getByIdsAsync(ids: number[]): Promise<File[]> {
+        const files: File[] = [];
+        for (let i = 0; i < ids.length; i++) {
+            const file = await this.filesRepository.findOneOrFail(ids[i]);
+            files.push(file);
+        }
+        return files;
     }
 
     async getByNameAsync(fileName: string): Promise<File> {
-        const file = await this.filesRepository.findOneOrFail({ where: { fileName: fileName } });
-        return ResponseFileConvert(this.origin, file);
+        return await this.filesRepository.findOneOrFail({ where: { fileName: fileName } });
     }
 
     async updateAsync(updateFileInput: UpdateFileInput): Promise<File> {
-        const file = await this.filesRepository.save(updateFileInput);
-        return ResponseFileConvert(this.origin, file);
+        return await this.filesRepository.save(updateFileInput);
     }
 
     async removeAsync(id: number): Promise<File> {
         const file = await this.getByIdAsync(id);
-        const removedFile = await this.filesRepository.remove(file);
-        return ResponseFileConvert(this.origin, removedFile);
+        return await this.filesRepository.remove(file);
     }
 }

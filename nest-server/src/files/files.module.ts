@@ -13,7 +13,12 @@ import { FilesController } from './files.controller';
         FilesResolver,
         FilesService,
     ],
-    controllers: [FilesController],
+    controllers: [
+        FilesController,
+    ],
+    exports: [
+        FilesService,
+    ],
 })
 export class FilesModule {
 }

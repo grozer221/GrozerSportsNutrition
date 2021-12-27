@@ -14,11 +14,27 @@ export const GET_PRODUCTS_QUERY = gql`
                 id
                 name
                 isShown
+                quantity
+                priceUAH
+                description
+                characteristics {
+                    name
+                    value
+                }
+                files {
+                    id
+                    fileImage
+                    filePath
+                    mimetype
+                    destination
+                    fileName
+                    size
+                    originalName
+                }
             }
             total
         }
     }
-
 `;
 
 export type GetProductData = { getProduct: Product }
@@ -31,6 +47,23 @@ export const GET_PRODUCT_QUERY = gql`
             id
             name
             isShown
+            quantity
+            priceUAH
+            description
+            characteristics {
+                name
+                value
+            }
+            files {
+                id
+                fileImage
+                filePath
+                mimetype
+                destination
+                fileName
+                size
+                originalName
+            }
         }
     }
 `;

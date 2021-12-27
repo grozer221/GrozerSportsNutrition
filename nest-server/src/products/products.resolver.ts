@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { ProductsService } from './products.service';
 import { Product } from './product.entity';
 import { CreateProductInput } from './dto/create-product.input';
@@ -10,10 +10,18 @@ import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { GetProductsInput } from './dto/get-products.input';
 import { GetProductsResponse } from './dto/get-products.response';
+import { File } from '../files/file.entity';
 
 @Resolver(() => Product)
 export class ProductsResolver {
-    constructor(private readonly productsService: ProductsService) {
+    constructor(
+        private readonly productsService: ProductsService,
+    ) {
+    }
+
+    @ResolveField(() => [File])
+    async files(@Parent() product: Product): Promise<File[]> {
+        return await this.productsService.getFilesByProductId(product.id);
     }
 
     @Query(() => GetProductsResponse)

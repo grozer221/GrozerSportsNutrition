@@ -1,4 +1,9 @@
-.product {
-    display: flex;
-    gap: 10px;
+.carousel{
+    width: 64px;
 }
+
+.image{
+    object-fit: cover;
+}
+
+

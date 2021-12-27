@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Button, Divider, Switch, Table} from 'antd';
+import {Avatar, Button, Carousel, Divider, Switch, Table} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Loading} from '../../../components/Loading/Loading';
@@ -14,6 +14,7 @@ import {
     UpdateProductsVars,
 } from '../../GraphQL/products-mutation';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
+import s from './ProductsIndex.module.css';
 
 export const ProductsIndex: FC = () => {
     const {loading, error, data, refetch} = useQuery<GetProductsData, GetProductsVars>(
@@ -53,14 +54,19 @@ export const ProductsIndex: FC = () => {
     };
 
     const toggleIsShownHandler = async (product: Product, flag: boolean) => {
-        // @ts-ignore
-        delete product.key;
-        // @ts-ignore
-        delete product.__typename;
         product.isShown = flag;
-        const response = await updateProduct({variables: {updateProductInput: product}});
+        // @ts-ignore
+        const {key, files, ...rest} = product;
+        const response = await updateProduct({
+            variables: {
+                updateProductInput: {
+                    ...rest,
+                    filesIds: files.map(file => file.id),
+                },
+            },
+        });
         if (!response.errors) {
-            const newProducts = productsObj.products.map(product => (product.id == response.data?.updateProduct.id ? response.data.updateProduct : product))
+            const newProducts = productsObj.products.map(product => (product.id == response.data?.updateProduct.id ? response.data.updateProduct : product));
             setProductsObj({products: newProducts, total: productsObj.total});
         } else {
             console.log(response.errors);
@@ -69,19 +75,11 @@ export const ProductsIndex: FC = () => {
     };
 
     const columns = [
-        // {
-        //     title: 'Image',
-        //     render: (text: any, file: FileType) => {
-        //         if (file.mimetype.match(/image/)?.length)
-        //             return (
-        //                 <Avatar size={48} shape={'square'} src={urls.server + file.destination + '/' + file.fileName}/>
-        //             );
-        //         return (
-        //             <Avatar size={48} shape={'square'} src={urls.server + 'static/images/file.png'}/>
-        //         );
-        //
-        //     },
-        // },
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            render: (text: any, product: Product) => <>#{product.id}</>,
+        },
         {
             title: 'Is shown',
             dataIndex: 'isShown',
@@ -91,12 +89,30 @@ export const ProductsIndex: FC = () => {
             ),
         },
         {
-            title: 'Id',
-            dataIndex: 'id',
+            title: 'Image',
+            dataIndex: 'fileImage',
+            render: (text: any, product: Product) => (
+                <Carousel className={s.carousel}>
+                    {product.files.map(file => (
+                        <div>
+                            <Avatar className={s.image} shape={'square'} size={64} src={file.fileImage}
+                                    alt={file.fileName}/>
+                        </div>
+                    ))}
+                </Carousel>
+            ),
         },
         {
             title: 'Name',
             dataIndex: 'name',
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'quantity',
+        },
+        {
+            title: 'Price',
+            dataIndex: 'priceUAH',
         },
         {
             title: 'Actions',

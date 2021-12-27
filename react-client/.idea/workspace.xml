@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/main.ts" afterDir="false" />
+    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="expanded product module">
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/file.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/file.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/dto/create-product.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/dto/create-product.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/dto/get-products.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/dto/get-products.input.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/products/dto/update-product.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/dto/update-product.input.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/schema.gql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/utills/response.file.convert.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +66,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../University/Labs/Course 2/Web-tecnologies2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
@@ -61,6 +75,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\components" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Products" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\ButtonsVUD" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\GraphQL" />
@@ -114,6 +129,7 @@
       <workItem from="1640334147262" duration="11271000" />
       <workItem from="1640418974513" duration="16182000" />
       <workItem from="1640515402326" duration="8611000" />
+      <workItem from="1640593418688" duration="16958000" />
     </task>
     <servers />
   </component>
@@ -131,5 +147,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="expanded product module" />
+    <option name="LAST_COMMIT_MESSAGE" value="expanded product module" />
   </component>
 </project>

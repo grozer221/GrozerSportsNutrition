@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { FilesService } from './files.service';
 import { File } from './file.entity';
 import { CreateFileInput } from './dto/create-file.input';
@@ -16,6 +16,16 @@ export class FilesResolver {
     constructor(
         private readonly filesService: FilesService,
     ) {
+    }
+
+    @ResolveField(() => String)
+    filePath(@Parent() file: File): string {
+        return this.filesService.getFilePath(file);
+    }
+
+    @ResolveField(() => String)
+    fileImage(@Parent() file: File): string {
+        return this.filesService.getFileImage(file);
     }
 
     @Roles(RoleName.admin)

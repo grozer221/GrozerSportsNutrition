@@ -26,7 +26,9 @@ a {
     border-radius: 20px;
 }
 
-
+.ant-carousel .slick-dots{
+    top: 80%;
+}
 
 
 

@@ -3,7 +3,7 @@ import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {GET_FILES_QUERY, GetFilesData, GetFilesVars} from '../../GraphQL/files-query';
 import {Loading} from '../../../components/Loading/Loading';
-import {Avatar, Button, Divider, Form, Input, Table} from 'antd';
+import {Avatar, Button, Divider, Form, Table} from 'antd';
 import {FileType} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {REMOVE_FILES_MUTATION, RemoveFilesData, RemoveFilesVars} from '../../GraphQL/files-mutation';
@@ -12,6 +12,7 @@ import {actions} from '../../../redux/files-reducer';
 import {s_getLoading} from '../../../redux/files.selectors';
 import s from './FilesIndex.module.css';
 import debounce from 'lodash.debounce';
+import Search from 'antd/es/input/Search';
 
 export const FilesIndex: FC = () => {
     const {loading, error, data, refetch} = useQuery<GetFilesData, GetFilesVars>(
@@ -136,7 +137,6 @@ export const FilesIndex: FC = () => {
     if (error)
         console.log(error);
 
-    console.log(searchFileName, data?.getFiles, searchFilesQuery.data?.getFiles);
     return (
         <>
             <div className={s.createAndSearch}>
@@ -144,8 +144,9 @@ export const FilesIndex: FC = () => {
                     <Button>Create</Button>
                 </Link>
                 <Form style={{width: '100%'}}>
-                    <Form.Item name="search">
-                        <Input placeholder="Search" onChange={handleSearch}/>
+                    <Form.Item>
+                        <Search placeholder="Search" onChange={handleSearch} enterButton/>
+                        {/*<Input placeholder="Search" onChange={handleSearch}/>*/}
                     </Form.Item>
                 </Form>
             </div>

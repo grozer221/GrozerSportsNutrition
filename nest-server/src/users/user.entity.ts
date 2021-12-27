@@ -5,25 +5,20 @@ import {
     CreateDateColumn,
     Entity,
     JoinTable,
-    ManyToMany,
+    ManyToMany, OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { Role } from '../roles/role.entity';
 import { usersConstants } from './users.constants';
-
-// export enum Role {
-//     CUSTOMER = 'customer',
-//     ADMIN = 'admin',
-//     EDITOR = 'editor'
-// }
+import { Product } from '../products/product.entity';
 
 @Entity(usersConstants.tableName)
 @ObjectType()
 export class User {
     @PrimaryGeneratedColumn()
-    @Field(type => Int)
+    @Field(() => Int)
     id: number;
 
     @Column()
@@ -41,10 +36,13 @@ export class User {
     @Field()
     lastName: string;
 
-    @ManyToMany(type => Role, role => role.users)
+    @ManyToMany(() => Role, role => role.users)
     @JoinTable()
-    @Field(type => [Role])
+    @Field(() => [Role])
     roles: Role[];
+
+    @OneToMany(() => Product, product => product.user)
+    products: Product[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
     createdAt: Date;

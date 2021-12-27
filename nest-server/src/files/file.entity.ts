@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { filesConstants } from './files.constants';
+import { Product } from '../products/product.entity';
 
 
 
@@ -36,6 +37,10 @@ export class File {
     @Column('int')
     @Field(type => Int)
     size: number;
+
+    @ManyToMany(type => Product, product => product.files)
+    @Field(type => [Product])
+    products: Product[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
     createdAt: Date;
