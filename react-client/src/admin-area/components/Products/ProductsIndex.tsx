@@ -15,33 +15,29 @@ import {
 } from '../../GraphQL/products-mutation';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './ProductsIndex.module.css';
+import {updateFileInput} from '../../GraphQL/files-mutation';
 
 export const ProductsIndex: FC = () => {
-    const {loading, error, data, refetch} = useQuery<GetProductsData, GetProductsVars>(
+    const [pageTake, setPageTake] = useState(10);
+    const [pageSkip, setSkipTake] = useState(0);
+    const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(
         GET_PRODUCTS_QUERY,
-        {variables: {getProductsInput: {skip: 0, take: 10}}},
+        {variables: {getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}}},
     );
     const [productsObj, setProductsObj] = useState<getProductsObject>({products: [], total: 0});
     const [removeProduct, removeProductOptions] = useMutation<RemoveProductsData, RemoveProductsVars>(REMOVE_PRODUCTS_MUTATION);
     const [updateProduct, updateProductOptions] = useMutation<UpdateProductsData, UpdateProductsVars>(UPDATE_PRODUCTS_MUTATION);
-
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
-    const [pageTake, setPageTake] = useState(10);
-    const [pageSkip, setSkipTake] = useState(0);
-
-    // const [visibleRemove, setVisibleRemove] = useState(false);
-    // const [productRemove, setProductRemove] = useState<Product | null>(null);
-
     useEffect(() => {
-        if (data?.getProducts)
-            setProductsObj(data.getProducts);
-    }, [data?.getProducts]);
+        if (getProductsQuery.data?.getProducts)
+            setProductsObj(getProductsQuery.data.getProducts);
+    }, [getProductsQuery.data?.getProducts]);
 
     const onRemove = async (id: number) => {
         const response = await removeProduct({variables: {id: id}});
         if (response.data)
-            await refetch({getProductsInput: {skip: pageSkip, take: pageTake}});
+            await getProductsQuery.refetch({getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}});
         else
             console.log(response.errors);
     };
@@ -56,12 +52,16 @@ export const ProductsIndex: FC = () => {
     const toggleIsShownHandler = async (product: Product, flag: boolean) => {
         product.isShown = flag;
         // @ts-ignore
-        const {key, files, ...rest} = product;
+        const {key, categories, ...rest} = product;
+        const files: updateFileInput[] = product.files.map(file => {
+            const {fileImage, filePath, ...rest} = file;
+            return rest;
+        });
         const response = await updateProduct({
             variables: {
                 updateProductInput: {
                     ...rest,
-                    filesIds: files.map(file => file.id),
+                    files: files,
                 },
             },
         });
@@ -71,7 +71,6 @@ export const ProductsIndex: FC = () => {
         } else {
             console.log(response.errors);
         }
-
     };
 
     const columns = [
@@ -123,21 +122,27 @@ export const ProductsIndex: FC = () => {
         },
     ];
 
-    if (loading)
+    if (getProductsQuery.loading)
         return <Loading/>;
 
-    if (error)
-        console.log(error);
+    if (getProductsQuery.error)
+        console.log(getProductsQuery.error);
 
     return (
         <>
-            <Link to={'create'}>
-                <Button>Create</Button>
-            </Link>
+            <div className="wrapperHeader">
+                <div className="wrapperHeader">
+                    <header>Products</header>
+                    <Link to={'create'}>
+                        <Button>Create</Button>
+                    </Link>
+                </div>
+                <strong>search</strong>
+            </div>
             <Divider/>
             <div>
                 <Table
-                    loading={loading || removeProductOptions.loading || updateProductOptions.loading}
+                    loading={getProductsQuery.loading || removeProductOptions.loading || updateProductOptions.loading}
                     rowSelection={{...rowSelection}}
                     columns={columns}
                     dataSource={productsObj.products.map(products => ({key: products.id, ...products}))}
@@ -147,7 +152,7 @@ export const ProductsIndex: FC = () => {
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
                             setSkipTake(pageSkip);
-                            await refetch({getProductsInput: {skip: pageSkip, take: pageTake}});
+                            await getProductsQuery.refetch({getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}});
                         },
                         // onShowSizeChange: async (pageNumber, pageSize) => {
                         //     setPageTake(pageSize);

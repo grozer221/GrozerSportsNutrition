@@ -2,7 +2,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { Max, Min } from 'class-validator';
 
 @InputType()
-export class GetProductsInput {
+export class GetCategoriesInput {
     @Min(1)
     @Max(20)
     @Field(() => Int)
@@ -11,7 +11,4 @@ export class GetProductsInput {
     @Min(0)
     @Field(() => Int)
     skip: number;
-
-    @Field()
-    likeName: string;
 }

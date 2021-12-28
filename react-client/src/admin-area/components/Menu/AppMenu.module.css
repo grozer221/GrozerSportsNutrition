@@ -1,5 +1,51 @@
+.wrapperMenu{
+    overflow-y: auto;
+}
+
+.wrapperMenu::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.wrapperMenu::-webkit-scrollbar-track {
+    background-color: #001529;
+}
+
+.wrapperMenu::-webkit-scrollbar-thumb {
+    background-color: #004277;
+}
+
+
 .logo {
     height: 32px;
     margin: 16px;
     background: rgba(255, 255, 255, 0.3);
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.userFirstLastName{
+    color: #3498db;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.roles{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }

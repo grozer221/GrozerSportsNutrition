@@ -1,5 +1,6 @@
 import {gql} from '@apollo/client';
-import {Characteristic, Product} from '../../types/types';
+import {Characteristic, FileType, Product} from '../../types/types';
+import {updateFileInput} from './files-mutation';
 
 export type CreateProductsData = { createProduct: Product[] }
 
@@ -10,7 +11,7 @@ type createProductInput = {
     quantity: number,
     priceUAH: number,
     description: string,
-    filesIds: number[],
+    files: FileType[],
 }
 
 export const CREATE_PRODUCTS_MUTATION = gql`
@@ -43,7 +44,7 @@ export const CREATE_PRODUCTS_MUTATION = gql`
 export type UpdateProductsData = { updateProduct: Product }
 
 export type UpdateProductsVars = { updateProductInput: updateProductInput }
-type updateProductInput = {
+export type updateProductInput = {
     id: number
     isShown: boolean,
     name: string,
@@ -51,8 +52,9 @@ type updateProductInput = {
     priceUAH: number,
     description: string,
     characteristics: Characteristic[]
-    filesIds: number[],
+    files: updateFileInput[],
 }
+export interface updateProductWithoutFilesInput extends Omit<updateProductInput, 'files'>{}
 
 export const UPDATE_PRODUCTS_MUTATION = gql`
     mutation UpdateProduct($updateProductInput: UpdateProductInput!){

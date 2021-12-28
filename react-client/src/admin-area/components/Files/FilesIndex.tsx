@@ -3,7 +3,7 @@ import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {GET_FILES_QUERY, GetFilesData, GetFilesVars} from '../../GraphQL/files-query';
 import {Loading} from '../../../components/Loading/Loading';
-import {Avatar, Button, Divider, Form, Table} from 'antd';
+import {Avatar, Button, Divider, Table} from 'antd';
 import {FileType} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {REMOVE_FILES_MUTATION, RemoveFilesData, RemoveFilesVars} from '../../GraphQL/files-mutation';
@@ -139,18 +139,16 @@ export const FilesIndex: FC = () => {
 
     return (
         <>
-            <div className={s.createAndSearch}>
-                <Link to={'create'}>
-                    <Button>Create</Button>
-                </Link>
-                <Form style={{width: '100%'}}>
-                    <Form.Item>
-                        <Search placeholder="Search" onChange={handleSearch} enterButton/>
-                        {/*<Input placeholder="Search" onChange={handleSearch}/>*/}
-                    </Form.Item>
-                </Form>
+            <div className='wrapperHeader'>
+                <div className='wrapperHeader'>
+                    <header>Files</header>
+                    <Link to={'create'}>
+                        <Button>Create</Button>
+                    </Link>
+                </div>
+                <Search placeholder="Search" onChange={handleSearch} enterButton className={s.search}/>
             </div>
-            <Divider/>
+            <Divider/>;
             <div>
                 <Table
                     loading={loading || removeFileOptions.loading || uploadLoading || searchFilesQuery.loading}
@@ -210,7 +208,8 @@ export const FilesIndex: FC = () => {
                         // },
                     }}
                 />
-            </div>
+            </div>;
         </>
-    );
+    )
+        ;
 };

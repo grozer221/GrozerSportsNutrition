@@ -18,6 +18,7 @@ export const LOGIN_MUTATION = gql`
                 roles{
                     id
                     name
+                    color
                 }
             }
         }

@@ -43,14 +43,13 @@ export const ProductsCreate: FC = () => {
     }) => {
         const intQuantity = parseInt(values.quantity);
         const intPriceUAH = parseInt(values.priceUAH);
-        const filesIds = photos.map(photo => photo.id);
         const createProductsVars: CreateProductsVars = {
             createProductInput: {
                 ...values,
+                isShown,
                 quantity: intQuantity,
                 priceUAH: intPriceUAH,
-                isShown,
-                filesIds,
+                files: photos,
             },
         };
         console.log(createProductsVars);
@@ -97,7 +96,6 @@ export const ProductsCreate: FC = () => {
         dispatch(actions.setLoading(false));
     };
 
-    console.log(getFilesQuery.networkStatus);
     return (
         <Form name="createProduct" onFinish={onFinish}>
             <Form.Item

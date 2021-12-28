@@ -21,6 +21,7 @@ import {
     GetFilesVars,
 } from '../../GraphQL/files-query';
 import {Characteristic, FileType} from '../../../types/types';
+import {updateFileInput} from '../../GraphQL/files-mutation';
 
 export const ProductUpdate: FC = () => {
     const params = useParams();
@@ -58,18 +59,20 @@ export const ProductUpdate: FC = () => {
         const intId = parseInt(values.id);
         const intQuantity = parseInt(values.quantity);
         const intPriceUAH = parseInt(values.priceUAH);
-        const filesIds = photos.map(photo => photo.id);
+        const files: updateFileInput[] = photos.map(photo => {
+            const {fileImage,filePath, ...rest} = photo;
+            return rest;
+        });
         const updateProductsVars: UpdateProductsVars = {
             updateProductInput: {
                 ...values,
                 id: intId,
+                isShown: isShown,
                 quantity: intQuantity,
                 priceUAH: intPriceUAH,
-                isShown,
-                filesIds,
+                files: files,
             },
         };
-        console.log(updateProductsVars);
         const response = await updateProduct({variables: updateProductsVars});
         if (response.data && !response.errors) {
             navigate('..');

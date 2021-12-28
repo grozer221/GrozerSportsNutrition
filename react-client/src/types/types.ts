@@ -7,6 +7,7 @@ export enum RoleName {
 export type Role = {
     id: number,
     name: RoleName,
+    color: string,
 }
 
 export type User = {
@@ -22,7 +23,7 @@ export type Auth = {
     accessToken: string,
 }
 
-export type ProductWithoutFiles = {
+export type Product = {
     id: number,
     name: string,
     isShown: boolean,
@@ -31,10 +32,8 @@ export type ProductWithoutFiles = {
     description: string,
     characteristics: Characteristic[],
     user: User,
-}
-
-export type Product = ProductWithoutFiles & {
     files: FileType[],
+    categories: Category[],
 }
 
 export type FileType = {
@@ -51,4 +50,13 @@ export type FileType = {
 export type Characteristic = {
     name: string,
     value: string,
+}
+
+export type Category = {
+    id: number,
+    isShown: boolean,
+    name: string,
+    slug: string,
+    description: string,
+    products: Product[],
 }

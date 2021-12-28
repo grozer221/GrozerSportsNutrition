@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { CharacteristicInputType } from '../product.entity';
+import { UpdateFileInput } from '../../files/dto/update-file.input';
 
 @InputType()
 export class CreateProductInput {
@@ -8,9 +9,6 @@ export class CreateProductInput {
 
     @Field()
     name: string;
-
-    @Field(() => [Number])
-    filesIds: number[];
 
     @Field(() => Number)
     quantity: number;
@@ -23,4 +21,7 @@ export class CreateProductInput {
 
     @Field(() => [CharacteristicInputType], {nullable: true})
     characteristics: CharacteristicInputType[];
+
+    @Field(() => [UpdateFileInput])
+    files: UpdateFileInput[];
 }

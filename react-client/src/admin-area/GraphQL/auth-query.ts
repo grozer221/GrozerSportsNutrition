@@ -16,6 +16,7 @@ export const ME_QUERY = gql`
                 roles {
                     id
                     name
+                    color
                 }
             }
             accessToken

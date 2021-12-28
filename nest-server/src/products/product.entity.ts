@@ -12,6 +12,7 @@ import {
 import { productsConstants } from './products.constants';
 import { File } from '../files/file.entity';
 import { User } from '../users/user.entity';
+import { Category } from '../categories/category.entity';
 
 @ObjectType()
 export class Characteristic {
@@ -67,6 +68,11 @@ export class Product {
     @JoinTable()
     @Field(() => [File])
     files: File[];
+
+    @ManyToMany(() => Category, category => category.products)
+    @JoinTable()
+    @Field(() => [Category], {nullable: true})
+    categories: Category[];
 
     @ManyToOne(() => User, user => user.products)
     user: User;

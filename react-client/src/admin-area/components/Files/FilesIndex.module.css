@@ -1,4 +1,3 @@
-.createAndSearch {
-    display: flex;
-    gap: 10px;
+.search {
+    max-width: 600px;
 }

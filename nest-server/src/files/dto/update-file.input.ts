@@ -1,22 +1,8 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
+import { CreateFileInput } from './create-file.input';
 
 @InputType()
-export class UpdateFileInput {
-    @Field(type => Int)
+export class UpdateFileInput extends PartialType(CreateFileInput) {
+    @Field(() => Int)
     id: number;
-
-    @Field()
-    originalName: string;
-
-    @Field()
-    mimetype: string;
-
-    @Field()
-    destination: string;
-
-    @Field()
-    fileName: string;
-
-    @Field(type => Int)
-    size: number;
 }

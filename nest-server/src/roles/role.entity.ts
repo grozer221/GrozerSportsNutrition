@@ -9,6 +9,20 @@ export enum RoleName {
     customer = 'customer',
 }
 
+export enum RoleColor {
+    magenta = 'magenta',
+    red = 'red',
+    volcano = 'volcano',
+    orange = 'orange',
+    gold = 'gold',
+    lime = 'lime',
+    green = 'green',
+    cyan = 'cyan',
+    blue = 'blue',
+    geekblue = 'geekblue',
+    purple = 'purple',
+}
+
 registerEnumType(RoleName, { name: 'RoleName' });
 
 @Entity(rolesConstants.tableName)
@@ -16,7 +30,7 @@ registerEnumType(RoleName, { name: 'RoleName' });
 export class Role {
 
     @PrimaryGeneratedColumn()
-    @Field(type => Int)
+    @Field(() => Int)
     id: number;
 
     @Column({
@@ -24,11 +38,15 @@ export class Role {
         enum: RoleName,
         default: RoleName.customer,
     })
-    @Field(type => RoleName)
+    @Field(() => RoleName)
     name: RoleName;
 
-    @ManyToMany(type => User, user => user.roles)
-    @Field(type => [User])
+    @Column({default: 'purple'})
+    @Field()
+    color: string;
+
+    @ManyToMany(() => User, user => user.roles)
+    @Field(() => [User])
     users: User[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })

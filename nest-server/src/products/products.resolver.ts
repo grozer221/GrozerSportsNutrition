@@ -11,6 +11,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { GetProductsInput } from './dto/get-products.input';
 import { GetProductsResponse } from './dto/get-products.response';
 import { File } from '../files/file.entity';
+import { Category } from '../categories/category.entity';
 
 @Resolver(() => Product)
 export class ProductsResolver {
@@ -24,19 +25,26 @@ export class ProductsResolver {
         return await this.productsService.getFilesByProductId(product.id);
     }
 
+    @ResolveField(() => [Category])
+    async categories(@Parent() product: Product): Promise<Category[]> {
+        return await this.productsService.getCategoriesByProductId(product.id);
+    }
+
     @Query(() => GetProductsResponse)
     async getProducts(
         @Args('getProductsInput', { type: () => GetProductsInput }) getProductsInput: GetProductsInput,
     ): Promise<GetProductsResponse> {
-        const response = new GetProductsResponse();
-        response.products = await this.productsService.getAsync(getProductsInput.take, getProductsInput.skip);
-        response.total = await this.productsService.getTotalAsync();
-        return response;
+        return await this.productsService.getAsync(getProductsInput.take, getProductsInput.skip, getProductsInput.likeName);
     }
 
     @Query(() => Product)
     async getProduct(@Args('id', { type: () => Int }) id: number): Promise<Product> {
         return await this.productsService.getByIdAsync(id);
+    }
+
+    @Query(() => Product)
+    async getProductByName(@Args('name', { type: () => String }) name: string): Promise<Product> {
+        return await this.productsService.getByNameAsync(name);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)

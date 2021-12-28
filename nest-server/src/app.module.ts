@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
     imports: [
@@ -43,6 +44,7 @@ import { FilesModule } from './files/files.module';
         RolesModule,
         ProductsModule,
         FilesModule,
+        CategoriesModule,
     ],
     providers: [
         AppService,

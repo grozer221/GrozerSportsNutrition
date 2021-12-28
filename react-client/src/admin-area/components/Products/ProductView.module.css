@@ -1,0 +1,36 @@
+.photosAndMainInfo{
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.mainInfo, .mainInfo tr, .mainInfo, td{
+    padding: 5px;
+}
+
+.mainInfo tr td:first-child{
+    color: grey;
+}
+
+.mainInfo tr td:last-child *{
+    border-bottom: 2px dotted gray;
+}
+
+.carousel{
+    width: 256px;
+}
+
+
+.image{
+    object-fit: cover;
+}
+
+.cards{
+    display: flex;
+    gap: 10px;
+    justify-content: stretch;
+}
+
+.card{
+    width: 50%;
+}

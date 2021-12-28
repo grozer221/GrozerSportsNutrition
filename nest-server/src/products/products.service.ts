@@ -2,13 +2,16 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Product } from './product.entity';
 import { FilesService } from '../files/files.service';
 import { filesConstants } from '../files/files.constants';
 import { File } from '../files/file.entity';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import { Category } from '../categories/category.entity';
+import { GetProductsResponse } from './dto/get-products.response';
+import { categoriesConstants } from '../categories/categories.constants';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ProductsService {
@@ -32,29 +35,51 @@ export class ProductsService {
         return product.files;
     }
 
+    async getCategoriesByProductId(id: number): Promise<Category[]> {
+        const product = await this.productsRepository.findOneOrFail(id, {
+            relations: [categoriesConstants.tableName],
+        });
+        return product.categories;
+    }
+
     async getTotalAsync(): Promise<number> {
         return await this.productsRepository.count();
     }
 
     async createAsync(createProductInput: CreateProductInput): Promise<Product> {
-        const { filesIds, ...rest } = createProductInput;
-        const product = this.productsRepository.create(rest);
-        product.files = await this.filesService.getByIdsAsync(filesIds);
+        const product = this.productsRepository.create(createProductInput);
         return await this.productsRepository.save(product);
     }
 
-    async getAsync(take: number, skip: number): Promise<Product[]> {
-        return await this.productsRepository.find({ take, skip });
+    async getAsync(take: number, skip: number, likeName: string): Promise<GetProductsResponse> {
+        const getProductsResponse = new GetProductsResponse();
+        const products = await this.productsRepository.find({
+            where: {
+                name: Like(`%${likeName}%`),
+            },
+            take: take,
+            skip: skip,
+        });
+        const productsCount = await this.productsRepository.find({
+            where: {
+                name: Like(`%${likeName}%`),
+            },
+        });
+        getProductsResponse.products = products;
+        getProductsResponse.total = productsCount.length;
+        return getProductsResponse;
     }
 
     async getByIdAsync(id: number): Promise<Product> {
         return await this.productsRepository.findOneOrFail(id);
     }
 
+    async getByNameAsync(name: string): Promise<Product> {
+        return await this.productsRepository.findOneOrFail({ where: { name: name } });
+    }
+
     async updateAsync(updateProductInput: UpdateProductInput): Promise<Product> {
-        const { filesIds, ...rest } = updateProductInput;
-        rest.files = await this.filesService.getByIdsAsync(filesIds);
-        return await this.productsRepository.save(rest);
+        return await this.productsRepository.save(updateProductInput);
     }
 
     async removeAsync(id: number): Promise<Product> {

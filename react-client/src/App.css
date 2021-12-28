@@ -4,6 +4,29 @@
     box-sizing: border-box;
 }
 
+.wrapperHeader{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header{
+    font-size: 30px;
+    font-weight: 600;
+}
+
+strong{
+    color: red;
+    font-weight: bold;
+}
+
+.ant-input-group-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 button {
     border: none;
 }
@@ -26,8 +49,8 @@ a {
     border-radius: 20px;
 }
 
-.ant-carousel .slick-dots{
-    top: 80%;
+.ant-carousel .slick-dots {
+    top: 90%;
 }
 
 

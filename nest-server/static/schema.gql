@@ -5,6 +5,7 @@
 type Role {
   id: Int!
   name: RoleName!
+  color: String!
   users: [User!]!
 }
 
@@ -26,6 +27,15 @@ type File {
   products: [Product!]!
 }
 
+type Category {
+  id: Int!
+  isShown: Boolean!
+  name: String!
+  slug: String!
+  description: String!
+  products: [Product!]
+}
+
 type Characteristic {
   name: String!
   value: String!
@@ -40,6 +50,7 @@ type Product {
   description: String!
   characteristics: [Characteristic!]
   files: [File!]!
+  categories: [Category!]
 }
 
 type User {
@@ -65,6 +76,11 @@ type GetProductsResponse {
   total: Int!
 }
 
+type GetCategoriesResponse {
+  categories: [Category!]!
+  total: Int!
+}
+
 type Query {
   getUsers(getUsersInput: GetUsersInput!): [User!]!
   getUser(id: Int!): User!
@@ -73,9 +89,13 @@ type Query {
   me: AuthResponse!
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
   getProduct(id: Int!): Product!
+  getProductByName(name: String!): Product!
   getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
   getFile(id: Int!): File!
   getFileByName(fileName: String!): File!
+  getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
+  getCategory(id: Int!): Category!
+  getCategoryByName(name: String!): Category!
 }
 
 input GetUsersInput {
@@ -91,6 +111,7 @@ input GetRolesInput {
 input GetProductsInput {
   take: Int!
   skip: Int!
+  likeName: String!
 }
 
 input GetFilesInput {
@@ -98,6 +119,11 @@ input GetFilesInput {
   skip: Int!
   likeOriginalName: String!
   likeMimetype: String!
+}
+
+input GetCategoriesInput {
+  take: Int!
+  skip: Int!
 }
 
 type Mutation {
@@ -109,6 +135,9 @@ type Mutation {
   createFile(createFileInput: CreateFileInput!): File!
   updateFile(updateFileInput: UpdateFileInput!): File!
   removeFile(id: Int!): Boolean!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Boolean!
 }
 
 input LoginInput {
@@ -126,11 +155,11 @@ input RegisterInput {
 input CreateProductInput {
   isShown: Boolean!
   name: String!
-  filesIds: [Float!]!
   quantity: Float!
   priceUAH: Float!
   description: String!
   characteristics: [CharacteristicInputType!]
+  files: [UpdateFileInput!]!
 }
 
 input CharacteristicInputType {
@@ -138,15 +167,24 @@ input CharacteristicInputType {
   value: String!
 }
 
-input UpdateProductInput {
+input UpdateFileInput {
+  originalName: String
+  mimetype: String
+  destination: String
+  fileName: String
+  size: Int
   id: Int!
-  isShown: Boolean!
-  name: String!
-  filesIds: [Float!]!
-  quantity: Float!
-  priceUAH: Float!
-  description: String!
+}
+
+input UpdateProductInput {
+  isShown: Boolean
+  name: String
+  quantity: Float
+  priceUAH: Float
+  description: String
   characteristics: [CharacteristicInputType!]
+  files: [UpdateFileInput!]
+  id: Int!
 }
 
 input CreateFileInput {
@@ -157,11 +195,27 @@ input CreateFileInput {
   size: Int!
 }
 
-input UpdateFileInput {
+input CreateCategoryInput {
+  isShown: Boolean!
+  name: String!
+  description: String!
+  products: [UpdateProductWithoutFilesInput!]!
+}
+
+input UpdateProductWithoutFilesInput {
+  isShown: Boolean
+  name: String
+  quantity: Float
+  priceUAH: Float
+  description: String
+  characteristics: [CharacteristicInputType!]
   id: Int!
-  originalName: String!
-  mimetype: String!
-  destination: String!
-  fileName: String!
-  size: Int!
+}
+
+input UpdateCategoryInput {
+  isShown: Boolean
+  name: String
+  description: String
+  products: [UpdateProductWithoutFilesInput!]
+  id: Int!
 }

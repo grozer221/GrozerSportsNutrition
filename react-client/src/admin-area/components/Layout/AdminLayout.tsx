@@ -3,7 +3,6 @@ import {useSelector} from 'react-redux';
 import {s_getIsAuth} from '../../../redux/auth-selectors';
 import {Layout} from 'antd';
 import {AppMenu} from '../Menu/AppMenu';
-import {AppHeader} from '../Header/AppHeader';
 import {AppBreadcrumb} from '../Breadcrumb/AppBreadcrumb';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Home} from '../Home/Home';
@@ -18,7 +17,6 @@ import {Settings} from '../Settings/Settings';
 const {Content} = Layout;
 
 export const AdminLayout: FC = () => {
-    console.log('AppLayout');
     const isAuth = useSelector(s_getIsAuth);
 
     if (!isAuth)
@@ -28,7 +26,6 @@ export const AdminLayout: FC = () => {
         <Layout className={s.layout}>
             <AppMenu/>
             <Layout className="site-layout">
-                <AppHeader/>
                 <Content className={s.content}>
                     <AppBreadcrumb/>
                     <div className={s.siteLayoutBackground}>

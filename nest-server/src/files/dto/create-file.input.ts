@@ -14,6 +14,6 @@ export class CreateFileInput {
     @Field()
     fileName: string;
 
-    @Field(type => Int)
+    @Field(() => Int)
     size: number;
 }

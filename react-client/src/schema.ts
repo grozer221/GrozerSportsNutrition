@@ -4,6 +4,7 @@ export const schema = gql`
     type Role {
         id: Int!
         name: RoleName!
+        color: String!
         users: [User!]!
     }
 
@@ -25,6 +26,15 @@ export const schema = gql`
         products: [Product!]!
     }
 
+    type Category {
+        id: Int!
+        isShown: Boolean!
+        name: String!
+        slug: String!
+        description: String!
+        products: [Product!]!
+    }
+
     type Characteristic {
         name: String!
         value: String!
@@ -39,6 +49,7 @@ export const schema = gql`
         description: String!
         characteristics: [Characteristic!]
         files: [File!]!
+        categories: [Category!]!
     }
 
     type User {
@@ -64,6 +75,11 @@ export const schema = gql`
         total: Int!
     }
 
+    type GetCategoriesResponse {
+        categories: [Category!]!
+        total: Int!
+    }
+
     type Query {
         getUsers(getUsersInput: GetUsersInput!): [User!]!
         getUser(id: Int!): User!
@@ -72,9 +88,13 @@ export const schema = gql`
         me: AuthResponse!
         getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
         getProduct(id: Int!): Product!
+        getProductByName(name: String!): Product!
         getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
         getFile(id: Int!): File!
         getFileByName(fileName: String!): File!
+        getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
+        getCategory(id: Int!): Category!
+        getCategoryByName(name: String!): Category!
     }
 
     input GetUsersInput {
@@ -99,6 +119,11 @@ export const schema = gql`
         likeMimetype: String!
     }
 
+    input GetCategoriesInput {
+        take: Int!
+        skip: Int!
+    }
+
     type Mutation {
         login(loginInput: LoginInput!): AuthResponse!
         register(registerInput: RegisterInput!): AuthResponse!
@@ -108,6 +133,9 @@ export const schema = gql`
         createFile(createFileInput: CreateFileInput!): File!
         updateFile(updateFileInput: UpdateFileInput!): File!
         removeFile(id: Int!): Boolean!
+        createCategory(createCategoryInput: CreateCategoryInput!): Category!
+        updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+        removeCategory(id: Int!): Boolean!
     }
 
     input LoginInput {
@@ -125,11 +153,11 @@ export const schema = gql`
     input CreateProductInput {
         isShown: Boolean!
         name: String!
-        filesIds: [Float!]!
         quantity: Float!
         priceUAH: Float!
         description: String!
         characteristics: [CharacteristicInputType!]
+        files: [UpdateFileInput!]!
     }
 
     input CharacteristicInputType {
@@ -137,15 +165,24 @@ export const schema = gql`
         value: String!
     }
 
-    input UpdateProductInput {
+    input UpdateFileInput {
+        originalName: String
+        mimetype: String
+        destination: String
+        fileName: String
+        size: Int
         id: Int!
-        isShown: Boolean!
-        name: String!
-        filesIds: [Float!]!
-        quantity: Float!
-        priceUAH: Float!
-        description: String!
+    }
+
+    input UpdateProductInput {
+        isShown: Boolean
+        name: String
+        quantity: Float
+        priceUAH: Float
+        description: String
         characteristics: [CharacteristicInputType!]
+        files: [UpdateFileInput!]
+        id: Int!
     }
 
     input CreateFileInput {
@@ -156,12 +193,28 @@ export const schema = gql`
         size: Int!
     }
 
-    input UpdateFileInput {
+    input CreateCategoryInput {
+        isShown: Boolean!
+        name: String!
+        description: String!
+        products: [UpdateProductWithoutFilesInput!]!
+    }
+
+    input UpdateProductWithoutFilesInput {
+        isShown: Boolean
+        name: String
+        quantity: Float
+        priceUAH: Float
+        description: String
+        characteristics: [CharacteristicInputType!]
         id: Int!
-        originalName: String!
-        mimetype: String!
-        destination: String!
-        fileName: String!
-        size: Int!
+    }
+
+    input UpdateCategoryInput {
+        isShown: Boolean
+        name: String
+        description: String
+        products: [UpdateProductWithoutFilesInput!]
+        id: Int!
     }
 `
