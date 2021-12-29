@@ -11,14 +11,14 @@ import {
 import {Category} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {
-    REMOVE_CATEGORIES_MUTATION,
-    RemoveCategoriesData,
-    RemoveCategoriesVars,
-    UPDATE_CATEGORIES_MUTATION,
-    UpdateCategoriesData,
-    UpdateCategoriesVars,
+    REMOVE_CATEGORY_MUTATION,
+    RemoveCategoryData,
+    RemoveCategoryVars,
+    UPDATE_CATEGORY_MUTATION,
+    UpdateCategoryData,
+    UpdateCategoryVars,
 } from '../../GraphQL/categories-mutation';
-import s from './CategoriesIndex.module.css';
+import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
 
 export const CategoriesIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
@@ -29,8 +29,8 @@ export const CategoriesIndex: FC = () => {
     );
     const [categoriesObj, setCategoriesObj] = useState<getCategoriesObject>({categories: [], total: 0});
     const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
-    const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoriesData, RemoveCategoriesVars>(REMOVE_CATEGORIES_MUTATION);
-    const [updateCategory, updateCategoryOptions] = useMutation<UpdateCategoriesData, UpdateCategoriesVars>(UPDATE_CATEGORIES_MUTATION);
+    const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION);
+    const [updateCategory, updateCategoryOptions] = useMutation<UpdateCategoryData, UpdateCategoryVars>(UPDATE_CATEGORY_MUTATION);
 
     useEffect(() => {
         if (getCategoriesQuery.data?.getCategories)
@@ -56,10 +56,15 @@ export const CategoriesIndex: FC = () => {
         category.isShown = flag;
         // @ts-ignore
         const {key, slug, ...rest} = category;
+        const productsWithoutFiles: updateProductWithoutFilesInput[] = rest.products?.map(product => {
+            const {files, ...restProduct} = product;
+            return restProduct;
+        });
         const response = await updateCategory({
             variables: {
                 updateCategoryInput: {
-                    ...rest
+                    ...rest,
+                    products: productsWithoutFiles,
                 },
             },
         });
@@ -86,20 +91,6 @@ export const CategoriesIndex: FC = () => {
                         onChange={(flag) => toggleIsShownHandler(category, flag)}/>
             ),
         },
-        // {
-        //     title: 'Image',
-        //     dataIndex: 'fileImage',
-        //     render: (text: any, category: Category) => (
-        //         <Carousel className={s.carousel}>
-        //             {product.files.map(file => (
-        //                 <div>
-        //                     <Avatar className={s.image} shape={'square'} size={64} src={file.fileImage}
-        //                             alt={file.fileName}/>
-        //                 </div>
-        //             ))}
-        //         </Carousel>
-        //     ),
-        // },
         {
             title: 'Name',
             dataIndex: 'name',

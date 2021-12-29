@@ -6,7 +6,7 @@ import {Loading} from '../../../components/Loading/Loading';
 import {Avatar, Button, Divider, Table} from 'antd';
 import {FileType} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {REMOVE_FILES_MUTATION, RemoveFilesData, RemoveFilesVars} from '../../GraphQL/files-mutation';
+import {REMOVE_FILE_MUTATION, RemoveFileData, RemoveFileVars} from '../../GraphQL/files-mutation';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions} from '../../../redux/files-reducer';
 import {s_getLoading} from '../../../redux/files.selectors';
@@ -29,7 +29,7 @@ export const FilesIndex: FC = () => {
         },
     );
     const searchFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
-    const [removeFile, removeFileOptions] = useMutation<RemoveFilesData, RemoveFilesVars>(REMOVE_FILES_MUTATION);
+    const [removeFile, removeFileOptions] = useMutation<RemoveFileData, RemoveFileVars>(REMOVE_FILE_MUTATION);
     const [pageTake, setPageTake] = useState(10);
     const [pageSkip, setPageSkip] = useState(0);
     const [selectedFiles, setSelectedFiles] = useState<FileType[]>([]);

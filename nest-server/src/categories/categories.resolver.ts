@@ -10,9 +10,10 @@ import { CreateCategoryInput } from './dto/create-category.input';
 import { GetCategoriesResponse } from './dto/get-categories.response';
 import { GetCategoriesInput } from './dto/get-categories.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
-import { Product } from '../products/product.entity';
 import { getSlug } from '../utils/get-slug';
-import { File } from '../files/file.entity';
+import { GetProductsInput } from '../products/dto/get-products.input';
+import { GetProductsResponse } from '../products/dto/get-products.response';
+import { Product } from '../products/product.entity';
 
 @Resolver(() => Category)
 export class CategoriesResolver {

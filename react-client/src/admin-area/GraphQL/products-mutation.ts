@@ -2,9 +2,9 @@ import {gql} from '@apollo/client';
 import {Characteristic, FileType, Product} from '../../types/types';
 import {updateFileInput} from './files-mutation';
 
-export type CreateProductsData = { createProduct: Product[] }
+export type CreateProductData = { createProduct: Product[] }
 
-export type CreateProductsVars = { createProductInput: createProductInput }
+export type CreateProductVars = { createProductInput: createProductInput }
 type createProductInput = {
     isShown: boolean,
     name: string,
@@ -14,7 +14,7 @@ type createProductInput = {
     files: FileType[],
 }
 
-export const CREATE_PRODUCTS_MUTATION = gql`
+export const CREATE_PRODUCT_MUTATION = gql`
     mutation CreateProduct($createProductInput: CreateProductInput!){
         createProduct(createProductInput: $createProductInput){
             id
@@ -41,9 +41,9 @@ export const CREATE_PRODUCTS_MUTATION = gql`
     }
 `;
 
-export type UpdateProductsData = { updateProduct: Product }
+export type UpdateProductData = { updateProduct: Product }
 
-export type UpdateProductsVars = { updateProductInput: updateProductInput }
+export type UpdateProductVars = { updateProductInput: updateProductInput }
 export type updateProductInput = {
     id: number
     isShown: boolean,
@@ -56,7 +56,7 @@ export type updateProductInput = {
 }
 export interface updateProductWithoutFilesInput extends Omit<updateProductInput, 'files'>{}
 
-export const UPDATE_PRODUCTS_MUTATION = gql`
+export const UPDATE_PRODUCT_MUTATION = gql`
     mutation UpdateProduct($updateProductInput: UpdateProductInput!){
         updateProduct(updateProductInput: $updateProductInput){
             id
@@ -84,10 +84,10 @@ export const UPDATE_PRODUCTS_MUTATION = gql`
 `;
 
 
-export type RemoveProductsData = { removeProduct: boolean }
-export type RemoveProductsVars = { id: number }
+export type RemoveProductData = { removeProduct: boolean }
+export type RemoveProductVars = { id: number }
 
-export const REMOVE_PRODUCTS_MUTATION = gql`
+export const REMOVE_PRODUCT_MUTATION = gql`
     mutation RemoveProduct($id: Int!){
         removeProduct(id: $id)
     }

@@ -19,13 +19,13 @@ import {
     GetProductsVars,
 } from '../../GraphQL/products-query';
 import {
-    CREATE_CATEGORIES_MUTATION,
-    CreateCategoriesData,
-    CreateCategoriesVars,
+    CREATE_CATEGORY_MUTATION,
+    CreateCategoryData,
+    CreateCategoryVars,
 } from '../../GraphQL/categories-mutation';
 
 export const CategoriesCreate: FC = () => {
-    const [createCategory, createCategoryOptions] = useMutation<CreateCategoriesData, CreateCategoriesVars>(CREATE_CATEGORIES_MUTATION);
+    const [createCategory, createCategoryOptions] = useMutation<CreateCategoryData, CreateCategoryVars>(CREATE_CATEGORY_MUTATION);
     const getProductByName = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY);
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY);
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ export const CategoriesCreate: FC = () => {
         description: string,
     }) => {
         const productsWithoutFiles = products.map(product => {
-            const {files, ...rest} = product;
+            const {files, categories, ...rest} = product;
             return rest;
         });
         const response = await createCategory({

@@ -2,7 +2,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {AutoComplete, Button, Form, Input, Space, Switch} from 'antd';
 import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_PRODUCTS_MUTATION, CreateProductsData, CreateProductsVars} from '../../GraphQL/products-mutation';
+import {CREATE_PRODUCT_MUTATION, CreateProductData, CreateProductVars} from '../../GraphQL/products-mutation';
 import s from './ProductsCreate.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {s_getLoading} from '../../../redux/files.selectors';
@@ -24,7 +24,7 @@ import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 export const ProductsCreate: FC = () => {
     const [createProduct, {
         loading,
-    }] = useMutation<CreateProductsData, CreateProductsVars>(CREATE_PRODUCTS_MUTATION);
+    }] = useMutation<CreateProductData, CreateProductVars>(CREATE_PRODUCT_MUTATION);
     const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
     const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
     const navigate = useNavigate();
@@ -43,7 +43,7 @@ export const ProductsCreate: FC = () => {
     }) => {
         const intQuantity = parseInt(values.quantity);
         const intPriceUAH = parseInt(values.priceUAH);
-        const createProductsVars: CreateProductsVars = {
+        const createProductsVars: CreateProductVars = {
             createProductInput: {
                 ...values,
                 isShown,

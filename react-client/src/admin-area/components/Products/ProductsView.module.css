@@ -4,15 +4,15 @@
     margin-bottom: 30px;
 }
 
-.mainInfo, .mainInfo tr, .mainInfo, td{
+.info, .info tr, .info td{
     padding: 5px;
 }
 
-.mainInfo tr td:first-child{
+.info tr td:first-child{
     color: grey;
 }
 
-.mainInfo tr td:last-child *{
+.info tr td:last-child *{
     border-bottom: 2px dotted gray;
 }
 

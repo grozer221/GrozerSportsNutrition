@@ -1,17 +1,17 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Avatar, Button, Carousel, Divider, Switch, Table} from 'antd';
+import {Avatar, Button, Carousel, Divider, Switch, Table, Tag} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Loading} from '../../../components/Loading/Loading';
 import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../GraphQL/products-query';
 import {Product} from '../../../types/types';
 import {
-    REMOVE_PRODUCTS_MUTATION,
-    RemoveProductsData,
-    RemoveProductsVars,
-    UPDATE_PRODUCTS_MUTATION,
-    UpdateProductsData,
-    UpdateProductsVars,
+    REMOVE_PRODUCT_MUTATION,
+    RemoveProductData,
+    RemoveProductVars,
+    UPDATE_PRODUCT_MUTATION,
+    UpdateProductData,
+    UpdateProductVars,
 } from '../../GraphQL/products-mutation';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './ProductsIndex.module.css';
@@ -25,8 +25,8 @@ export const ProductsIndex: FC = () => {
         {variables: {getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}}},
     );
     const [productsObj, setProductsObj] = useState<getProductsObject>({products: [], total: 0});
-    const [removeProduct, removeProductOptions] = useMutation<RemoveProductsData, RemoveProductsVars>(REMOVE_PRODUCTS_MUTATION);
-    const [updateProduct, updateProductOptions] = useMutation<UpdateProductsData, UpdateProductsVars>(UPDATE_PRODUCTS_MUTATION);
+    const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION);
+    const [updateProduct, updateProductOptions] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
     useEffect(() => {
@@ -106,6 +106,19 @@ export const ProductsIndex: FC = () => {
             dataIndex: 'name',
         },
         {
+            title: 'Categories',
+            dataIndex: 'categories',
+            render: (text: any, product: Product) => (
+                <div className={s.categories}>
+                    {product?.categories?.length && product.categories.map(category => (
+                        <Tag color="cyan">
+                            <Link to={`../../categories/${category.id}`}>{category.name} </Link>
+                        </Tag>
+                    ))}
+                </div>
+            ),
+        },
+        {
             title: 'Quantity',
             dataIndex: 'quantity',
         },
@@ -152,7 +165,13 @@ export const ProductsIndex: FC = () => {
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
                             setSkipTake(pageSkip);
-                            await getProductsQuery.refetch({getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}});
+                            await getProductsQuery.refetch({
+                                getProductsInput: {
+                                    skip: pageSkip,
+                                    take: pageTake,
+                                    likeName: '',
+                                },
+                            });
                         },
                         // onShowSizeChange: async (pageNumber, pageSize) => {
                         //     setPageTake(pageSize);

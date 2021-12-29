@@ -1,0 +1,28 @@
+.info, .info tr, .info td {
+    padding: 5px;
+}
+
+.info tr td:first-child {
+    color: grey;
+}
+
+.info tr td:last-child * {
+    border-bottom: 2px dotted gray;
+}
+
+.carousel {
+    width: 64px;
+}
+
+.image {
+    object-fit: cover;
+}
+
+.description{
+    margin: 10px 0;
+}
+
+.productsTitle {
+    font-size: 16px;
+    font-weight: 600;
+}

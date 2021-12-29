@@ -1,7 +1,7 @@
 import {Avatar, Button, Form} from 'antd';
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_FILES_MUTATION, CreateFilesData, CreateFilesVars} from '../../GraphQL/files-mutation';
+import {CREATE_FILE_MUTATION, CreateFileData, CreateFileVars} from '../../GraphQL/files-mutation';
 import {useMutation} from '@apollo/client';
 import {useDispatch, useSelector} from 'react-redux';
 import {PinnedFiles} from '../../../components/PinnedFiles/PinnedFiles';
@@ -14,7 +14,7 @@ export const FilesCreate: FC = () => {
     const dispatch = useDispatch();
     const [createFile, {
         loading,
-    }] = useMutation<CreateFilesData, CreateFilesVars>(CREATE_FILES_MUTATION);
+    }] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION);
     const navigate = useNavigate();
     const [files, setFiles] = useState([] as File[]);
     const uploadedFiles = useSelector(s_getUploadedFiles);

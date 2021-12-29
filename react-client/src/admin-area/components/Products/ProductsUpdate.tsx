@@ -2,8 +2,8 @@ import {useMutation, useQuery} from '@apollo/client';
 import {AutoComplete, Button, Form, Input, Space, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {UPDATE_PRODUCTS_MUTATION, UpdateProductsData, UpdateProductsVars} from '../../GraphQL/products-mutation';
-import s from './ProductUpdate.module.css';
+import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../GraphQL/products-mutation';
+import s from './ProductsUpdate.module.css';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
 import {Loading} from '../../../components/Loading/Loading';
 import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
@@ -23,14 +23,14 @@ import {
 import {Characteristic, FileType} from '../../../types/types';
 import {updateFileInput} from '../../GraphQL/files-mutation';
 
-export const ProductUpdate: FC = () => {
+export const ProductsUpdate: FC = () => {
     const params = useParams();
 
     const {loading, error, data} = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
         {variables: {id: params.id ? parseInt(params.id) : 0}},
     );
-    const [updateProduct] = useMutation<UpdateProductsData, UpdateProductsVars>(UPDATE_PRODUCTS_MUTATION);
+    const [updateProduct] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
     const navigate = useNavigate();
     const loadingUpload = useSelector(s_getLoading);
     const [isShown, setIsShown] = useState<boolean>(false);
@@ -63,7 +63,7 @@ export const ProductUpdate: FC = () => {
             const {fileImage,filePath, ...rest} = photo;
             return rest;
         });
-        const updateProductsVars: UpdateProductsVars = {
+        const updateProductsVars: UpdateProductVars = {
             updateProductInput: {
                 ...values,
                 id: intId,

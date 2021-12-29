@@ -6,10 +6,8 @@ import { CreateCategoryInput } from './dto/create-category.input';
 import { GetCategoriesResponse } from './dto/get-categories.response';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { getSlug } from '../utils/get-slug';
-import { File } from '../files/file.entity';
-import { filesConstants } from '../files/files.constants';
-import { Product } from '../products/product.entity';
 import { productsConstants } from '../products/products.constants';
+import { Product } from '../products/product.entity';
 
 @Injectable()
 export class CategoriesService {

@@ -1,5 +1,5 @@
 .wrapperMenu{
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .wrapperMenu::-webkit-scrollbar {
@@ -12,7 +12,7 @@
 }
 
 .wrapperMenu::-webkit-scrollbar-thumb {
-    background-color: #004277;
+    background-color: #3498db;
 }
 
 

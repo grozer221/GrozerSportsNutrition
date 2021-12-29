@@ -5,7 +5,7 @@ export type GetProductsData = { getProducts: getProductsObject }
 export type getProductsObject = { products: Product[], total: number }
 
 export type GetProductsVars = { getProductsInput: getProductsInput }
-type getProductsInput = {
+export type getProductsInput = {
     take: number,
     skip: number,
     likeName: string
@@ -123,5 +123,3 @@ export const GET_PRODUCT_BY_NAME_QUERY = gql`
         }
     }
 `;
-
-

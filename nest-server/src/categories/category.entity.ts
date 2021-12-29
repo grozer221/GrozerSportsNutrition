@@ -27,6 +27,6 @@ export class Category {
   description: string;
 
   @ManyToMany(() => Product, product => product.categories)
-  @Field(() => [Product], {nullable: true})
+  // @Field(() => [Product], {nullable: true})
   products: Product[];
 }

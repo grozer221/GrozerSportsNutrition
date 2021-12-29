@@ -3,9 +3,9 @@ import { Product } from '../product.entity';
 
 @ObjectType()
 export class GetProductsResponse {
-    @Field(type => [Product])
+    @Field(() => [Product])
     products: Product[];
 
-    @Field(type => Int)
+    @Field(() => Int)
     total: number;
 }

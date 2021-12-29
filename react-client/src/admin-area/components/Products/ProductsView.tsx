@@ -1,18 +1,41 @@
 import React, {FC} from 'react';
-import {Link, Navigate, useParams} from 'react-router-dom';
-import {useQuery} from '@apollo/client';
+import {Link, Navigate, useNavigate, useParams} from 'react-router-dom';
+import {useMutation, useQuery} from '@apollo/client';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
 import {Loading} from '../../../components/Loading/Loading';
 import {Avatar, Card, Carousel, Table, Tag} from 'antd';
-import s from './ProductView.module.css';
+import s from './ProductsView.module.css';
+import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
+import {REMOVE_PRODUCT_MUTATION, RemoveProductData, RemoveProductVars} from '../../GraphQL/products-mutation';
 
-export const ProductView: FC = () => {
+export const ProductsView: FC = () => {
     const params = useParams();
-
+    const productId = params.id ? parseInt(params.id) : 0;
     const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
-        {variables: {id: params.id ? parseInt(params.id) : 0}},
+        {variables: {id: productId}},
     );
+    const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION);
+    const navigate = useNavigate();
+
+    const columns = [
+        {
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            dataIndex: 'value',
+            key: 'value',
+        },
+    ];
+
+    const onRemove = async (id: number) => {
+        const response = await removeProduct({variables: {id: id}});
+        if (response.data)
+            navigate(`../`);
+        else
+            console.log(response.errors);
+    };
 
     if (!params.id)
         return <Navigate to={'../../error'}/>;
@@ -24,17 +47,6 @@ export const ProductView: FC = () => {
         console.log(getProductQuery.error);
 
     const product = getProductQuery.data?.getProduct;
-    console.log(product);
-    const columns = [
-        {
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            dataIndex: 'value',
-            key: 'value',
-        },
-    ];
     return (
         <>
             <div className={s.photosAndMainInfo}>
@@ -44,8 +56,10 @@ export const ProductView: FC = () => {
                     ))}
                 </Carousel>
                 <div>
+                    <ButtonsVUR updateUrl={`../update/${productId}`} onRemove={() => onRemove(productId)}/>
                     <header>{product?.name}</header>
-                    <table className={s.mainInfo}>
+                    <table className={s.info}>
+                        <tbody>
                         <tr>
                             <td>Id:</td>
                             <td>
@@ -77,9 +91,13 @@ export const ProductView: FC = () => {
                             <tr>
                                 <td>Categories:</td>
                                 <td>{product?.categories.map(category => (
-                                    <Link to={'../../categories/' + category.slug}>{category.name} </Link>))}</td>
+                                    <Link key={category.id}
+                                          to={'../../categories/' + category.id}>{category.name} </Link>
+                                ))}
+                                </td>
                             </tr>
                         )}
+                        </tbody>
                     </table>
                 </div>
             </div>

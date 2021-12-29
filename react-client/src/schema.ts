@@ -49,7 +49,7 @@ export const schema = gql`
         description: String!
         characteristics: [Characteristic!]
         files: [File!]!
-        categories: [Category!]!
+        categories: [Category!]
     }
 
     type User {
@@ -110,6 +110,7 @@ export const schema = gql`
     input GetProductsInput {
         take: Int!
         skip: Int!
+        likeName: String!
     }
 
     input GetFilesInput {

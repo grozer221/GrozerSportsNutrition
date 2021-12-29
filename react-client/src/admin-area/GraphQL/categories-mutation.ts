@@ -2,9 +2,9 @@ import {gql} from '@apollo/client';
 import {Category} from '../../types/types';
 import {updateProductWithoutFilesInput} from './products-mutation';
 
-export type CreateCategoriesData = { createCategory: Category[] }
+export type CreateCategoryData = { createCategory: Category[] }
 
-export type CreateCategoriesVars = { createCategoryInput: createCategoryInput }
+export type CreateCategoryVars = { createCategoryInput: createCategoryInput }
 type createCategoryInput = {
     isShown: boolean,
     name: string,
@@ -12,7 +12,7 @@ type createCategoryInput = {
     products: updateProductWithoutFilesInput[]
 }
 
-export const CREATE_CATEGORIES_MUTATION = gql`
+export const CREATE_CATEGORY_MUTATION = gql`
     mutation CreateCategory($createCategoryInput: CreateCategoryInput!) {
         createCategory(createCategoryInput: $createCategoryInput) {
             id
@@ -24,12 +24,12 @@ export const CREATE_CATEGORIES_MUTATION = gql`
     }
 `;
 
-export type UpdateCategoriesData = { updateCategory: Category }
+export type UpdateCategoryData = { updateCategory: Category }
 
-export type UpdateCategoriesVars = { updateCategoryInput: updateCategoryInput }
+export type UpdateCategoryVars = { updateCategoryInput: updateCategoryInput }
 type updateCategoryInput = createCategoryInput & { id: number }
 
-export const UPDATE_CATEGORIES_MUTATION = gql`
+export const UPDATE_CATEGORY_MUTATION = gql`
     mutation UpdateCategory($updateCategoryInput: UpdateCategoryInput!) {
         updateCategory(updateCategoryInput: $updateCategoryInput) {
             id
@@ -42,10 +42,10 @@ export const UPDATE_CATEGORIES_MUTATION = gql`
 `;
 
 
-export type RemoveCategoriesData = { removeCategory: boolean }
-export type RemoveCategoriesVars = { id: number }
+export type RemoveCategoryData = { removeCategory: boolean }
+export type RemoveCategoryVars = { id: number }
 
-export const REMOVE_CATEGORIES_MUTATION = gql`
+export const REMOVE_CATEGORY_MUTATION = gql`
     mutation RemoveCategory($id: Int!) {
         removeCategory(id: $id)
     }

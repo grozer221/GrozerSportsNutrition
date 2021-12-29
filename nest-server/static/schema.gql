@@ -33,7 +33,7 @@ type Category {
   name: String!
   slug: String!
   description: String!
-  products: [Product!]
+  products: [Product!]!
 }
 
 type Characteristic {

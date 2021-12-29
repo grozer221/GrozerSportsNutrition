@@ -1,10 +1,10 @@
 import React, {FC, useState} from 'react';
 import {Layout, Menu, Tag} from 'antd';
 import {
+    AccountBookOutlined,
     AppstoreAddOutlined,
     FileOutlined,
     FunnelPlotOutlined,
-    HomeOutlined,
     LineChartOutlined,
     LogoutOutlined,
     PercentageOutlined,
@@ -40,7 +40,7 @@ export const AppMenu: FC = () => {
                 </div>
                 <div className={s.roles}>
                     {authData?.user.roles.map(role => (
-                        <Tag color={role.color}>{role.name}</Tag>
+                        <Tag key={role.id} color={role.color}>{role.name}</Tag>
                     ))}
                 </div>
             </div>
@@ -62,7 +62,7 @@ export const AppMenu: FC = () => {
                             Categories
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="50" icon={<HomeOutlined/>}>
+                    <Menu.Item key="50" icon={<AccountBookOutlined/>}>
                         <Link to={'/admin/brands'}>
                             Brands
                         </Link>
@@ -104,6 +104,7 @@ export const AppMenu: FC = () => {
                 <Menu.Item key="130" icon={<LogoutOutlined/>} onClick={() => dispatch(logout())}>
                     Logout
                 </Menu.Item>
+                <div style={{height: '48px'}}/>
             </Menu>
         </Sider>
     );
