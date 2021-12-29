@@ -4,8 +4,6 @@ import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {CREATE_PRODUCT_MUTATION, CreateProductData, CreateProductVars} from '../../GraphQL/products-mutation';
 import s from './ProductsCreate.module.css';
-import {useDispatch, useSelector} from 'react-redux';
-import {s_getLoading} from '../../../redux/files.selectors';
 import debounce from 'lodash.debounce';
 import {
     GET_FILE_BY_NAME_QUERY,
@@ -16,23 +14,18 @@ import {
     GetFilesVars,
 } from '../../GraphQL/files-query';
 import {Loading} from '../../../components/Loading/Loading';
-import {actions} from '../../../redux/files-reducer';
 import {Characteristic, FileType} from '../../../types/types';
 import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 
 export const ProductsCreate: FC = () => {
-    const [createProduct, {
-        loading,
-    }] = useMutation<CreateProductData, CreateProductVars>(CREATE_PRODUCT_MUTATION);
+    const [createProduct, createProductOption] = useMutation<CreateProductData, CreateProductVars>(CREATE_PRODUCT_MUTATION);
     const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
     const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
     const navigate = useNavigate();
     const [photos, setPhotos] = useState([] as FileType[]);
-    const loadingUpload = useSelector(s_getLoading);
     const [options, setOptions] = useState<{ value: string }[]>([]);
     const [isShown, setIsShown] = useState<boolean>(true);
-    const dispatch = useDispatch();
 
     const onFinish = async (values: {
         name: string,
@@ -65,7 +58,6 @@ export const ProductsCreate: FC = () => {
             setOptions([]);
             return;
         }
-        dispatch(actions.setLoading(true));
         const response = await getFilesQuery.refetch({
             getFilesInput: {
                 skip: 0,
@@ -74,7 +66,6 @@ export const ProductsCreate: FC = () => {
                 likeMimetype: 'image',
             },
         });
-        dispatch(actions.setLoading(false));
         if (!response.errors) {
             setOptions(response.data.getFiles.files.map(file => ({value: file.fileName})));
         } else {
@@ -87,13 +78,11 @@ export const ProductsCreate: FC = () => {
 
     const selectPhotoHandler = async (value: string) => {
         console.log('selected: ' + value);
-        dispatch(actions.setLoading(true));
         const response = await getFileByName.refetch({
             fileName: value,
         });
         console.log(response);
         setPhotos([...photos, response.data.getFileByName]);
-        dispatch(actions.setLoading(false));
     };
 
     return (
@@ -127,13 +116,14 @@ export const ProductsCreate: FC = () => {
                         onSelect={selectPhotoHandler}
                     />
                     <div className={s.wrapperLoading}>
-                        {loadingUpload && <Loading/>}
+                        {(getFileByName.loading || getFilesQuery.loading) && <Loading/>}
                     </div>
                 </div>
             </Form.Item>
             {photos.length > 0 && (
                 <Form.Item>
-                    <PinnedUploadedFiles loading={loading || loadingUpload} files={photos} setFiles={setPhotos}/>
+                    <PinnedUploadedFiles loading={createProductOption.loading}
+                                         files={photos} setFiles={setPhotos}/>
                 </Form.Item>
             )}
             <Form.Item
@@ -203,7 +193,8 @@ export const ProductsCreate: FC = () => {
                 )}
             </Form.List>
             <Form.Item>
-                <Button type="primary" htmlType={'submit'} loading={loading || loadingUpload}>
+                <Button type="primary" htmlType={'submit'}
+                        loading={createProductOption.loading || getFilesQuery.loading || getFileByName.loading}>
                     Create
                 </Button>
             </Form.Item>

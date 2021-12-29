@@ -1,41 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added category module">
+    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="update category module">
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/categories/categories.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/categories/categories.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/categories/categories.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/categories/categories.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/categories/categories.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/categories/categories.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/categories/category.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/categories/category.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/dto/get-products.response.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/dto/get-products.response.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/static/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/categories-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/categories-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/categories-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/categories-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/files-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/files-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/products-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesRemove.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Menu/AppMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductView.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsController.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsRemove.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsRemove.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersIndex/UsersIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PinnedProducts/PinnedProducts.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PinnedProducts/PinnedProducts.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +52,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/admin-area/components/Categories" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/admin-area/components/Pages" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
@@ -81,11 +61,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Pages" />
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\GraphQL" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Categories" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\components" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\GraphQL" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Products" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\ButtonsVUD" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Users" />
@@ -140,7 +120,7 @@
       <workItem from="1640593418688" duration="17071000" />
       <workItem from="1640680216067" duration="19854000" />
       <workItem from="1640713295747" duration="1020000" />
-      <workItem from="1640766426486" duration="15499000" />
+      <workItem from="1640766426486" duration="20000000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>
@@ -156,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640704828070</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update category module">
+      <created>1640792795900</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1640792795900</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +164,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="expanded product module" />
     <MESSAGE value="added category module" />
-    <option name="LAST_COMMIT_MESSAGE" value="added category module" />
+    <MESSAGE value="update category module" />
+    <option name="LAST_COMMIT_MESSAGE" value="update category module" />
   </component>
 </project>

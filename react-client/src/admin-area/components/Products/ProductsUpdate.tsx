@@ -26,27 +26,25 @@ import {updateFileInput} from '../../GraphQL/files-mutation';
 export const ProductsUpdate: FC = () => {
     const params = useParams();
 
-    const {loading, error, data} = useQuery<GetProductData, GetProductVars>(
+    const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
         {variables: {id: params.id ? parseInt(params.id) : 0}},
     );
     const [updateProduct] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
     const navigate = useNavigate();
-    const loadingUpload = useSelector(s_getLoading);
     const [isShown, setIsShown] = useState<boolean>(false);
     const [options, setOptions] = useState<{ value: string }[]>([]);
-    const dispatch = useDispatch();
     const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
     const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
     const [photos, setPhotos] = useState([] as FileType[]);
 
 
     useEffect(() => {
-        if (data) {
-            setIsShown(data.getProduct.isShown);
-            setPhotos(data.getProduct.files);
+        if (getProductQuery.data) {
+            setIsShown(getProductQuery.data.getProduct.isShown);
+            setPhotos(getProductQuery.data.getProduct.files);
         }
-    }, [data]);
+    }, [getProductQuery.data]);
 
     const onFinish = async (values: {
         id: string,
@@ -60,7 +58,7 @@ export const ProductsUpdate: FC = () => {
         const intQuantity = parseInt(values.quantity);
         const intPriceUAH = parseInt(values.priceUAH);
         const files: updateFileInput[] = photos.map(photo => {
-            const {fileImage,filePath, ...rest} = photo;
+            const {fileImage, filePath, ...rest} = photo;
             return rest;
         });
         const updateProductsVars: UpdateProductVars = {
@@ -82,13 +80,11 @@ export const ProductsUpdate: FC = () => {
 
     const selectPhotoHandler = async (value: string) => {
         console.log('selected: ' + value);
-        dispatch(actions.setLoading(true));
         const response = await getFileByName.refetch({
             fileName: value,
         });
         console.log(response);
         setPhotos([...photos, response.data.getFileByName]);
-        dispatch(actions.setLoading(false));
     };
 
     const onSearch = async (value: string) => {
@@ -96,7 +92,6 @@ export const ProductsUpdate: FC = () => {
             setOptions([]);
             return;
         }
-        dispatch(actions.setLoading(true));
         const response = await getFilesQuery.refetch({
             getFilesInput: {
                 skip: 0,
@@ -105,7 +100,6 @@ export const ProductsUpdate: FC = () => {
                 likeMimetype: 'image',
             },
         });
-        dispatch(actions.setLoading(false));
         if (!response.errors) {
             setOptions(response.data.getFiles.files.map(file => ({value: file.fileName})));
         } else {
@@ -119,21 +113,21 @@ export const ProductsUpdate: FC = () => {
     if (!params.id)
         return <Navigate to={'../../error'}/>;
 
-    if (loading)
+    if (getProductQuery.loading)
         return <Loading/>;
 
-    if (error)
-        console.log(error);
+    if (getProductQuery.error)
+        console.log(getProductQuery.error);
 
     return (
         <Form name="updateProduct" onFinish={onFinish}
               initialValues={{
-                  id: data?.getProduct.id,
-                  name: data?.getProduct.name,
-                  quantity: data?.getProduct.quantity,
-                  priceUAH: data?.getProduct.priceUAH,
-                  description: data?.getProduct.description,
-                  characteristics: data?.getProduct.characteristics,
+                  id: getProductQuery.data?.getProduct.id,
+                  name: getProductQuery.data?.getProduct.name,
+                  quantity: getProductQuery.data?.getProduct.quantity,
+                  priceUAH: getProductQuery.data?.getProduct.priceUAH,
+                  description: getProductQuery.data?.getProduct.description,
+                  characteristics: getProductQuery.data?.getProduct.characteristics,
               }}>
             <Form.Item name="id" className={s.inputId}>
                 <Input type={'hidden'} className={s.inputId}/>
@@ -167,13 +161,13 @@ export const ProductsUpdate: FC = () => {
                         onSelect={selectPhotoHandler}
                     />
                     <div className={s.wrapperLoading}>
-                        {loadingUpload && <Loading/>}
+                        {getFileByName.loading && <Loading/>}
                     </div>
                 </div>
             </Form.Item>
             {photos.length > 0 && (
                 <Form.Item>
-                    <PinnedUploadedFiles loading={loading || loadingUpload} files={photos} setFiles={setPhotos}/>
+                    <PinnedUploadedFiles loading={getProductQuery.loading || getFileByName.loading} files={photos} setFiles={setPhotos}/>
                 </Form.Item>
             )}
             <Form.Item
@@ -243,7 +237,7 @@ export const ProductsUpdate: FC = () => {
                 )}
             </Form.List>
             <Form.Item>
-                <Button type="primary" htmlType={'submit'} loading={loading || loadingUpload}>
+                <Button type="primary" htmlType={'submit'} loading={getProductQuery.loading || getFilesQuery.loading}>
                     Update
                 </Button>
             </Form.Item>

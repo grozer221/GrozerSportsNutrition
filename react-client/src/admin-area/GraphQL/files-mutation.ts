@@ -2,7 +2,7 @@ import {FileType} from '../../types/types';
 import {gql} from '@apollo/client';
 
 // CREATE FILE
-export type CreateFileData = { filesCreate: FileType[] }
+export type CreateFileData = { createFile: FileType }
 
 export type CreateFileVars = { createFileInput: createFileInput }
 export type createFileInput = {
@@ -44,7 +44,7 @@ export const UPDATE_FILE_MUTATION = gql`
 
 
 // DELETE FILE
-export type RemoveFileData = {}
+export type RemoveFileData = { removeFile: boolean }
 export type RemoveFileVars = { id: number }
 
 export const REMOVE_FILE_MUTATION = gql`

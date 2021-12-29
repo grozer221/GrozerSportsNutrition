@@ -10,6 +10,7 @@ import { RolesModule } from './roles/roles.module';
 import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
 import { CategoriesModule } from './categories/categories.module';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
     imports: [
@@ -45,6 +46,7 @@ import { CategoriesModule } from './categories/categories.module';
         ProductsModule,
         FilesModule,
         CategoriesModule,
+        PagesModule,
     ],
     providers: [
         AppService,

@@ -60,3 +60,11 @@ export type Category = {
     description: string,
     products: Product[],
 }
+
+export type Page = {
+    id: number,
+    isShown: boolean,
+    name: string,
+    slug: string,
+    text: string,
+}

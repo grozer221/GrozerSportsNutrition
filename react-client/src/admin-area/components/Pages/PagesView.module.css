@@ -1,0 +1,15 @@
+.card {
+    margin-top: 10px;
+}
+
+.info, .info tr, .info td {
+    padding: 5px;
+}
+
+.info tr td:first-child {
+    color: grey;
+}
+
+.info tr td:last-child * {
+    border-bottom: 2px dotted gray;
+}

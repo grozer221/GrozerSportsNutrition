@@ -11,8 +11,6 @@ import { GetCategoriesResponse } from './dto/get-categories.response';
 import { GetCategoriesInput } from './dto/get-categories.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { getSlug } from '../utils/get-slug';
-import { GetProductsInput } from '../products/dto/get-products.input';
-import { GetProductsResponse } from '../products/dto/get-products.response';
 import { Product } from '../products/product.entity';
 
 @Resolver(() => Category)

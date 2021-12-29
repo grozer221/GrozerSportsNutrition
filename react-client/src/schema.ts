@@ -80,6 +80,14 @@ export const schema = gql`
         total: Int!
     }
 
+    type Page {
+        id: Int!
+        isShown: Boolean!
+        name: String!
+        slug: String!
+        text: String!
+    }
+
     type Query {
         getUsers(getUsersInput: GetUsersInput!): [User!]!
         getUser(id: Int!): User!
@@ -95,6 +103,8 @@ export const schema = gql`
         getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
         getCategory(id: Int!): Category!
         getCategoryByName(name: String!): Category!
+        getPages: [Page!]!
+        getPage(id: Int!): Page!
     }
 
     input GetUsersInput {
@@ -137,6 +147,9 @@ export const schema = gql`
         createCategory(createCategoryInput: CreateCategoryInput!): Category!
         updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
         removeCategory(id: Int!): Boolean!
+        createPage(createPageInput: CreatePageInput!): Page!
+        updatePage(updatePageInput: UpdatePageInput!): Page!
+        removePage(id: Int!): Boolean!
     }
 
     input LoginInput {
@@ -216,6 +229,19 @@ export const schema = gql`
         name: String
         description: String
         products: [UpdateProductWithoutFilesInput!]
+        id: Int!
+    }
+
+    input CreatePageInput {
+        isShown: Boolean!
+        name: String!
+        text: String!
+    }
+
+    input UpdatePageInput {
+        isShown: Boolean
+        name: String
+        text: String
         id: Int!
     }
 `
