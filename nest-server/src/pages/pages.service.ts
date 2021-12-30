@@ -1,16 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePageInput } from './dto/create-page.input';
 import { UpdatePageInput } from './dto/update-page.input';
-import { Product } from '../products/product.entity';
-import { productsConstants } from '../products/products.constants';
-import { CreateCategoryInput } from '../categories/dto/create-category.input';
-import { Category } from '../categories/category.entity';
 import { getSlug } from '../utils/get-slug';
-import { GetCategoriesResponse } from '../categories/dto/get-categories.response';
-import { UpdateCategoryInput } from '../categories/dto/update-category.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Page } from './page.entity';
+import { UpdatePagesInput } from './dto/update-pages.input';
 
 @Injectable()
 export class PagesService {
@@ -19,14 +14,24 @@ export class PagesService {
   ) {
   }
 
+  async getCount(): Promise<number> {
+    const pages = await this.pageRepository.find();
+    return pages.length;
+  }
+
   async addAsync(createPageInput: CreatePageInput): Promise<Page> {
     const page = this.pageRepository.create(createPageInput);
     page.slug = getSlug(page.name);
+    page.sorting = await this.getCount() + 1;
     return await this.pageRepository.save(page);
   }
 
   async getAsync(): Promise<Page[]> {
-    return await this.pageRepository.find();;
+    return await this.pageRepository.find({
+      order: {
+        sorting: 'ASC',
+      },
+    });
   }
 
   async getByIdAsync(id: number): Promise<Page> {
@@ -37,8 +42,19 @@ export class PagesService {
     return await this.pageRepository.save(updatePageInput);
   }
 
+  async updateAllAsync(updatePagesInput: UpdatePagesInput): Promise<Page[]> {
+    const returnPages: Page[] = [];
+    for (let i = 0; i < updatePagesInput.updatePagesInput.length; i++) {
+      const returnPage = await this.updateAsync(updatePagesInput.updatePagesInput[i]);
+      returnPages.push(returnPage);
+    }
+    return returnPages;
+  }
+
   async removeAsync(id: number): Promise<Page> {
     const page = await this.getByIdAsync(id);
     return await this.pageRepository.remove(page);
   }
+
+
 }

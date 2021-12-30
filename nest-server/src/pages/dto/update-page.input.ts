@@ -5,4 +5,7 @@ import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 export class UpdatePageInput extends PartialType(CreatePageInput) {
   @Field(() => Int)
   id: number;
+
+  @Field(() => Int)
+  sorting: number;
 }

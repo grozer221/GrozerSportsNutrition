@@ -75,35 +75,37 @@ export const FilesIndex: FC = () => {
 
     const columns = [
         {
-            key: 'image',
             title: 'Image',
+            dataIndex: 'image',
+            key: 'image',
             render: (text: any, file: FileType) => (
                 <Avatar size={48} shape={'square'} src={file.fileImage}/>
             ),
         },
         {
-            key: 'originalName',
             title: 'Original name',
             dataIndex: 'originalName',
+            key: 'originalName',
         },
         {
-            key: 'fileName',
             title: 'File name',
             dataIndex: 'fileName',
+            key: 'fileName',
         },
         {
-            key: 'mimetype',
             title: 'Mimetype',
             dataIndex: 'mimetype',
+            key: 'fileName',
         },
         {
-            key: 'size',
             title: 'Size',
             dataIndex: 'size',
+            key: 'size',
         },
         {
-            key: 'actions',
             title: 'Actions',
+            dataIndex: 'size',
+            key: 'size',
             render: (text: any, file: FileType) => (
                 <ButtonsVUR onRemove={() => onRemove(file.id)} viewUrlA={file.filePath}/>
             ),
@@ -139,8 +141,8 @@ export const FilesIndex: FC = () => {
 
     return (
         <>
-            <div className='wrapperHeader'>
-                <div className='wrapperHeader'>
+            <div className="wrapperHeader">
+                <div className="wrapperHeader">
                     <header>Files</header>
                     <Link to={'create'}>
                         <Button>Create</Button>
@@ -210,6 +212,5 @@ export const FilesIndex: FC = () => {
                 />
             </div>;
         </>
-    )
-        ;
+    );
 };

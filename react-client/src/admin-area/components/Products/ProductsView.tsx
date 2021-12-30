@@ -7,6 +7,7 @@ import {Avatar, Card, Carousel, Table, Tag} from 'antd';
 import s from './ProductsView.module.css';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {REMOVE_PRODUCT_MUTATION, RemoveProductData, RemoveProductVars} from '../../GraphQL/products-mutation';
+import parse from 'html-react-parser';
 
 export const ProductsView: FC = () => {
     const params = useParams();
@@ -52,7 +53,7 @@ export const ProductsView: FC = () => {
             <div className={s.photosAndMainInfo}>
                 <Carousel autoplay className={s.carousel}>
                     {product?.files.map(file => (
-                        <Avatar className={s.image} shape={'square'} src={file.fileImage} size={256}/>
+                        <Avatar key={file.id} className={s.image} shape={'square'} src={file.fileImage} size={256}/>
                     ))}
                 </Carousel>
                 <div>
@@ -91,8 +92,10 @@ export const ProductsView: FC = () => {
                             <tr>
                                 <td>Categories:</td>
                                 <td>{product?.categories.map(category => (
-                                    <Link key={category.id}
-                                          to={'../../categories/' + category.id}>{category.name} </Link>
+                                    <Tag color={'cyan'}>
+                                        <Link key={category.id}
+                                              to={'../../categories/' + category.id}>{category.name}</Link>
+                                    </Tag>
                                 ))}
                                 </td>
                             </tr>
@@ -102,7 +105,7 @@ export const ProductsView: FC = () => {
                 </div>
             </div>
             <div className={s.cards}>
-                <Card title="Description" className={s.card}>{product?.description}</Card>
+                <Card title="Description" className={s.card}>{product && parse(product?.description)}</Card>
                 <Card title="Characteristics" className={s.card}>
                     <Table showHeader={false} dataSource={product?.characteristics}
                            columns={columns} pagination={false}/>

@@ -7,6 +7,7 @@ import s from './PagesView.module.css';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../GraphQL/pages-query';
 import {REMOVE_PAGE_MUTATION, RemovePageData, RemovePageVars} from '../../GraphQL/pages-mutation';
+import parse from 'html-react-parser';
 
 export const PagesView: FC = () => {
     const params = useParams();
@@ -64,7 +65,7 @@ export const PagesView: FC = () => {
                     </table>
                 </div>
             </div>
-            <Card title="Text" className={s.card}>{page?.text}</Card>
+            <Card title="Text" className={s.card}>{page && parse(page?.text)}</Card>
         </>
     );
 };

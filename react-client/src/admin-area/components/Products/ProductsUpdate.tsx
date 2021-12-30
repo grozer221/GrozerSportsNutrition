@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {AutoComplete, Button, Form, Input, Space, Switch} from 'antd';
+import {AutoComplete, Button, Form, Input, message, Space, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../GraphQL/products-mutation';
@@ -8,9 +8,6 @@ import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/p
 import {Loading} from '../../../components/Loading/Loading';
 import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
-import {useDispatch, useSelector} from 'react-redux';
-import {s_getLoading} from '../../../redux/files.selectors';
-import {actions} from '../../../redux/files-reducer';
 import debounce from 'lodash.debounce';
 import {
     GET_FILE_BY_NAME_QUERY,
@@ -22,6 +19,7 @@ import {
 } from '../../GraphQL/files-query';
 import {Characteristic, FileType} from '../../../types/types';
 import {updateFileInput} from '../../GraphQL/files-mutation';
+import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
 
 export const ProductsUpdate: FC = () => {
     const params = useParams();
@@ -37,12 +35,13 @@ export const ProductsUpdate: FC = () => {
     const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
     const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
     const [photos, setPhotos] = useState([] as FileType[]);
-
+    const [description, setDescription] = useState<string>('');
 
     useEffect(() => {
         if (getProductQuery.data) {
             setIsShown(getProductQuery.data.getProduct.isShown);
             setPhotos(getProductQuery.data.getProduct.files);
+            setDescription(getProductQuery.data.getProduct.description);
         }
     }, [getProductQuery.data]);
 
@@ -51,7 +50,6 @@ export const ProductsUpdate: FC = () => {
         name: string,
         quantity: string,
         priceUAH: string,
-        description: string,
         characteristics: Characteristic[]
     }) => {
         const intId = parseInt(values.id);
@@ -68,6 +66,7 @@ export const ProductsUpdate: FC = () => {
                 isShown: isShown,
                 quantity: intQuantity,
                 priceUAH: intPriceUAH,
+                description: description,
                 files: files,
             },
         };
@@ -79,12 +78,18 @@ export const ProductsUpdate: FC = () => {
     };
 
     const selectPhotoHandler = async (value: string) => {
-        console.log('selected: ' + value);
+        if (photos.some(photo => photo.fileName === value)) {
+            message.warning('You already added this photo');
+            return;
+        }
         const response = await getFileByName.refetch({
             fileName: value,
         });
-        console.log(response);
-        setPhotos([...photos, response.data.getFileByName]);
+        if (!response.errors) {
+            setPhotos([...photos, response.data.getFileByName]);
+        } else {
+            console.log(response.errors);
+        }
     };
 
     const onSearch = async (value: string) => {
@@ -102,6 +107,9 @@ export const ProductsUpdate: FC = () => {
         });
         if (!response.errors) {
             setOptions(response.data.getFiles.files.map(file => ({value: file.fileName})));
+            if (!response.data.getFiles.files.length) {
+                message.warning('Photos with current name not found');
+            }
         } else {
             console.log(response.errors);
         }
@@ -167,7 +175,8 @@ export const ProductsUpdate: FC = () => {
             </Form.Item>
             {photos.length > 0 && (
                 <Form.Item>
-                    <PinnedUploadedFiles loading={getProductQuery.loading || getFileByName.loading} files={photos} setFiles={setPhotos}/>
+                    <PinnedUploadedFiles loading={getProductQuery.loading || getFileByName.loading} files={photos}
+                                         setFiles={setPhotos}/>
                 </Form.Item>
             )}
             <Form.Item
@@ -194,17 +203,8 @@ export const ProductsUpdate: FC = () => {
             >
                 <Input placeholder="Price" type={'number'} addonAfter="UAH"/>
             </Form.Item>
-            <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input product description',
-                    },
-                ]}
-            >
-                <Input placeholder="Description"/>
+            <Form.Item label={'Description'}>
+                <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             <Form.List name="characteristics">
                 {(fields, {add, remove}) => (

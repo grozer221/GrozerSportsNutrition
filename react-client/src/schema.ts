@@ -86,6 +86,7 @@ export const schema = gql`
         name: String!
         slug: String!
         text: String!
+        sorting: Int!
     }
 
     type Query {
@@ -149,6 +150,7 @@ export const schema = gql`
         removeCategory(id: Int!): Boolean!
         createPage(createPageInput: CreatePageInput!): Page!
         updatePage(updatePageInput: UpdatePageInput!): Page!
+        updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
         removePage(id: Int!): Boolean!
     }
 
@@ -243,5 +245,10 @@ export const schema = gql`
         name: String
         text: String
         id: Int!
+        sorting: Int!
+    }
+
+    input UpdatePagesInput {
+        updatePagesInput: [UpdatePageInput!]!
     }
 `

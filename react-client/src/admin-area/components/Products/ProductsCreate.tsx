@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {AutoComplete, Button, Form, Input, Space, Switch} from 'antd';
+import {AutoComplete, Button, Form, Input, message, Space, Switch} from 'antd';
 import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {CREATE_PRODUCT_MUTATION, CreateProductData, CreateProductVars} from '../../GraphQL/products-mutation';
@@ -17,6 +17,7 @@ import {Loading} from '../../../components/Loading/Loading';
 import {Characteristic, FileType} from '../../../types/types';
 import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
+import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
 
 export const ProductsCreate: FC = () => {
     const [createProduct, createProductOption] = useMutation<CreateProductData, CreateProductVars>(CREATE_PRODUCT_MUTATION);
@@ -26,12 +27,12 @@ export const ProductsCreate: FC = () => {
     const [photos, setPhotos] = useState([] as FileType[]);
     const [options, setOptions] = useState<{ value: string }[]>([]);
     const [isShown, setIsShown] = useState<boolean>(true);
+    const [description, setDescription] = useState<string>('');
 
     const onFinish = async (values: {
         name: string,
         quantity: string,
         priceUAH: string,
-        description: string,
         characteristics: Characteristic[]
     }) => {
         const intQuantity = parseInt(values.quantity);
@@ -42,6 +43,7 @@ export const ProductsCreate: FC = () => {
                 isShown,
                 quantity: intQuantity,
                 priceUAH: intPriceUAH,
+                description: description,
                 files: photos,
             },
         };
@@ -68,6 +70,9 @@ export const ProductsCreate: FC = () => {
         });
         if (!response.errors) {
             setOptions(response.data.getFiles.files.map(file => ({value: file.fileName})));
+            if (!response.data.getFiles.files.length) {
+                message.warning('Photos with current name not found');
+            }
         } else {
             console.log(response.errors);
         }
@@ -77,12 +82,19 @@ export const ProductsCreate: FC = () => {
     const handleSearch = (value: string) => debouncedSearch(value);
 
     const selectPhotoHandler = async (value: string) => {
+        if (photos.some(photo => photo.fileName === value)) {
+            message.warning('You already added this photo');
+            return;
+        }
         console.log('selected: ' + value);
         const response = await getFileByName.refetch({
             fileName: value,
         });
-        console.log(response);
-        setPhotos([...photos, response.data.getFileByName]);
+        if (!response.errors) {
+            setPhotos([...photos, response.data.getFileByName]);
+        } else {
+            console.log(response.errors);
+        }
     };
 
     return (
@@ -150,17 +162,8 @@ export const ProductsCreate: FC = () => {
             >
                 <Input placeholder="Price" type={'number'} addonAfter="UAH"/>
             </Form.Item>
-            <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input product description',
-                    },
-                ]}
-            >
-                <Input placeholder="Description"/>
+            <Form.Item label={'Description'}>
+                <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             <Form.List name="characteristics">
                 {(fields, {add, remove}) => (

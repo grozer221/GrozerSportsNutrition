@@ -81,11 +81,13 @@ export const CategoriesIndex: FC = () => {
         {
             title: 'Id',
             dataIndex: 'id',
+            key: 'id',
             render: (text: any, category: Category) => <>#{category.id}</>,
         },
         {
             title: 'Is shown',
             dataIndex: 'isShown',
+            key: 'isShown',
             render: (text: any, category: Category) => (
                 <Switch size={'small'} checked={category.isShown}
                         onChange={(flag) => toggleIsShownHandler(category, flag)}/>
@@ -94,9 +96,12 @@ export const CategoriesIndex: FC = () => {
         {
             title: 'Name',
             dataIndex: 'name',
+            key: 'name',
         },
         {
             title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
             render: (text: any, category: Category) => (
                 <ButtonsVUR viewUrl={`${category.id}`} updateUrl={`update/${category.id}`}
                             onRemove={() => onRemove(category.id)}/>
@@ -130,10 +135,6 @@ export const CategoriesIndex: FC = () => {
                             setSkipTake(pageSkip);
                             await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake}});
                         },
-                        // onShowSizeChange: async (pageNumber, pageSize) => {
-                        //     setPageTake(pageSize);
-                        //     await refetch({getProductsInput: {skip: (pageNumber - 1) * pageTake, take: pageTake}});
-                        // },
                     }}
                 />
             </div>

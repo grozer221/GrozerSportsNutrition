@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {AutoComplete, Button, Form, Input, Switch} from 'antd';
+import {AutoComplete, Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {Loading} from '../../../components/Loading/Loading';
@@ -18,6 +18,7 @@ import {
     GetProductsVars,
 } from '../../GraphQL/products-query';
 import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
+import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
 
 export const CategoriesUpdate: FC = () => {
     const params = useParams();
@@ -33,31 +34,32 @@ export const CategoriesUpdate: FC = () => {
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY);
     const getProductByNameQuery = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY);
     const [products, setProducts] = useState([] as Product[]);
-
+    const [description, setDescription] = useState<string>('');
 
     useEffect(() => {
         if (getCategoryQuery.data?.getCategory) {
             setIsShown(getCategoryQuery.data.getCategory.isShown);
             setProducts(getCategoryQuery.data.getCategory.products);
+            setDescription(getCategoryQuery.data.getCategory.description);
         }
     }, [getCategoryQuery.data?.getCategory]);
 
     const onFinish = async (values: {
         id: string,
         name: string,
-        description: string,
     }) => {
         const intId = parseInt(values.id);
         const productsWithoutFiles: updateProductWithoutFilesInput[] = products.map(product => {
             const {files, categories, ...rest} = product;
             return rest;
-        })
+        });
         const response = await updateCategory({
             variables: {
                 updateCategoryInput: {
                     ...values,
                     id: intId,
                     isShown: isShown,
+                    description: description,
                     products: productsWithoutFiles,
                 },
             },
@@ -69,12 +71,18 @@ export const CategoriesUpdate: FC = () => {
     };
 
     const selectProductHandler = async (value: string) => {
-        console.log('selected: ' + value);
+        if (products.some(product => product.name === value)) {
+            message.warning('You already added this product');
+            return;
+        }
         const response = await getProductByNameQuery.refetch({
             name: value,
         });
-        console.log(response);
-        setProducts([...products, response.data.getProductByName]);
+        if (!response.errors) {
+            setProducts([...products, response.data.getProductByName]);
+        } else {
+            console.log(response.errors);
+        }
     };
 
     const onSearch = async (value: string) => {
@@ -91,6 +99,9 @@ export const CategoriesUpdate: FC = () => {
         });
         if (!response.errors) {
             setOptions(response.data.getProducts.products.map(product => ({value: product.name})));
+            if (!response.data.getProducts.products.length) {
+                message.warning('Products with current name not found');
+            }
         } else {
             console.log(response.errors);
         }
@@ -137,17 +148,8 @@ export const CategoriesUpdate: FC = () => {
             >
                 <Input placeholder="Name"/>
             </Form.Item>
-            <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input product description',
-                    },
-                ]}
-            >
-                <Input placeholder="Description"/>
+            <Form.Item label={'Description'}>
+                <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             <Form.Item
                 label="Products"

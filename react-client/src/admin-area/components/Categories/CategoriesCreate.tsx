@@ -1,12 +1,9 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {AutoComplete, Button, Form, Input, Switch} from 'antd';
+import {AutoComplete, Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {s_getLoading} from '../../../redux/files.selectors';
 import debounce from 'lodash.debounce';
 import {Loading} from '../../../components/Loading/Loading';
-import {actions} from '../../../redux/files-reducer';
 import {Product} from '../../../types/types';
 import s from './CategoriesCreate.module.css';
 import {PinnedProducts} from '../../../components/PinnedProducts/PinnedProducts';
@@ -18,11 +15,8 @@ import {
     GetProductsData,
     GetProductsVars,
 } from '../../GraphQL/products-query';
-import {
-    CREATE_CATEGORY_MUTATION,
-    CreateCategoryData,
-    CreateCategoryVars,
-} from '../../GraphQL/categories-mutation';
+import {CREATE_CATEGORY_MUTATION, CreateCategoryData, CreateCategoryVars} from '../../GraphQL/categories-mutation';
+import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
 
 export const CategoriesCreate: FC = () => {
     const [createCategory, createCategoryOptions] = useMutation<CreateCategoryData, CreateCategoryVars>(CREATE_CATEGORY_MUTATION);
@@ -32,10 +26,10 @@ export const CategoriesCreate: FC = () => {
     const [products, setProducts] = useState([] as Product[]);
     const [options, setOptions] = useState<{ value: string }[]>([]);
     const [isShown, setIsShown] = useState<boolean>(true);
+    const [description, setDescription] = useState<string>('');
 
     const onFinish = async (values: {
         name: string,
-        description: string,
     }) => {
         const productsWithoutFiles = products.map(product => {
             const {files, categories, ...rest} = product;
@@ -46,6 +40,7 @@ export const CategoriesCreate: FC = () => {
                 createCategoryInput: {
                     ...values,
                     isShown,
+                    description: description,
                     products: productsWithoutFiles,
                 },
             },
@@ -70,6 +65,9 @@ export const CategoriesCreate: FC = () => {
         });
         if (!response.errors) {
             setOptions(response.data.getProducts.products.map(product => ({value: product.name})));
+            if (!response.data.getProducts.products.length) {
+                message.warning('Products with current name not found');
+            }
         } else {
             console.log(response.errors);
         }
@@ -78,14 +76,19 @@ export const CategoriesCreate: FC = () => {
     const debouncedSearch = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
     const handleSearch = (value: string) => debouncedSearch(value);
 
-    const selectPhotoHandler = async (value: string) => {
-        console.log('selected: ' + value);
-        // dispatch(actions.setLoading(true));
+    const selectProductHandler = async (value: string) => {
+        if (products.some(product => product.name === value)) {
+            message.warning('You already added this product');
+            return;
+        }
         const response = await getProductByName.refetch({
             name: value,
         });
-        setProducts([...products, response.data.getProductByName]);
-        // dispatch(actions.setLoading(false));
+        if (!response.errors) {
+            setProducts([...products, response.data.getProductByName]);
+        } else {
+            console.log(response.errors);
+        }
     };
 
     return (
@@ -108,17 +111,8 @@ export const CategoriesCreate: FC = () => {
             >
                 <Input placeholder="Name"/>
             </Form.Item>
-            <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input product description',
-                    },
-                ]}
-            >
-                <Input placeholder="Description"/>
+            <Form.Item label={'Description'}>
+                <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             <Form.Item
                 label="Products"
@@ -128,7 +122,7 @@ export const CategoriesCreate: FC = () => {
                         options={options}
                         placeholder="Search in products"
                         onSearch={handleSearch}
-                        onSelect={selectPhotoHandler}
+                        onSelect={selectProductHandler}
                     />
                     <div className={s.wrapperLoading}>
                         {(getProductsQuery.loading || getProductByName.loading) && <Loading/>}

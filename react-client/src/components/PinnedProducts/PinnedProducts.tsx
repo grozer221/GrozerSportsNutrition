@@ -1,7 +1,7 @@
 import React from 'react';
-import {Avatar, Carousel, Switch, Table} from 'antd';
+import {Avatar, Carousel, Table} from 'antd';
 import {ButtonsVUR} from '../../admin-area/components/ButtonsVUD/ButtonsVUR';
-import {FileType, Product} from '../../types/types';
+import {Product} from '../../types/types';
 import s from './PinnedProducts.module.css';
 
 type Props = {
@@ -37,10 +37,8 @@ export const PinnedProducts: React.FC<Props> = ({loading, products, setProducts}
             render: (text: any, product: Product) => (
                 <Carousel className={s.carousel}>
                     {product.files.map(file => (
-                        <div>
-                            <Avatar className={s.image} shape={'square'} size={64} src={file.fileImage}
-                                    alt={file.fileName}/>
-                        </div>
+                        <Avatar key={file.id} className={s.image} shape={'square'} size={64} src={file.fileImage}
+                                alt={file.fileName}/>
                     ))}
                 </Carousel>
             ),

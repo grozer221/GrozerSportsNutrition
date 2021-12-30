@@ -77,11 +77,13 @@ export const ProductsIndex: FC = () => {
         {
             title: 'Id',
             dataIndex: 'id',
+            key: 'id',
             render: (text: any, product: Product) => <>#{product.id}</>,
         },
         {
             title: 'Is shown',
             dataIndex: 'isShown',
+            key: 'isShown',
             render: (text: any, product: Product) => (
                 <Switch size={'small'} checked={product.isShown}
                         onChange={(flag) => toggleIsShownHandler(product, flag)}/>
@@ -90,13 +92,12 @@ export const ProductsIndex: FC = () => {
         {
             title: 'Image',
             dataIndex: 'fileImage',
+            key: 'fileImage',
             render: (text: any, product: Product) => (
                 <Carousel className={s.carousel}>
                     {product.files.map(file => (
-                        <div>
-                            <Avatar className={s.image} shape={'square'} size={64} src={file.fileImage}
-                                    alt={file.fileName}/>
-                        </div>
+                        <Avatar key={file.id} className={s.image} shape={'square'} size={64} src={file.fileImage}
+                                alt={file.fileName}/>
                     ))}
                 </Carousel>
             ),
@@ -104,14 +105,16 @@ export const ProductsIndex: FC = () => {
         {
             title: 'Name',
             dataIndex: 'name',
+            key: 'name',
         },
         {
             title: 'Categories',
             dataIndex: 'categories',
+            key: 'categories',
             render: (text: any, product: Product) => (
                 <div className={s.categories}>
                     {product?.categories?.length && product.categories.map(category => (
-                        <Tag color="cyan">
+                        <Tag color="cyan" key={category.id}>
                             <Link to={`../../categories/${category.id}`}>{category.name} </Link>
                         </Tag>
                     ))}
@@ -121,13 +124,17 @@ export const ProductsIndex: FC = () => {
         {
             title: 'Quantity',
             dataIndex: 'quantity',
+            key: 'quantity',
         },
         {
             title: 'Price',
             dataIndex: 'priceUAH',
+            key: 'priceUAH',
         },
         {
             title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
             render: (text: any, product: Product) => (
                 <ButtonsVUR viewUrl={`${product.id}`} updateUrl={`update/${product.id}`}
                             onRemove={() => onRemove(product.id)}/>
@@ -158,8 +165,7 @@ export const ProductsIndex: FC = () => {
                     loading={getProductsQuery.loading || removeProductOptions.loading || updateProductOptions.loading}
                     rowSelection={{...rowSelection}}
                     columns={columns}
-                    dataSource={productsObj.products.map(products => ({key: products.id, ...products}))}
-
+                    dataSource={productsObj.products}
                     pagination={{
                         total: productsObj.total,
                         onChange: async (pageNumber: number) => {
@@ -173,10 +179,6 @@ export const ProductsIndex: FC = () => {
                                 },
                             });
                         },
-                        // onShowSizeChange: async (pageNumber, pageSize) => {
-                        //     setPageTake(pageSize);
-                        //     await refetch({getProductsInput: {skip: (pageNumber - 1) * pageTake, take: pageTake}});
-                        // },
                     }}
                 />
             </div>

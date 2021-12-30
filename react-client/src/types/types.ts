@@ -67,4 +67,5 @@ export type Page = {
     name: string,
     slug: string,
     text: string,
+    sorting: number,
 }

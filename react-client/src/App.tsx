@@ -1,6 +1,4 @@
 import React, {FC, useEffect, useState} from 'react';
-import './App.css';
-import 'antd/dist/antd.css';
 import {Route, Routes} from 'react-router-dom';
 import {ClientLayout} from './client-area/Layout/ClientLayout';
 import {useQuery} from '@apollo/client';
@@ -10,6 +8,9 @@ import {actions} from './redux/auth-reducer';
 import {Loading} from './components/Loading/Loading';
 import {AdminLayout} from './admin-area/components/Layout/AdminLayout';
 import {Login} from './admin-area/components/Login/Login';
+import './App.css';
+import 'antd/dist/antd.css';
+
 
 export const App: FC = () => {
     const dispatch = useDispatch();

@@ -4,24 +4,19 @@
     box-sizing: border-box;
 }
 
-.wrapperHeader{
+.wrapperHeader {
     display: flex;
     gap: 15px;
     align-items: center;
     justify-content: space-between;
 }
 
-header{
+header {
     font-size: 30px;
     font-weight: 600;
 }
 
-strong{
-    color: red;
-    font-weight: bold;
-}
-
-.ant-input-group-wrapper{
+.ant-input-group-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,6 +46,20 @@ a {
 
 .ant-carousel .slick-dots {
     top: 90%;
+}
+
+
+.row-dragging {
+    background: #fafafa;
+    border: 1px solid #ccc;
+}
+
+.row-dragging td {
+    padding: 16px;
+}
+
+.row-dragging .drag-visible {
+    visibility: visible;
 }
 
 

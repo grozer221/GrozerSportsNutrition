@@ -5,23 +5,27 @@ import { pagesConstants } from './pages.constants';
 @Entity(pagesConstants.tableName)
 @ObjectType()
 export class Page {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
+    @PrimaryGeneratedColumn()
+    @Field(() => Int)
+    id: number;
 
-  @Column('boolean', { default: false })
-  @Field(() => Boolean)
-  isShown: boolean;
+    @Column('boolean', { default: false })
+    @Field(() => Boolean)
+    isShown: boolean;
 
-  @Column()
-  @Field()
-  name: string;
+    @Column()
+    @Field()
+    name: string;
 
-  @Column()
-  @Field()
-  slug: string;
+    @Column()
+    @Field()
+    slug: string;
 
-  @Column()
-  @Field()
-  text: string;
+    @Column()
+    @Field()
+    text: string;
+
+    @Column('int')
+    @Field(() => Int)
+    sorting: number;
 }

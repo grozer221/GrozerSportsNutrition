@@ -10,6 +10,8 @@ import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {updateFileInput} from '../../GraphQL/files-mutation';
 import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../GraphQL/products-mutation';
 import {REMOVE_CATEGORY_MUTATION, RemoveCategoryData, RemoveCategoryVars} from '../../GraphQL/categories-mutation';
+import parse from 'html-react-parser';
+
 
 export const CategoriesView: FC = () => {
         const [pageTake, setPageTake] = useState(10);
@@ -151,7 +153,7 @@ export const CategoriesView: FC = () => {
                     </tr>
                     </tbody>
                 </table>
-                <Card title="Description" className={s.description}>{category?.description}</Card>
+                <Card title="Description" className={s.description}>{category && parse(category?.description)}</Card>
                 <Table
                     title={() => <div className={s.productsTitle}>Products</div>}
                     loading={updateProductOptions.loading}

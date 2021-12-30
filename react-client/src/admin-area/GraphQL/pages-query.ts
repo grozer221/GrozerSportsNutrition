@@ -12,9 +12,9 @@ export const GET_PAGES_QUERY = gql`
             name
             slug
             text
+            sorting
         }
     }
-
 `;
 
 
@@ -29,7 +29,7 @@ export const GET_PAGE_QUERY = gql`
             name
             slug
             text
+            sorting
         }
     }
-
 `;

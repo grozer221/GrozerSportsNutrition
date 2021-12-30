@@ -10,6 +10,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { CreatePageInput } from './dto/create-page.input';
 import { UpdatePageInput } from './dto/update-page.input';
 import { getSlug } from '../utils/get-slug';
+import { UpdatePagesInput } from './dto/update-pages.input';
 
 @Resolver(() => Page)
 export class PagesResolver {
@@ -47,6 +48,13 @@ export class PagesResolver {
   @Mutation(() => Page)
   async updatePage(@Args('updatePageInput', { type: () => UpdatePageInput }) updatePageInput: UpdatePageInput): Promise<Page> {
     return await this.pagesService.updateAsync(updatePageInput);
+  }
+
+  @Roles(RoleName.admin)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Mutation(() => [Page])
+  async updatePages(@Args('updatePagesInput', { type: () => UpdatePagesInput }) updatePagesInput: UpdatePagesInput): Promise<Page[]> {
+    return await this.pagesService.updateAllAsync(updatePagesInput);
   }
 
   @Roles(RoleName.admin)

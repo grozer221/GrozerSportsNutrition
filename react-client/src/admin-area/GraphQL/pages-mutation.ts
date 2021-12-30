@@ -19,6 +19,7 @@ export const CREATE_PAGE_MUTATION = gql`
             name
             slug
             text
+            sorting
         }
     }
 `;
@@ -28,7 +29,7 @@ export const CREATE_PAGE_MUTATION = gql`
 export type UpdatePageData = { updatePage: Page }
 
 export type UpdatePageVars = { updatePageInput: updatePageInput }
-export type updatePageInput = createPageInput & { id: number }
+export type updatePageInput = createPageInput & { id: number, sorting: number }
 
 export const UPDATE_PAGE_MUTATION = gql`
     mutation UpdatePage($updatePageInput: UpdatePageInput!){
@@ -38,6 +39,29 @@ export const UPDATE_PAGE_MUTATION = gql`
             name
             slug
             text
+            sorting
+        }
+    }
+`;
+
+
+// UPDATE PAGES
+export type UpdatePagesData = { updatePages: Page[] }
+
+export type UpdatePagesVars = { updatePagesInput: updatePagesInput }
+export type updatePagesInput = {
+    updatePagesInput: updatePageInput[],
+}
+
+export const UPDATE_PAGES_MUTATION = gql`
+    mutation UpdatePages($updatePagesInput: UpdatePagesInput!) {
+        updatePages(updatePagesInput: $updatePagesInput) {
+            id
+            isShown
+            name
+            slug
+            text
+            sorting
         }
     }
 `;
