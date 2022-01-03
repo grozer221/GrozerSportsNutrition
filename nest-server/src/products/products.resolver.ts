@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { ProductsService } from './products.service';
 import { Product } from './product.entity';
 import { CreateProductInput } from './dto/create-product.input';
@@ -30,6 +30,11 @@ export class ProductsResolver {
         return await this.productsService.getCategoriesByProductId(product.id);
     }
 
+    // @ResolveField(() => String)
+    // async slug(@Parent() product: Product): Promise<string> {
+    //     return getSlug(product.name);
+    // }
+
     @Query(() => GetProductsResponse)
     async getProducts(
         @Args('getProductsInput', { type: () => GetProductsInput }) getProductsInput: GetProductsInput,
@@ -38,8 +43,8 @@ export class ProductsResolver {
     }
 
     @Query(() => Product)
-    async getProduct(@Args('id', { type: () => Int }) id: number): Promise<Product> {
-        return await this.productsService.getByIdAsync(id);
+    async getProduct(@Args('slug', { type: () => String }) slug: string): Promise<Product> {
+        return await this.productsService.getBySlugAsync(slug);
     }
 
     @Query(() => Product)
@@ -64,8 +69,8 @@ export class ProductsResolver {
     @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => Boolean)
-    async removeProduct(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
-        await this.productsService.removeAsync(id);
+    async removeProduct(@Args('slug', { type: () => String }) slug: string): Promise<boolean> {
+        await this.productsService.removeAsync(slug);
         return true;
     }
 }

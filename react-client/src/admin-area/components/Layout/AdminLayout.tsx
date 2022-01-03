@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {s_getIsAuth} from '../../../redux/auth-selectors';
 import {Layout} from 'antd';
 import {AppMenu} from '../Menu/AppMenu';
-import {AppBreadcrumb} from '../Breadcrumb/AppBreadcrumb';
+import {MyBreadcrumb} from '../../../components/MyBreadcrumb/MyBreadcrumb';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Home} from '../Home/Home';
 import {UsersController} from '../Users/UsersController';
@@ -28,7 +28,7 @@ export const AdminLayout: FC = () => {
             <AppMenu/>
             <Layout className="site-layout">
                 <Content className={s.content}>
-                    <AppBreadcrumb/>
+                    <MyBreadcrumb/>
                     <div className={s.siteLayoutBackground}>
                         <Routes>
                             <Route path={'/'} element={<Home/>}/>

@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { CharacteristicInputType } from '../product.entity';
 import { UpdateFileInput } from '../../files/dto/update-file.input';
+import { CharacteristicInputType } from './characteristic-input';
+import { UpdateCategoryWithoutProductsInput } from '../../categories/dto/update-category.input';
 
 @InputType()
 export class CreateProductInput {
@@ -19,9 +20,12 @@ export class CreateProductInput {
     @Field(() => String)
     description: string;
 
-    @Field(() => [CharacteristicInputType], {nullable: true})
+    @Field(() => [CharacteristicInputType], { nullable: true })
     characteristics: CharacteristicInputType[];
 
     @Field(() => [UpdateFileInput])
     files: UpdateFileInput[];
+
+    // @Field(() => [UpdateCategoryWithoutProductsInput])
+    // categories: UpdateCategoryWithoutProductsInput[];
 }

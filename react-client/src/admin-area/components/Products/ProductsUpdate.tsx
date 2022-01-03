@@ -17,30 +17,46 @@ import {
     GetFilesData,
     GetFilesVars,
 } from '../../GraphQL/files-query';
-import {Characteristic, FileType} from '../../../types/types';
+import {Category, Characteristic, FileType} from '../../../types/types';
 import {updateFileInput} from '../../GraphQL/files-mutation';
 import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+import {
+    GET_CATEGORIES_QUERY,
+    GET_CATEGORY_BY_NAME_QUERY,
+    GetCategoriesData,
+    GetCategoriesVars,
+    GetCategoryByNameData,
+    GetCategoryByNameVars,
+} from '../../GraphQL/categories-query';
+import {PinnedCategories} from '../../../components/PinnedCategories/PinnedCategories';
 
 export const ProductsUpdate: FC = () => {
     const params = useParams();
-
+    const productSlug = params.slug || '';
     const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
-        {variables: {id: params.id ? parseInt(params.id) : 0}},
+        {variables: {slug: productSlug}},
     );
     const [updateProduct] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
     const navigate = useNavigate();
     const [isShown, setIsShown] = useState<boolean>(false);
-    const [options, setOptions] = useState<{ value: string }[]>([]);
+    const [description, setDescription] = useState<string>('');
+
     const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
     const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
+    const [searchedPhotosNames, setSearchedPhotosNames] = useState<{ value: string }[]>([]);
     const [photos, setPhotos] = useState([] as FileType[]);
-    const [description, setDescription] = useState<string>('');
+
+    const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(GET_CATEGORIES_QUERY);
+    const getCategoryByName = useQuery<GetCategoryByNameData, GetCategoryByNameVars>(GET_CATEGORY_BY_NAME_QUERY);
+    const [searchedCategoryNames, setSearchedCategoryNames] = useState<{ value: string }[]>([]);
+    const [categories, setCategories] = useState([] as Category[]);
 
     useEffect(() => {
         if (getProductQuery.data) {
             setIsShown(getProductQuery.data.getProduct.isShown);
             setPhotos(getProductQuery.data.getProduct.files);
+            setCategories(getProductQuery.data.getProduct.categories);
             setDescription(getProductQuery.data.getProduct.description);
         }
     }, [getProductQuery.data]);
@@ -59,18 +75,19 @@ export const ProductsUpdate: FC = () => {
             const {fileImage, filePath, ...rest} = photo;
             return rest;
         });
-        const updateProductsVars: UpdateProductVars = {
-            updateProductInput: {
-                ...values,
-                id: intId,
-                isShown: isShown,
-                quantity: intQuantity,
-                priceUAH: intPriceUAH,
-                description: description,
-                files: files,
+        const response = await updateProduct({
+            variables: {
+                updateProductInput: {
+                    ...values,
+                    id: intId,
+                    isShown: isShown,
+                    quantity: intQuantity,
+                    priceUAH: intPriceUAH,
+                    description: description,
+                    files: files,
+                },
             },
-        };
-        const response = await updateProduct({variables: updateProductsVars});
+        });
         if (response.data && !response.errors) {
             navigate('..');
         } else
@@ -92,9 +109,9 @@ export const ProductsUpdate: FC = () => {
         }
     };
 
-    const onSearch = async (value: string) => {
+    const onSearchPhotoHandler = async (value: string) => {
         if (value.trim() === '') {
-            setOptions([]);
+            setSearchedPhotosNames([]);
             return;
         }
         const response = await getFilesQuery.refetch({
@@ -106,7 +123,7 @@ export const ProductsUpdate: FC = () => {
             },
         });
         if (!response.errors) {
-            setOptions(response.data.getFiles.files.map(file => ({value: file.fileName})));
+            setSearchedPhotosNames(response.data.getFiles.files.map(file => ({value: file.fileName})));
             if (!response.data.getFiles.files.length) {
                 message.warning('Photos with current name not found');
             }
@@ -115,10 +132,50 @@ export const ProductsUpdate: FC = () => {
         }
     };
 
-    const debouncedSearch = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
-    const handleSearch = (value: string) => debouncedSearch(value);
+    const debouncedSearchPhotoHandler = useCallback(debounce(nextValue => onSearchPhotoHandler(nextValue), 500), []);
+    const searchPhotoHandler = (value: string) => debouncedSearchPhotoHandler(value);
 
-    if (!params.id)
+
+    const selectCategoryHandler = async (value: string) => {
+        if (categories.some(category => category.name === value)) {
+            message.warning('You already added this category');
+            return;
+        }
+        const response = await getCategoryByName.refetch({
+            name: value,
+        });
+        if (!response.errors) {
+            setCategories([...categories, response.data.getCategoryByName]);
+        } else {
+            console.log(response.errors);
+        }
+    };
+
+    const onSearchCategoryHandler = async (value: string) => {
+        if (value.trim() === '') {
+            setSearchedCategoryNames([]);
+            return;
+        }
+        const response = await getCategoriesQuery.refetch({
+            getCategoriesInput: {
+                skip: 0,
+                take: 5,
+            },
+        });
+        if (!response.errors) {
+            setSearchedCategoryNames(response.data.getCategories.categories.map(category => ({value: category.name})));
+            if (!response.data.getCategories.categories.length) {
+                message.warning('Categories with current name not found');
+            }
+        } else {
+            console.log(response.errors);
+        }
+    };
+
+    const debouncedSearchCategoriesHandler = useCallback(debounce(nextValue => onSearchCategoryHandler(nextValue), 500), []);
+    const searchCategoriesHandler = (value: string) => debouncedSearchCategoriesHandler(value);
+
+    if (!productSlug)
         return <Navigate to={'../../error'}/>;
 
     if (getProductQuery.loading)
@@ -163,9 +220,9 @@ export const ProductsUpdate: FC = () => {
             >
                 <div className={s.photosAdd}>
                     <AutoComplete
-                        options={options}
+                        options={searchedPhotosNames}
                         placeholder="Find in uploaded files"
-                        onSearch={handleSearch}
+                        onSearch={searchPhotoHandler}
                         onSelect={selectPhotoHandler}
                     />
                     <div className={s.wrapperLoading}>
@@ -206,6 +263,28 @@ export const ProductsUpdate: FC = () => {
             <Form.Item label={'Description'}>
                 <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
+            {/*<Form.Item*/}
+            {/*    label="Categories"*/}
+            {/*>*/}
+            {/*    <div className={s.photosAdd}>*/}
+            {/*        <AutoComplete*/}
+            {/*            options={searchedCategoryNames}*/}
+            {/*            placeholder="Search in categories"*/}
+            {/*            onSearch={searchCategoriesHandler}*/}
+            {/*            onSelect={selectCategoryHandler}*/}
+            {/*        />*/}
+            {/*        <div className={s.wrapperLoading}>*/}
+            {/*            {getCategoryByName.loading && <Loading/>}*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</Form.Item>*/}
+            {/*{categories.length > 0 && (*/}
+            {/*    <Form.Item>*/}
+            {/*        <PinnedCategories loading={getProductQuery.loading || getCategoryByName.loading}*/}
+            {/*                          categories={categories}*/}
+            {/*                          setCategories={setCategories}/>*/}
+            {/*    </Form.Item>*/}
+            {/*)}*/}
             <Form.List name="characteristics">
                 {(fields, {add, remove}) => (
                     <>

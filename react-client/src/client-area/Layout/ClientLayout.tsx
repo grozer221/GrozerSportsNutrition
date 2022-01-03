@@ -1,25 +1,28 @@
-import React, {FC} from "react";
-import {Link, Route, Routes} from "react-router-dom";
+import React, {FC} from 'react';
+import {Route, Routes} from 'react-router-dom';
+import s from './ClientLayout.module.css';
+import {Home} from '../Home/Home';
+import {Error} from '../Error/Error';
+import {Pages} from '../Pages/Pages';
+import {MyBreadcrumb} from '../../components/MyBreadcrumb/MyBreadcrumb';
 
 export const ClientLayout: FC = () => {
     return (
         <>
-            <Link to={'/admin'}>AdminArea</Link>
-            <Routes>
-                <Route path={'/'} element={<div>client layout</div>}/>
-                <Route path={'users/*'} element={<Users/>}/>
-                <Route path={'*'} element={<div>Client Error</div>}/>
-            </Routes>
+            <div className={s.wrapperPages}>
+                <div className={s.container}>
+                    <Pages/>
+                </div>
+            </div>
+            <div className={s.container}>
+                <MyBreadcrumb/>
+                <div>
+                    <Routes>
+                        <Route path={'/'} element={<Home/>}/>
+                        <Route path={'*'} element={<Error/>}/>
+                    </Routes>
+                </div>
+            </div>
         </>
     );
-}
-
-
-const Users: FC = () => {
-    return (
-        <Routes>
-            <Route path={'/'} element={<div>client users</div>}/>
-            <Route path={':id'} element={<div>client user</div>}/>
-        </Routes>
-    )
-}
+};

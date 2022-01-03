@@ -13,22 +13,7 @@ import { productsConstants } from './products.constants';
 import { File } from '../files/file.entity';
 import { User } from '../users/user.entity';
 import { Category } from '../categories/category.entity';
-
-@ObjectType()
-export class Characteristic {
-    @Field()
-    name: string;
-    @Field()
-    value: string;
-}
-
-@InputType()
-export class CharacteristicInputType {
-    @Field()
-    name: string;
-    @Field()
-    value: string;
-}
+import { Characteristic } from './characteristic.entity';
 
 @Entity(productsConstants.tableName)
 @ObjectType()
@@ -41,9 +26,13 @@ export class Product {
     @Field(() => Boolean)
     isShown: boolean;
 
-    @Column({ unique: true })
+    @Column()
     @Field()
     name: string;
+
+    @Column()
+    @Field()
+    slug: string;
 
     @Column('int')
     @Field(() => Number)
@@ -61,7 +50,7 @@ export class Product {
         type: 'json',
         array: false,
     })
-    @Field(() => [Characteristic], {nullable: true})
+    @Field(() => [Characteristic], { nullable: true })
     characteristics: Characteristic[];
 
     @ManyToMany(() => File, file => file.products)
@@ -71,7 +60,7 @@ export class Product {
 
     @ManyToMany(() => Category, category => category.products)
     @JoinTable()
-    @Field(() => [Category], {nullable: true})
+    @Field(() => [Category], { nullable: true })
     categories: Category[];
 
     @ManyToOne(() => User, user => user.products)

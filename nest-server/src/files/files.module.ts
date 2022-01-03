@@ -16,9 +16,6 @@ import { FilesController } from './files.controller';
     controllers: [
         FilesController,
     ],
-    exports: [
-        FilesService,
-    ],
 })
 export class FilesModule {
 }

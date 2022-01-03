@@ -11,10 +11,10 @@ import parse from 'html-react-parser';
 
 export const ProductsView: FC = () => {
     const params = useParams();
-    const productId = params.id ? parseInt(params.id) : 0;
+    const productSlug = params.slug || ''
     const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
-        {variables: {id: productId}},
+        {variables: {slug: productSlug}},
     );
     const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION);
     const navigate = useNavigate();
@@ -30,15 +30,15 @@ export const ProductsView: FC = () => {
         },
     ];
 
-    const onRemove = async (id: number) => {
-        const response = await removeProduct({variables: {id: id}});
+    const onRemove = async (slug: string) => {
+        const response = await removeProduct({variables: {slug: slug}});
         if (response.data)
             navigate(`../`);
         else
             console.log(response.errors);
     };
 
-    if (!params.id)
+    if (!productSlug)
         return <Navigate to={'../../error'}/>;
 
     if (getProductQuery.loading)
@@ -57,7 +57,7 @@ export const ProductsView: FC = () => {
                     ))}
                 </Carousel>
                 <div>
-                    <ButtonsVUR updateUrl={`../update/${productId}`} onRemove={() => onRemove(productId)}/>
+                    <ButtonsVUR updateUrl={`../update/${productSlug}`} onRemove={() => onRemove(productSlug)}/>
                     <header>{product?.name}</header>
                     <table className={s.info}>
                         <tbody>
@@ -94,7 +94,7 @@ export const ProductsView: FC = () => {
                                 <td>{product?.categories.map(category => (
                                     <Tag color={'cyan'}>
                                         <Link key={category.id}
-                                              to={'../../categories/' + category.id}>{category.name}</Link>
+                                              to={'../../categories/' + category.slug}>{category.name}</Link>
                                     </Tag>
                                 ))}
                                 </td>

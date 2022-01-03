@@ -17,6 +17,7 @@ import {
 } from '../../GraphQL/products-query';
 import {CREATE_CATEGORY_MUTATION, CreateCategoryData, CreateCategoryVars} from '../../GraphQL/categories-mutation';
 import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+import {updateProductInput, updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
 
 export const CategoriesCreate: FC = () => {
     const [createCategory, createCategoryOptions] = useMutation<CreateCategoryData, CreateCategoryVars>(CREATE_CATEGORY_MUTATION);
@@ -31,7 +32,7 @@ export const CategoriesCreate: FC = () => {
     const onFinish = async (values: {
         name: string,
     }) => {
-        const productsWithoutFiles = products.map(product => {
+        const productsWithoutFiles: updateProductWithoutFilesInput[] = products.map(product => {
             const {files, categories, ...rest} = product;
             return rest;
         });

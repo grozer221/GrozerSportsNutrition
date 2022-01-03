@@ -41,8 +41,8 @@ export class CategoriesService {
     return getCategoriesResponse;
   }
 
-  async getByIdAsync(id: number): Promise<Category> {
-    return await this.categoryRepository.findOneOrFail(id);
+  async getBySlugAsync(slug: string): Promise<Category> {
+    return await this.categoryRepository.findOneOrFail({ where: { slug: slug } });
   }
 
   async getByNameAsync(name: string): Promise<Category> {
@@ -50,11 +50,13 @@ export class CategoriesService {
   }
 
   async updateAsync(updateCategoryInput: UpdateCategoryInput): Promise<Category> {
-    return await this.categoryRepository.save(updateCategoryInput);
+    const category = this.categoryRepository.create(updateCategoryInput);
+    category.slug = getSlug(category.name);
+    return await this.categoryRepository.save(category);
   }
 
-  async removeAsync(id: number): Promise<Category> {
-    const category = await this.getByIdAsync(id);
+  async removeAsync(slug: string): Promise<Category> {
+    const category = await this.getBySlugAsync(slug);
     return await this.categoryRepository.remove(category);
   }
 }

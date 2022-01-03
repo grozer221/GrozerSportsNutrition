@@ -67,6 +67,11 @@ export const AppMenu: FC = () => {
                             Brands
                         </Link>
                     </Menu.Item>
+                    <Menu.Item key="51">
+                        <Link to={'/admin/goals'}>
+                            Goals
+                        </Link>
+                    </Menu.Item>
                     <Menu.Item key="60" icon={<PercentageOutlined/>}>
                         <Link to={'/admin/discounts'}>
                             Discounts

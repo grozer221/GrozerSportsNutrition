@@ -26,6 +26,7 @@ export type Auth = {
 export type Product = {
     id: number,
     name: string,
+    slug: string,
     isShown: boolean,
     quantity: number,
     priceUAH: number,
@@ -69,3 +70,6 @@ export type Page = {
     text: string,
     sorting: number,
 }
+
+
+export type OrderByType = 'ASC' | 'DESC';

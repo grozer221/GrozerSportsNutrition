@@ -22,10 +22,10 @@ import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
 
 export const CategoriesUpdate: FC = () => {
     const params = useParams();
-    const categoryId = params.id ? parseInt(params.id) : 0;
+    const categorySlug = params.slug || '';
     const getCategoryQuery = useQuery<GetCategoryData, GetCategoryVars>(
         GET_CATEGORY_QUERY,
-        {variables: {id: categoryId}},
+        {variables: {slug: categorySlug}},
     );
     const [updateCategory, updateCategoryOption] = useMutation<UpdateCategoryData, UpdateCategoryVars>(UPDATE_CATEGORY_MUTATION);
     const navigate = useNavigate();
@@ -50,7 +50,7 @@ export const CategoriesUpdate: FC = () => {
     }) => {
         const intId = parseInt(values.id);
         const productsWithoutFiles: updateProductWithoutFilesInput[] = products.map(product => {
-            const {files, categories, ...rest} = product;
+            const {files, categories, slug, ...rest} = product;
             return rest;
         });
         const response = await updateCategory({
@@ -110,7 +110,7 @@ export const CategoriesUpdate: FC = () => {
     const debouncedSearch = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
     const handleSearch = (value: string) => debouncedSearch(value);
 
-    if (!params.id)
+    if (!categorySlug)
         return <Navigate to={'../../error'}/>;
 
     if (getCategoryQuery.loading)

@@ -11,6 +11,7 @@ import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
 import { CategoriesModule } from './categories/categories.module';
 import { PagesModule } from './pages/pages.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
     imports: [
@@ -47,6 +48,7 @@ import { PagesModule } from './pages/pages.module';
         FilesModule,
         CategoriesModule,
         PagesModule,
+        OrdersModule,
     ],
     providers: [
         AppService,

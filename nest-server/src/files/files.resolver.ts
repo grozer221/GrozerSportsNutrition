@@ -18,17 +18,21 @@ export class FilesResolver {
     ) {
     }
 
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
     @ResolveField(() => String)
     filePath(@Parent() file: File): string {
         return this.filesService.getFilePath(file);
     }
 
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
     @ResolveField(() => String)
     fileImage(@Parent() file: File): string {
         return this.filesService.getFileImage(file);
     }
 
-    @Roles(RoleName.admin)
+    @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => File)
     async createFile(
@@ -37,7 +41,7 @@ export class FilesResolver {
         return await this.filesService.addAsync(createFileInput);
     }
 
-    @Roles(RoleName.admin)
+    @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => GetFilesResponse)
     async getFiles(
@@ -46,28 +50,28 @@ export class FilesResolver {
         return await this.filesService.getAsync(getFilesInput.take, getFilesInput.skip, getFilesInput.likeOriginalName, getFilesInput.likeMimetype);
     }
 
-    @Roles(RoleName.admin)
+    @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => File)
     async getFile(@Args('id', { type: () => Int }) id: number): Promise<File> {
         return await this.filesService.getByIdAsync(id);
     }
 
-    @Roles(RoleName.admin)
+    @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => File)
     async getFileByName(@Args('fileName', { type: () => String }) fileName: string): Promise<File> {
         return await this.filesService.getByNameAsync(fileName);
     }
 
-    @Roles(RoleName.admin)
+    @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => File)
     async updateFile(@Args('updateFileInput') updateFileInput: UpdateFileInput): Promise<File> {
         return await this.filesService.updateAsync(updateFileInput);
     }
 
-    @Roles(RoleName.admin)
+    @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => Boolean)
     async removeFile(@Args('id', { type: () => Int }) id: number): Promise<boolean> {

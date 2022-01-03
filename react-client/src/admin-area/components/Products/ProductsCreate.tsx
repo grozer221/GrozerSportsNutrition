@@ -37,6 +37,7 @@ export const ProductsCreate: FC = () => {
     }) => {
         const intQuantity = parseInt(values.quantity);
         const intPriceUAH = parseInt(values.priceUAH);
+        const characteristics = values.characteristics || [];
         const createProductsVars: CreateProductVars = {
             createProductInput: {
                 ...values,
@@ -44,6 +45,7 @@ export const ProductsCreate: FC = () => {
                 quantity: intQuantity,
                 priceUAH: intPriceUAH,
                 description: description,
+                characteristics: characteristics,
                 files: photos,
             },
         };

@@ -15,61 +15,54 @@ import { Product } from '../products/product.entity';
 
 @Resolver(() => Category)
 export class CategoriesResolver {
-  constructor(
-      private readonly categoriesService: CategoriesService,
-  ) {
-  }
+    constructor(
+        private readonly categoriesService: CategoriesService,
+    ) {
+    }
 
-  @ResolveField(() => String)
-  async slug(@Parent() category: Category): Promise<string> {
-    return getSlug(category.name);
-  }
+    @ResolveField(() => [Product])
+    async products(@Parent() category: Category): Promise<Product[]> {
+        return await this.categoriesService.getProductsByCategoryId(category.id);
+    }
 
-  @ResolveField(() => [Product])
-  async products(@Parent() category: Category): Promise<Product[]> {
-    return await this.categoriesService.getProductsByCategoryId(category.id);
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => Category)
+    async createCategory(
+        @Args('createCategoryInput', { type: () => CreateCategoryInput }) createCategoryInput: CreateCategoryInput,
+    ): Promise<Category> {
+        return await this.categoriesService.addAsync(createCategoryInput);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => Category)
-  async createCategory(
-      @Args('createCategoryInput', { type: () => CreateCategoryInput }) createCategoryInput: CreateCategoryInput,
-  ): Promise<Category> {
-    return await this.categoriesService.addAsync(createCategoryInput);
-  }
+    @Query(() => GetCategoriesResponse)
+    async getCategories(
+        @Args('getCategoriesInput', { type: () => GetCategoriesInput }) getCategoriesInput: GetCategoriesInput,
+    ): Promise<GetCategoriesResponse> {
+        return await this.categoriesService.getAsync(getCategoriesInput.take, getCategoriesInput.skip);
+    }
 
-  @Query(() => GetCategoriesResponse)
-  async getCategories(
-      @Args('getCategoriesInput', { type: () => GetCategoriesInput }) getCategoriesInput: GetCategoriesInput,
-  ): Promise<GetCategoriesResponse> {
-    return await this.categoriesService.getAsync(getCategoriesInput.take, getCategoriesInput.skip);
-  }
+    @Query(() => Category)
+    async getCategory(@Args('slug', { type: () => String }) slug: string): Promise<Category> {
+        return await this.categoriesService.getBySlugAsync(slug);
+    }
 
-  @Query(() => Category)
-  async getCategory(@Args('id', { type: () => Int }) id: number): Promise<Category> {
-    return await this.categoriesService.getByIdAsync(id);
-  }
+    @Query(() => Category)
+    async getCategoryByName(@Args('name', { type: () => String }) name: string): Promise<Category> {
+        return await this.categoriesService.getByNameAsync(name);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Query(() => Category)
-  async getCategoryByName(@Args('name', { type: () => String }) name: string): Promise<Category> {
-    return await this.categoriesService.getByNameAsync(name);
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => Category)
+    async updateCategory(@Args('updateCategoryInput', { type: () => UpdateCategoryInput }) updateCategoryInput: UpdateCategoryInput): Promise<Category> {
+        return await this.categoriesService.updateAsync(updateCategoryInput);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => Category)
-  async updateCategory(@Args('updateCategoryInput', { type: () => UpdateCategoryInput }) updateCategoryInput: UpdateCategoryInput): Promise<Category> {
-    return await this.categoriesService.updateAsync(updateCategoryInput);
-  }
-
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => Boolean)
-  async removeCategory(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
-    await this.categoriesService.removeAsync(id);
-    return true;
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => Boolean)
+    async removeCategory(@Args('slug', { type: () => String }) slug: string): Promise<boolean> {
+        await this.categoriesService.removeAsync(slug);
+        return true;
+    }
 }

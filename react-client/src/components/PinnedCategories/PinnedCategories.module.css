@@ -1,0 +1,7 @@
+.carousel {
+    width: 64px;
+}
+
+.image {
+    object-fit: cover;
+}

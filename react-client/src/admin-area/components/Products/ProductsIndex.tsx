@@ -34,8 +34,8 @@ export const ProductsIndex: FC = () => {
             setProductsObj(getProductsQuery.data.getProducts);
     }, [getProductsQuery.data?.getProducts]);
 
-    const onRemove = async (id: number) => {
-        const response = await removeProduct({variables: {id: id}});
+    const onRemove = async (slug: string) => {
+        const response = await removeProduct({variables: {slug: slug}});
         if (response.data)
             await getProductsQuery.refetch({getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}});
         else
@@ -52,7 +52,7 @@ export const ProductsIndex: FC = () => {
     const toggleIsShownHandler = async (product: Product, flag: boolean) => {
         product.isShown = flag;
         // @ts-ignore
-        const {key, categories, ...rest} = product;
+        const {key, slug, categories, ...rest} = product;
         const files: updateFileInput[] = product.files.map(file => {
             const {fileImage, filePath, ...rest} = file;
             return rest;
@@ -115,7 +115,7 @@ export const ProductsIndex: FC = () => {
                 <div className={s.categories}>
                     {product?.categories?.length && product.categories.map(category => (
                         <Tag color="cyan" key={category.id}>
-                            <Link to={`../../categories/${category.id}`}>{category.name} </Link>
+                            <Link to={`../../categories/${category.slug}`}>{category.name} </Link>
                         </Tag>
                     ))}
                 </div>
@@ -136,8 +136,8 @@ export const ProductsIndex: FC = () => {
             dataIndex: 'actions',
             key: 'actions',
             render: (text: any, product: Product) => (
-                <ButtonsVUR viewUrl={`${product.id}`} updateUrl={`update/${product.id}`}
-                            onRemove={() => onRemove(product.id)}/>
+                <ButtonsVUR viewUrl={`${product.slug}`} updateUrl={`update/${product.slug}`}
+                            onRemove={() => onRemove(product.slug)}/>
             ),
         },
     ];

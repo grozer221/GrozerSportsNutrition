@@ -23,6 +23,7 @@ export const GET_CATEGORIES_QUERY = gql`
                     id
                     isShown
                     name
+                    slug
                     quantity
                     priceUAH
                     description
@@ -50,11 +51,11 @@ export const GET_CATEGORIES_QUERY = gql`
 
 
 export type GetCategoryData = { getCategory: Category }
-export type GetCategoryVars = { id: number }
+export type GetCategoryVars = { slug: string }
 
 export const GET_CATEGORY_QUERY = gql`
-    query GetCategory($id: Int!) {
-        getCategory(id: $id) {
+    query GetCategory($slug: String!) {
+        getCategory(slug: $slug) {
             id
             isShown
             name
@@ -64,6 +65,7 @@ export const GET_CATEGORY_QUERY = gql`
                 id
                 isShown
                 name
+                slug
                 quantity
                 priceUAH
                 description
@@ -102,6 +104,7 @@ export const GET_CATEGORY_BY_NAME_QUERY = gql`
                 id
                 isShown
                 name
+                slug
                 quantity
                 priceUAH
                 description

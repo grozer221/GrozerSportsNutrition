@@ -17,6 +17,7 @@ export const GET_PRODUCTS_QUERY = gql`
             products {
                 id
                 name
+                slug
                 isShown
                 quantity
                 priceUAH
@@ -49,14 +50,15 @@ export const GET_PRODUCTS_QUERY = gql`
 `;
 
 export type GetProductData = { getProduct: Product }
-export type GetProductVars = { id: number }
+export type GetProductVars = { slug: string }
 
 
 export const GET_PRODUCT_QUERY = gql`
-    query GetProduct($id: Int!){
-        getProduct(id: $id){
+    query GetProduct($slug: String!){
+        getProduct(slug: $slug){
             id
             name
+            slug
             isShown
             quantity
             priceUAH
@@ -96,6 +98,7 @@ export const GET_PRODUCT_BY_NAME_QUERY = gql`
             id
             isShown
             name
+            slug
             quantity
             priceUAH
             description

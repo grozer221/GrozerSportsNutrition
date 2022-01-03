@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { categoriesConstants } from './categories.constants';
 import { Product } from '../products/product.entity';
 
@@ -14,7 +14,7 @@ export class Category {
   @Field(() => Boolean)
   isShown: boolean;
 
-  @Column()
+  @Column({ unique: true })
   @Field()
   name: string;
 
@@ -27,6 +27,12 @@ export class Category {
   description: string;
 
   @ManyToMany(() => Product, product => product.categories)
-  // @Field(() => [Product], {nullable: true})
+  @Field(() => [Product], { nullable: true })
   products: Product[];
+
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+  updatedAt: Date;
 }

@@ -9,20 +9,6 @@ export enum RoleName {
     customer = 'customer',
 }
 
-export enum RoleColor {
-    magenta = 'magenta',
-    red = 'red',
-    volcano = 'volcano',
-    orange = 'orange',
-    gold = 'gold',
-    lime = 'lime',
-    green = 'green',
-    cyan = 'cyan',
-    blue = 'blue',
-    geekblue = 'geekblue',
-    purple = 'purple',
-}
-
 registerEnumType(RoleName, { name: 'RoleName' });
 
 @Entity(rolesConstants.tableName)

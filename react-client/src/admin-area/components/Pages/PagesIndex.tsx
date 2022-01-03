@@ -22,7 +22,15 @@ import {arrayMoveImmutable} from 'array-move';
 import {MenuOutlined} from '@ant-design/icons';
 
 export const PagesIndex: FC = () => {
-    const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY);
+    const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY, {
+        variables: {
+            getPagesInput: {
+                orderBy: 'sorting',
+                orderByType: 'ASC',
+                isShown: true,
+            },
+        },
+    });
     const [pages, setPages] = useState<Page[]>([]);
     const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION);
     const [updatePage, updatePageOptions] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION);
@@ -37,7 +45,13 @@ export const PagesIndex: FC = () => {
     const onRemove = async (id: number) => {
         const response = await removePage({variables: {id: id}});
         if (response.data)
-            await getPagesQuery.refetch();
+            await getPagesQuery.refetch({
+                getPagesInput: {
+                    orderBy: 'sorting',
+                    orderByType: 'ASC',
+                    isShown: true,
+                },
+            });
         else
             console.log(response.errors);
     };

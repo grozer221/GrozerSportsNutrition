@@ -1,15 +1,15 @@
 import {gql} from '@apollo/client';
 import {Category} from '../../types/types';
-import {updateProductWithoutFilesInput} from './products-mutation';
+import {updateProductInput, updateProductWithoutFilesInput} from './products-mutation';
 
-export type CreateCategoryData = { createCategory: Category[] }
+export type CreateCategoryData = { createCategory: Category }
 
 export type CreateCategoryVars = { createCategoryInput: createCategoryInput }
-type createCategoryInput = {
+export type createCategoryInput = {
     isShown: boolean,
     name: string,
     description: string,
-    products: updateProductWithoutFilesInput[]
+    products: updateProductWithoutFilesInput[],
 }
 
 export const CREATE_CATEGORY_MUTATION = gql`
@@ -27,7 +27,7 @@ export const CREATE_CATEGORY_MUTATION = gql`
 export type UpdateCategoryData = { updateCategory: Category }
 
 export type UpdateCategoryVars = { updateCategoryInput: updateCategoryInput }
-type updateCategoryInput = createCategoryInput & { id: number }
+export type updateCategoryInput = createCategoryInput & { id: number }
 
 export const UPDATE_CATEGORY_MUTATION = gql`
     mutation UpdateCategory($updateCategoryInput: UpdateCategoryInput!) {
@@ -43,11 +43,11 @@ export const UPDATE_CATEGORY_MUTATION = gql`
 
 
 export type RemoveCategoryData = { removeCategory: boolean }
-export type RemoveCategoryVars = { id: number }
+export type RemoveCategoryVars = { slug: string }
 
 export const REMOVE_CATEGORY_MUTATION = gql`
-    mutation RemoveCategory($id: Int!) {
-        removeCategory(id: $id)
+    mutation RemoveCategory($slug: String!) {
+        removeCategory(slug: $slug)
     }
 `;
 

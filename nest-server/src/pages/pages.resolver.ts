@@ -1,7 +1,6 @@
 import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { PagesService } from './pages.service';
 import { Page } from './page.entity';
-import { Category } from '../categories/category.entity';
 import { Roles } from '../roles/roles.decorators';
 import { RoleName } from '../roles/role.entity';
 import { UseGuards } from '@nestjs/common';
@@ -11,57 +10,65 @@ import { CreatePageInput } from './dto/create-page.input';
 import { UpdatePageInput } from './dto/update-page.input';
 import { getSlug } from '../utils/get-slug';
 import { UpdatePagesInput } from './dto/update-pages.input';
+import { GetPagesInput } from './dto/get-pages.input';
+import { CurrentUser } from '../auth/auth.decorators';
+import { User } from '../users/user.entity';
+import { isModeratorOrAdmin } from '../utils/is-moderator-or-admin';
 
 @Resolver(() => Page)
 export class PagesResolver {
-  constructor(
-      private readonly pagesService: PagesService,
-  ) {
-  }
+    constructor(
+        private readonly pagesService: PagesService,
+    ) {
+    }
 
-  @ResolveField(() => String)
-  async slug(@Parent() page: Page): Promise<string> {
-    return getSlug(page.name);
-  }
+    @ResolveField(() => String)
+    async slug(@Parent() page: Page): Promise<string> {
+        return getSlug(page.name);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => Page)
-  async createPage(
-      @Args('createPageInput', { type: () => CreatePageInput }) createPageInput: CreatePageInput,
-  ): Promise<Page> {
-    return await this.pagesService.addAsync(createPageInput);
-  }
+    @Query(() => [Page])
+    async getPages(
+        @Args('getPagesInput', { type: () => GetPagesInput }) getPagesInput: GetPagesInput
+    ): Promise<Page[]> {
+        return await this.pagesService.getAsync(getPagesInput);
+    }
 
-  @Query(() => [Page])
-  async getPages(): Promise<Page[]> {
-    return await this.pagesService.getAsync();
-  }
+    @Query(() => Page)
+    async getPage(@Args('id', { type: () => Int }) id: number): Promise<Page> {
+        return await this.pagesService.getByIdAsync(id);
+    }
 
-  @Query(() => Page)
-  async getPage(@Args('id', { type: () => Int }) id: number): Promise<Page> {
-    return await this.pagesService.getByIdAsync(id);
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => Page)
+    async createPage(
+        @Args('createPageInput', { type: () => CreatePageInput }) createPageInput: CreatePageInput,
+    ): Promise<Page> {
+        return await this.pagesService.addAsync(createPageInput);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => Page)
-  async updatePage(@Args('updatePageInput', { type: () => UpdatePageInput }) updatePageInput: UpdatePageInput): Promise<Page> {
-    return await this.pagesService.updateAsync(updatePageInput);
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => Page)
+    async updatePage(
+        @Args('updatePageInput', { type: () => UpdatePageInput }) updatePageInput: UpdatePageInput
+    ): Promise<Page> {
+        return await this.pagesService.updateAsync(updatePageInput);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => [Page])
-  async updatePages(@Args('updatePagesInput', { type: () => UpdatePagesInput }) updatePagesInput: UpdatePagesInput): Promise<Page[]> {
-    return await this.pagesService.updateAllAsync(updatePagesInput);
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => [Page])
+    async updatePages(@Args('updatePagesInput', { type: () => UpdatePagesInput }) updatePagesInput: UpdatePagesInput): Promise<Page[]> {
+        return await this.pagesService.updateAllAsync(updatePagesInput);
+    }
 
-  @Roles(RoleName.admin)
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => Boolean)
-  async removePage(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
-    await this.pagesService.removeAsync(id);
-    return true;
-  }
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Mutation(() => Boolean)
+    async removePage(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+        await this.pagesService.removeAsync(id);
+        return true;
+    }
 }

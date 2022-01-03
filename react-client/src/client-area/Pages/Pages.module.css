@@ -1,0 +1,5 @@
+.pages{
+    display: flex;
+    gap: 10px;
+    text-transform: uppercase;
+}

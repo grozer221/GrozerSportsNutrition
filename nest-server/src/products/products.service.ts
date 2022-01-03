@@ -4,7 +4,6 @@ import { UpdateProductInput } from './dto/update-product.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Product } from './product.entity';
-import { FilesService } from '../files/files.service';
 import { filesConstants } from '../files/files.constants';
 import { File } from '../files/file.entity';
 import { REQUEST } from '@nestjs/core';
@@ -12,6 +11,7 @@ import { Request } from 'express';
 import { Category } from '../categories/category.entity';
 import { GetProductsResponse } from './dto/get-products.response';
 import { categoriesConstants } from '../categories/categories.constants';
+import { getSlug } from '../utils/get-slug';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ProductsService {
@@ -19,7 +19,6 @@ export class ProductsService {
 
     constructor(
         @InjectRepository(Product) private productsRepository: Repository<Product>,
-        private readonly filesService: FilesService,
         @Inject(REQUEST) private readonly request: Request,
     ) {
         // @ts-ignore
@@ -48,6 +47,7 @@ export class ProductsService {
 
     async createAsync(createProductInput: CreateProductInput): Promise<Product> {
         const product = this.productsRepository.create(createProductInput);
+        product.slug = getSlug(product.name);
         return await this.productsRepository.save(product);
     }
 
@@ -70,8 +70,8 @@ export class ProductsService {
         return getProductsResponse;
     }
 
-    async getByIdAsync(id: number): Promise<Product> {
-        return await this.productsRepository.findOneOrFail(id);
+    async getBySlugAsync(slug: string): Promise<Product> {
+        return await this.productsRepository.findOneOrFail({ where: { slug } });
     }
 
     async getByNameAsync(name: string): Promise<Product> {
@@ -79,11 +79,13 @@ export class ProductsService {
     }
 
     async updateAsync(updateProductInput: UpdateProductInput): Promise<Product> {
-        return await this.productsRepository.save(updateProductInput);
+        const product = this.productsRepository.create(updateProductInput);
+        product.slug = getSlug(product.name);
+        return await this.productsRepository.save(product);
     }
 
-    async removeAsync(id: number): Promise<Product> {
-        const product = await this.getByIdAsync(id);
+    async removeAsync(slug: string): Promise<Product> {
+        const product = await this.getBySlugAsync(slug);
         return await this.productsRepository.remove(product);
     }
 }

@@ -5,12 +5,13 @@ import {updateFileInput} from './files-mutation';
 export type CreateProductData = { createProduct: Product[] }
 
 export type CreateProductVars = { createProductInput: createProductInput }
-type createProductInput = {
+export type createProductInput = {
     isShown: boolean,
     name: string,
     quantity: number,
     priceUAH: number,
     description: string,
+    characteristics: Characteristic[],
     files: FileType[],
 }
 
@@ -19,6 +20,7 @@ export const CREATE_PRODUCT_MUTATION = gql`
         createProduct(createProductInput: $createProductInput){
             id
             name
+            slug
             isShown
             quantity
             priceUAH
@@ -54,13 +56,16 @@ export type updateProductInput = {
     characteristics: Characteristic[]
     files: updateFileInput[],
 }
-export interface updateProductWithoutFilesInput extends Omit<updateProductInput, 'files'>{}
+export interface updateProductWithoutFilesInput extends Omit<updateProductInput, 'files'> {
+}
+
 
 export const UPDATE_PRODUCT_MUTATION = gql`
     mutation UpdateProduct($updateProductInput: UpdateProductInput!){
         updateProduct(updateProductInput: $updateProductInput){
             id
             name
+            slug
             isShown
             quantity
             priceUAH
@@ -85,11 +90,11 @@ export const UPDATE_PRODUCT_MUTATION = gql`
 
 
 export type RemoveProductData = { removeProduct: boolean }
-export type RemoveProductVars = { id: number }
+export type RemoveProductVars = { slug: string }
 
 export const REMOVE_PRODUCT_MUTATION = gql`
-    mutation RemoveProduct($id: Int!){
-        removeProduct(id: $id)
+    mutation RemoveProduct($slug: String!){
+        removeProduct(slug: $slug)
     }
 `;
 

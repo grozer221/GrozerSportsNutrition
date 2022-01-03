@@ -1,4 +1,4 @@
-import { Args, Field, Mutation, ObjectType, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginInput } from './dto/login.input';
@@ -7,9 +7,7 @@ import { User } from '../users/user.entity';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
 import { CurrentUser } from './auth.decorators';
 import { RegisterInput } from './dto/register.input';
-import { Roles } from '../roles/roles.decorators';
-import { RoleName } from '../roles/role.entity';
-import { RolesGuard } from './guards/roles.guard';
+import { AuthResponse } from './dto/auth.response';
 
 @Resolver()
 export class AuthResolver {
@@ -19,7 +17,7 @@ export class AuthResolver {
     ) {
     }
 
-    @Mutation(returns => AuthResponse)
+    @Mutation(() => AuthResponse)
     async login(@Args('loginInput') loginInput: LoginInput): Promise<AuthResponse> {
         const user = await this.authService.validateUser(loginInput.email, loginInput.password);
         if (!user)
@@ -31,8 +29,8 @@ export class AuthResolver {
         return authResponse;
     }
 
-    @Query(returns => AuthResponse)
     @UseGuards(GqlAuthGuard)
+    @Query(() => AuthResponse)
     async me(@CurrentUser() user: User): Promise<AuthResponse> {
         const authResponse = new AuthResponse();
         authResponse.user = await this.usersService.getByIdAsync(user.id);
@@ -40,7 +38,7 @@ export class AuthResolver {
         return authResponse;
     }
 
-    @Mutation(returns => AuthResponse)
+    @Mutation(() => AuthResponse)
     async register(
         @Args('registerInput') registerInput: RegisterInput,
     ): Promise<AuthResponse> {
@@ -52,13 +50,4 @@ export class AuthResolver {
         authResponse.accessToken = await this.authService.login(user.id, user.email, user.roles);
         return authResponse;
     }
-}
-
-@ObjectType()
-export class AuthResponse {
-    @Field(type => User)
-    user: User;
-
-    @Field()
-    accessToken: string;
 }

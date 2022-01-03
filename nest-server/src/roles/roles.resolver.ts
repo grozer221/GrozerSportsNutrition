@@ -9,7 +9,7 @@ export class RolesResolver {
     constructor(private readonly rolesService: RolesService) {
     }
 
-    @ResolveField(returns => [Role])
+    @ResolveField(() => [Role])
     async users(@Parent() role: Role): Promise<User[]> {
         return await this.rolesService.getUsersByRoleIdAsync(role.id);
     }

@@ -10,9 +10,9 @@ export const ProductsController: FC = () => {
     return (
         <Routes>
             <Route path={'/'} element={<ProductsIndex/>}/>
-            <Route path={':id'} element={<ProductsView/>}/>
+            <Route path={':slug'} element={<ProductsView/>}/>
             <Route path={'create'} element={<ProductsCreate/>}/>
-            <Route path={'update/:id'} element={<ProductsUpdate/>}/>
+            <Route path={'update/:slug'} element={<ProductsUpdate/>}/>
             <Route path={'*'} element={<Error/>}/>
         </Routes>
     );

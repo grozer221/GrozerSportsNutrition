@@ -1,12 +1,19 @@
 import {gql} from '@apollo/client';
-import {Page} from '../../types/types';
+import {OrderByType, Page} from '../../types/types';
 
 export type GetPagesData = { getPages: Page[] }
-export type GetPagesVars = {}
+export type GetPagesVars = {
+    getPagesInput: {
+        orderBy: GetPagesOrderBy,
+        orderByType: OrderByType,
+        isShown: boolean,
+    }
+}
+export type GetPagesOrderBy = 'sorting';
 
 export const GET_PAGES_QUERY = gql`
-    query GetPages {
-        getPages {
+    query GetPages($getPagesInput: GetPagesInput!) {
+        getPages(getPagesInput: $getPagesInput) {
             id
             isShown
             name
@@ -15,6 +22,7 @@ export const GET_PAGES_QUERY = gql`
             sorting
         }
     }
+
 `;
 
 

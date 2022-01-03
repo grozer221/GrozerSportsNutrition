@@ -10,9 +10,9 @@ export const CategoriesController: FC = () => {
     return (
         <Routes>
             <Route path={'/'} element={<CategoriesIndex/>}/>
-            <Route path={'/:id'} element={<CategoriesView/>}/>
+            <Route path={'/:slug'} element={<CategoriesView/>}/>
             <Route path={'create'} element={<CategoriesCreate/>}/>
-            <Route path={'update/:id'} element={<CategoriesUpdate/>}/>
+            <Route path={'update/:slug'} element={<CategoriesUpdate/>}/>
             <Route path={'*'} element={<Error/>}/>
         </Routes>
     );

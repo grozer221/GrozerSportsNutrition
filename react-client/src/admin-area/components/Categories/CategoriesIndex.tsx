@@ -44,8 +44,8 @@ export const CategoriesIndex: FC = () => {
         },
     };
 
-    const onRemove = async (id: number) => {
-        const response = await removeCategory({variables: {id: id}});
+    const onRemove = async (slug: string) => {
+        const response = await removeCategory({variables: {slug: slug}});
         if (!response.errors)
             await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake}});
         else
@@ -57,7 +57,7 @@ export const CategoriesIndex: FC = () => {
         // @ts-ignore
         const {key, slug, ...rest} = category;
         const productsWithoutFiles: updateProductWithoutFilesInput[] = rest.products?.map(product => {
-            const {files, ...restProduct} = product;
+            const {files, slug, ...restProduct} = product;
             return restProduct;
         });
         const response = await updateCategory({
@@ -103,8 +103,8 @@ export const CategoriesIndex: FC = () => {
             dataIndex: 'actions',
             key: 'actions',
             render: (text: any, category: Category) => (
-                <ButtonsVUR viewUrl={`${category.id}`} updateUrl={`update/${category.id}`}
-                            onRemove={() => onRemove(category.id)}/>
+                <ButtonsVUR viewUrl={`${category.slug}`} updateUrl={`update/${category.slug}`}
+                            onRemove={() => onRemove(category.slug)}/>
             ),
         },
     ];
