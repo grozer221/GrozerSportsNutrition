@@ -2,12 +2,10 @@ import React, {FC, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
 import {Loading} from '../../../components/Loading/Loading';
-import {Avatar, Card, Carousel, Switch, Table, Tag} from 'antd';
+import {Avatar, Card, Carousel, message, Table, Tag} from 'antd';
 import {GET_CATEGORY_QUERY, GetCategoryData, GetCategoryVars} from '../../GraphQL/categories-query';
 import {Product} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {updateFileInput} from '../../GraphQL/files-mutation';
-import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../GraphQL/products-mutation';
 import {REMOVE_CATEGORY_MUTATION, RemoveCategoryData, RemoveCategoryVars} from '../../GraphQL/categories-mutation';
 import s from './CategoriesView.module.css';
 import parse from 'html-react-parser';
@@ -16,11 +14,10 @@ export const CategoriesView: FC = () => {
         const [pageTake, setPageTake] = useState(10);
         const [pageSkip, setSkipTake] = useState(0);
         const params = useParams();
-        const categorySlug = params.slug || ''
+        const categorySlug = params.slug || '';
         const getCategoryQuery = useQuery<GetCategoryData, GetCategoryVars>(
             GET_CATEGORY_QUERY, {variables: {slug: categorySlug}});
         const [products, setProducts] = useState<Product[]>([]);
-        const [updateProduct, updateProductOptions] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
         const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION);
         const navigate = useNavigate();
 
@@ -29,44 +26,12 @@ export const CategoriesView: FC = () => {
                 setProducts(getCategoryQuery.data?.getCategory.products);
         }, [getCategoryQuery.data?.getCategory]);
 
-        // const toggleIsShownHandler = async (product: Product, flag: boolean) => {
-        //     product.isShown = flag;
-        //     // @ts-ignore
-        //     const {key, categories, ...rest} = product;
-        //     const files: updateFileInput[] = product.files.map(file => {
-        //         const {fileImage, filePath, ...rest} = file;
-        //         return rest;
-        //     });
-        //     const response = await updateProduct({
-        //         variables: {
-        //             updateProductInput: {
-        //                 ...rest,
-        //                 files: files,
-        //             },
-        //         },
-        //     });
-        //     if (!response.errors) {
-        //         const newProducts = products.map(product => (product.id === response.data?.updateProduct.id ? response.data.updateProduct : product));
-        //         setProducts(newProducts);
-        //     } else {
-        //         console.log(response.errors);
-        //     }
-        // };
-
         const columns = [
             {
                 title: 'Id',
                 dataIndex: 'id',
                 render: (text: any, product: Product) => <>#{product.id}</>,
             },
-            // {
-            //     title: 'Is shown',
-            //     dataIndex: 'isShown',
-            //     render: (text: any, product: Product) => (
-            //         <Switch size={'small'} checked={product.isShown}
-            //                 onChange={(flag) => toggleIsShownHandler(product, flag)}/>
-            //     ),
-            // },
             {
                 title: 'Image',
                 dataIndex: 'fileImage',
@@ -105,8 +70,9 @@ export const CategoriesView: FC = () => {
             const response = await removeCategory({variables: {slug: slug}});
             if (!response.errors)
                 navigate(`../`);
-            else
-                console.log(response.errors);
+            else {
+                response.errors?.forEach(error => message.error(error.message));
+            }
         };
 
         if (!categorySlug)
@@ -151,7 +117,7 @@ export const CategoriesView: FC = () => {
                 <Card title="Description" className={s.description}>{category && parse(category?.description)}</Card>
                 <Table
                     title={() => <div className={s.productsTitle}>Products</div>}
-                    loading={updateProductOptions.loading}
+                    loading={removeCategoryOptions.loading}
                     columns={columns}
                     dataSource={products.map(products => ({key: products.id, ...products}))}
                     pagination={false}

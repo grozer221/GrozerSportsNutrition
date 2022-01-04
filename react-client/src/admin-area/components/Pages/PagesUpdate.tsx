@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Button, Form, Input, Switch} from 'antd';
+import {Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import s from './PagesUpdate.module.css';
@@ -47,8 +47,9 @@ export const PagesUpdate: FC = () => {
         });
         if (response.data && !response.errors) {
             navigate('..');
-        } else
-            console.log('error:', response.errors);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     if (!params.id)

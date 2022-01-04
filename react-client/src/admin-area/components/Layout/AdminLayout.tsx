@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {useSelector} from 'react-redux';
 import {s_getIsAuth} from '../../../redux/auth-selectors';
 import {Layout} from 'antd';
-import {AppMenu} from '../Menu/AppMenu';
+import {MyMenu} from '../MyMenu/MyMenu';
 import {MyBreadcrumb} from '../../../components/MyBreadcrumb/MyBreadcrumb';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Home} from '../Home/Home';
@@ -25,7 +25,7 @@ export const AdminLayout: FC = () => {
 
     return (
         <Layout className={s.layout}>
-            <AppMenu/>
+            <MyMenu/>
             <Layout className="site-layout">
                 <Content className={s.content}>
                     <MyBreadcrumb/>

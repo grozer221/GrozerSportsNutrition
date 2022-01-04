@@ -6,7 +6,6 @@ import {Loading} from '../../../components/Loading/Loading';
 import debounce from 'lodash.debounce';
 import {Product} from '../../../types/types';
 import {GET_CATEGORY_QUERY, GetCategoryData, GetCategoryVars} from '../../GraphQL/categories-query';
-import s from './CategoriesUpdate.module.css';
 import {PinnedProducts} from '../../../components/PinnedProducts/PinnedProducts';
 import {UPDATE_CATEGORY_MUTATION, UpdateCategoryData, UpdateCategoryVars} from '../../GraphQL/categories-mutation';
 import {
@@ -19,6 +18,9 @@ import {
 } from '../../GraphQL/products-query';
 import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
 import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+import {sizeFormItem} from '../../styles/sizeFormItem';
+
+const {Search} = Input;
 
 export const CategoriesUpdate: FC = () => {
     const params = useParams();
@@ -66,8 +68,9 @@ export const CategoriesUpdate: FC = () => {
         });
         if (response.data && !response.errors) {
             navigate('..');
-        } else
-            console.log('error:', response.errors);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     const selectProductHandler = async (value: string) => {
@@ -81,7 +84,7 @@ export const CategoriesUpdate: FC = () => {
         if (!response.errors) {
             setProducts([...products, response.data.getProductByName]);
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -103,12 +106,12 @@ export const CategoriesUpdate: FC = () => {
                 message.warning('Products with current name not found');
             }
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
-    const debouncedSearch = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
-    const handleSearch = (value: string) => debouncedSearch(value);
+    const debouncedSearchProductHandler = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
+    const searchProductHandler = (value: string) => debouncedSearchProductHandler(value);
 
     if (!categorySlug)
         return <Navigate to={'../../error'}/>;
@@ -127,16 +130,18 @@ export const CategoriesUpdate: FC = () => {
                   name: getCategoryQuery.data?.getCategory.name,
                   description: getCategoryQuery.data?.getCategory.description,
               }}>
-            <Form.Item name="id" className={s.inputId}>
-                <Input type={'hidden'} className={s.inputId}/>
+            <Form.Item name="id" style={{display: 'none'}}>
+                <Input type={'hidden'} style={{display: 'none'}}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 name="isShown"
                 label="Is shown"
             >
                 <Switch size={'small'} checked={isShown} onChange={setIsShown}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 name="name"
                 label="Name"
                 rules={[
@@ -148,23 +153,24 @@ export const CategoriesUpdate: FC = () => {
             >
                 <Input placeholder="Name"/>
             </Form.Item>
-            <Form.Item label={'Description'}>
+            <Form.Item
+                {...sizeFormItem}
+                label={'Description'}
+            >
                 <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 label="Products"
             >
-                <div className={s.productsAdd}>
-                    <AutoComplete
-                        options={options}
-                        placeholder="Find in uploaded files"
-                        onSearch={handleSearch}
-                        onSelect={selectProductHandler}
-                    />
-                    <div className={s.wrapperLoading}>
-                        {(getProductsQuery.loading || getProductByNameQuery.loading) && <Loading/>}
-                    </div>
-                </div>
+                <AutoComplete
+                    options={options}
+                    onSearch={searchProductHandler}
+                    onSelect={selectProductHandler}
+                >
+                    <Search placeholder="Find in products" enterButton
+                            loading={getProductsQuery.loading || getProductByNameQuery.loading}/>
+                </AutoComplete>
             </Form.Item>
             {products.length > 0 && (
                 <Form.Item>

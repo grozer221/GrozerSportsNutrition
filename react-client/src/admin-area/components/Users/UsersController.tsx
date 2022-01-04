@@ -1,10 +1,10 @@
-import React, {FC} from "react";
-import {Link, Route, Routes} from "react-router-dom";
-import {UsersIndex} from "./UsersIndex";
-import {Error} from "../Error/Error";
+import React, {FC} from 'react';
+import {Route, Routes} from 'react-router-dom';
+import {UsersIndex} from './UsersIndex';
+import {Error} from '../Error/Error';
 
 export const UsersController: FC = () => {
-    console.log('UsersController')
+    console.log('UsersController');
     return (
         <Routes>
             <Route path={'/'} element={<UsersIndex/>}/>
@@ -13,4 +13,4 @@ export const UsersController: FC = () => {
             <Route path={'*'} element={<Error/>}/>
         </Routes>
     );
-}
+};

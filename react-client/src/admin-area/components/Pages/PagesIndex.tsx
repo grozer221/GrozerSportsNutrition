@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Button, Divider, Switch, Table} from 'antd';
+import {Button, Divider, message, Switch, Table} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Loading} from '../../../components/Loading/Loading';
@@ -52,8 +52,9 @@ export const PagesIndex: FC = () => {
                     isShown: true,
                 },
             });
-        else
-            console.log(response.errors);
+        else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     const rowSelection = {
@@ -64,9 +65,8 @@ export const PagesIndex: FC = () => {
     };
 
     const toggleIsShownHandler = async (page: Page, flag: boolean) => {
-        page.isShown = flag;
-        // @ts-ignore
-        const {key, slug, ...rest} = page;
+        const {slug, ...rest} = page;
+        rest.isShown = flag;
         const response = await updatePage({
             variables: {
                 updatePageInput: {
@@ -78,7 +78,7 @@ export const PagesIndex: FC = () => {
             const newPages = pages.map(page => (page.id == response.data?.updatePage.id ? response.data.updatePage : page));
             setPages(newPages);
         } else {
-            console.log(response.errors);
+            response.errors.forEach(error => message.error(error.message));
         }
     };
 
@@ -150,8 +150,7 @@ export const PagesIndex: FC = () => {
                 console.log('Sorted pages: ', sortedPages);
                 response.data && setPages(response.data.updatePages);
             } else {
-                console.log(response.errors);
-
+                response.errors?.forEach(error => message.error(error.message));
             }
         }
     };
@@ -194,7 +193,7 @@ export const PagesIndex: FC = () => {
                     loading={getPagesQuery.loading || removePageOptions.loading || updatePageOptions.loading || updatePagesOptions.loading}
                     rowSelection={{...rowSelection}}
                     columns={columns}
-                    dataSource={pages.map(page => ({key: page.id, ...page}))}
+                    dataSource={pages}
                     pagination={false}
                     rowKey="id"
                     components={{

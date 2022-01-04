@@ -1,5 +1,5 @@
 import {useMutation} from '@apollo/client';
-import {Button, Form, Input, Switch} from 'antd';
+import {Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {CREATE_PAGE_MUTATION, CreatePageData, CreatePageVars} from '../../GraphQL/pages-mutation';
@@ -26,8 +26,9 @@ export const PagesCreate: FC = () => {
         });
         if (response.data && !response.errors) {
             navigate('..');
-        } else
-            console.log('error:', response.errors);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     return (
@@ -53,18 +54,6 @@ export const PagesCreate: FC = () => {
             <Form.Item label={'Text'}>
                 <WysiwygEditor text={text} setText={setText}/>
             </Form.Item>
-            {/*<Form.Item*/}
-            {/*    name="text"*/}
-            {/*    label="Text"*/}
-            {/*    rules={[*/}
-            {/*        {*/}
-            {/*            required: true,*/}
-            {/*            message: 'Please input page text',*/}
-            {/*        },*/}
-            {/*    ]}*/}
-            {/*>*/}
-            {/*    <Input placeholder="Text"/>*/}
-            {/*</Form.Item>*/}
             <Form.Item>
                 <Button type="primary" htmlType={'submit'} loading={createPageOption.loading}>
                     Create

@@ -31,8 +31,8 @@ export const App: FC = () => {
 
     return (
         <Routes>
-            <Route path="/" element={<ClientLayout/>}/>
             <Route path="admin/*" element={<AdminLayout/>}/>
+            <Route path="/*" element={<ClientLayout/>}/>
             <Route path={'admin/login'} element={<Login/>}/>
         </Routes>
     );

@@ -11,9 +11,6 @@ import { UpdatePageInput } from './dto/update-page.input';
 import { getSlug } from '../utils/get-slug';
 import { UpdatePagesInput } from './dto/update-pages.input';
 import { GetPagesInput } from './dto/get-pages.input';
-import { CurrentUser } from '../auth/auth.decorators';
-import { User } from '../users/user.entity';
-import { isModeratorOrAdmin } from '../utils/is-moderator-or-admin';
 
 @Resolver(() => Page)
 export class PagesResolver {
@@ -29,7 +26,7 @@ export class PagesResolver {
 
     @Query(() => [Page])
     async getPages(
-        @Args('getPagesInput', { type: () => GetPagesInput }) getPagesInput: GetPagesInput
+        @Args('getPagesInput', { type: () => GetPagesInput }) getPagesInput: GetPagesInput,
     ): Promise<Page[]> {
         return await this.pagesService.getAsync(getPagesInput);
     }
@@ -52,7 +49,7 @@ export class PagesResolver {
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => Page)
     async updatePage(
-        @Args('updatePageInput', { type: () => UpdatePageInput }) updatePageInput: UpdatePageInput
+        @Args('updatePageInput', { type: () => UpdatePageInput }) updatePageInput: UpdatePageInput,
     ): Promise<Page> {
         return await this.pagesService.updateAsync(updatePageInput);
     }

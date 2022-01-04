@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
 import {Loading} from '../../../components/Loading/Loading';
-import {Card, Tag} from 'antd';
+import {Card, message, Tag} from 'antd';
 import s from './PagesView.module.css';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../GraphQL/pages-query';
@@ -23,8 +23,9 @@ export const PagesView: FC = () => {
         const response = await removePage({variables: {id: id}});
         if (response.data)
             navigate(`../`);
-        else
-            console.log(response.errors);
+        else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     if (!params.id)

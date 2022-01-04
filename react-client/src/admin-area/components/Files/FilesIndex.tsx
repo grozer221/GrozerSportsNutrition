@@ -3,7 +3,7 @@ import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {GET_FILES_QUERY, GetFilesData, GetFilesVars} from '../../GraphQL/files-query';
 import {Loading} from '../../../components/Loading/Loading';
-import {Avatar, Button, Divider, Table} from 'antd';
+import {Avatar, Button, Divider, message, Table} from 'antd';
 import {FileType} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {REMOVE_FILE_MUTATION, RemoveFileData, RemoveFileVars} from '../../GraphQL/files-mutation';
@@ -39,7 +39,7 @@ export const FilesIndex: FC = () => {
 
     const onRemove = async (id: number) => {
         const response = await removeFile({variables: {id: id}});
-        if (response.data) {
+        if (response.data && !response.errors) {
             dispatch(actions.setLoading(true));
             if (searchFileName.trim() === '') {
                 await refetch({
@@ -60,10 +60,10 @@ export const FilesIndex: FC = () => {
                     },
                 });
             }
-
             dispatch(actions.setLoading(false));
-        } else
-            console.log(response.errors);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     const rowSelection = {

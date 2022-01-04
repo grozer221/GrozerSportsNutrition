@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Avatar, Button, Carousel, Divider, Switch, Table, Tag} from 'antd';
+import {Avatar, Button, Carousel, Divider, message, Switch, Table, Tag} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Loading} from '../../../components/Loading/Loading';
@@ -38,8 +38,9 @@ export const ProductsIndex: FC = () => {
         const response = await removeProduct({variables: {slug: slug}});
         if (response.data)
             await getProductsQuery.refetch({getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}});
-        else
-            console.log(response.errors);
+        else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     const rowSelection = {
@@ -50,9 +51,8 @@ export const ProductsIndex: FC = () => {
     };
 
     const toggleIsShownHandler = async (product: Product, flag: boolean) => {
-        product.isShown = flag;
-        // @ts-ignore
-        const {key, slug, categories, ...rest} = product;
+        const {slug, categories, ...rest} = product;
+        rest.isShown = flag;
         const files: updateFileInput[] = product.files.map(file => {
             const {fileImage, filePath, ...rest} = file;
             return rest;
@@ -69,7 +69,7 @@ export const ProductsIndex: FC = () => {
             const newProducts = productsObj.products.map(product => (product.id == response.data?.updateProduct.id ? response.data.updateProduct : product));
             setProductsObj({products: newProducts, total: productsObj.total});
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -113,7 +113,7 @@ export const ProductsIndex: FC = () => {
             key: 'categories',
             render: (text: any, product: Product) => (
                 <div className={s.categories}>
-                    {product?.categories?.length && product.categories.map(category => (
+                    {product?.categories?.length > 0 && product.categories.map(category => (
                         <Tag color="cyan" key={category.id}>
                             <Link to={`../../categories/${category.slug}`}>{category.name} </Link>
                         </Tag>
@@ -146,7 +146,7 @@ export const ProductsIndex: FC = () => {
         return <Loading/>;
 
     if (getProductsQuery.error)
-        console.log(getProductsQuery.error);
+        message.error(getProductsQuery.error.message);
 
     return (
         <>
@@ -180,6 +180,7 @@ export const ProductsIndex: FC = () => {
                             });
                         },
                     }}
+                    rowKey={'id'}
                 />
             </div>
         </>

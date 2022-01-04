@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Button, Divider, Switch, Table} from 'antd';
+import {Button, Divider, message, Switch, Table} from 'antd';
 import {useMutation, useQuery} from '@apollo/client';
 import {
     GET_CATEGORIES_QUERY,
@@ -49,13 +49,12 @@ export const CategoriesIndex: FC = () => {
         if (!response.errors)
             await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake}});
         else
-            console.log(response.errors);
+            response.errors.forEach(error => message.error(error.message));
     };
 
     const toggleIsShownHandler = async (category: Category, flag: boolean) => {
-        category.isShown = flag;
-        // @ts-ignore
-        const {key, slug, ...rest} = category;
+        const {slug, ...rest} = category;
+        rest.isShown = flag;
         const productsWithoutFiles: updateProductWithoutFilesInput[] = rest.products?.map(product => {
             const {files, slug, ...restProduct} = product;
             return restProduct;
@@ -72,9 +71,8 @@ export const CategoriesIndex: FC = () => {
             const newCategories = categoriesObj.categories.map(category => (category.id == response.data?.updateCategory.id ? response.data.updateCategory : category));
             setCategoriesObj({categories: newCategories, total: categoriesObj.total});
         } else {
-            console.log(response.errors);
+            response.errors.forEach(error => message.error(error.message));
         }
-
     };
 
     const columns = [
@@ -126,8 +124,7 @@ export const CategoriesIndex: FC = () => {
                     loading={getCategoriesQuery.loading || removeCategoryOptions.loading || updateCategoryOptions.loading}
                     rowSelection={{...rowSelection}}
                     columns={columns}
-                    dataSource={categoriesObj.categories.map(category => ({key: category.id, ...category}))}
-
+                    dataSource={categoriesObj.categories}
                     pagination={{
                         total: categoriesObj.total,
                         onChange: async (pageNumber: number) => {
@@ -136,6 +133,7 @@ export const CategoriesIndex: FC = () => {
                             await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake}});
                         },
                     }}
+                    rowKey={'id'}
                 />
             </div>
         </>

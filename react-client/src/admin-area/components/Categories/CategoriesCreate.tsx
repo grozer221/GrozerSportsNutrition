@@ -3,9 +3,7 @@ import {AutoComplete, Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import debounce from 'lodash.debounce';
-import {Loading} from '../../../components/Loading/Loading';
 import {Product} from '../../../types/types';
-import s from './CategoriesCreate.module.css';
 import {PinnedProducts} from '../../../components/PinnedProducts/PinnedProducts';
 import {
     GET_PRODUCT_BY_NAME_QUERY,
@@ -17,7 +15,10 @@ import {
 } from '../../GraphQL/products-query';
 import {CREATE_CATEGORY_MUTATION, CreateCategoryData, CreateCategoryVars} from '../../GraphQL/categories-mutation';
 import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
-import {updateProductInput, updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
+import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
+import {sizeFormItem} from '../../styles/sizeFormItem';
+
+const {Search} = Input;
 
 export const CategoriesCreate: FC = () => {
     const [createCategory, createCategoryOptions] = useMutation<CreateCategoryData, CreateCategoryVars>(CREATE_CATEGORY_MUTATION);
@@ -48,8 +49,9 @@ export const CategoriesCreate: FC = () => {
         });
         if (!response.errors) {
             navigate('..');
-        } else
-            console.log(response.errors);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     const onSearch = async (value: string) => {
@@ -70,7 +72,7 @@ export const CategoriesCreate: FC = () => {
                 message.warning('Products with current name not found');
             }
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -88,19 +90,21 @@ export const CategoriesCreate: FC = () => {
         if (!response.errors) {
             setProducts([...products, response.data.getProductByName]);
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
     return (
         <Form name="createCategory" onFinish={onFinish}>
             <Form.Item
+                {...sizeFormItem}
                 name="isShown"
                 label="Is shown"
             >
                 <Switch size={'small'} checked={isShown} onChange={setIsShown}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 name="name"
                 label="Name"
                 rules={[
@@ -112,23 +116,23 @@ export const CategoriesCreate: FC = () => {
             >
                 <Input placeholder="Name"/>
             </Form.Item>
-            <Form.Item label={'Description'}>
+            <Form.Item
+                {...sizeFormItem}
+                label={'Description'}
+            >
                 <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 label="Products"
             >
-                <div className={s.photosAdd}>
-                    <AutoComplete
-                        options={options}
-                        placeholder="Search in products"
-                        onSearch={handleSearch}
-                        onSelect={selectProductHandler}
-                    />
-                    <div className={s.wrapperLoading}>
-                        {(getProductsQuery.loading || getProductByName.loading) && <Loading/>}
-                    </div>
-                </div>
+                <AutoComplete
+                    options={options}
+                    onSearch={handleSearch}
+                    onSelect={selectProductHandler}
+                >
+                    <Search placeholder="Search in products" enterButton loading={getProductsQuery.loading || getProductByName.loading}/>
+                </AutoComplete>
             </Form.Item>
             {products.length > 0 && (
                 <Form.Item>

@@ -45,6 +45,7 @@ export const PinnedUploadedFiles: React.FC<Props> = ({loading, files, setFiles})
         },
         {
             title: 'Actions',
+            dataIndex: 'actions',
             key: 'actions',
             render: (text: any, file: FileType) => (
                 <ButtonsVUR onRemove={() => clickRemoveHandler(file)}/>
@@ -53,6 +54,6 @@ export const PinnedUploadedFiles: React.FC<Props> = ({loading, files, setFiles})
     ];
 
     return (
-        <Table columns={columns} dataSource={files} pagination={false} loading={loading}/>
+        <Table columns={columns} dataSource={files} pagination={false} loading={loading} rowKey={'id'}/>
     );
 };

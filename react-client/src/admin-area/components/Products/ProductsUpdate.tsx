@@ -3,7 +3,6 @@ import {AutoComplete, Button, Form, Input, message, Space, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../GraphQL/products-mutation';
-import s from './ProductsUpdate.module.css';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
 import {Loading} from '../../../components/Loading/Loading';
 import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
@@ -28,7 +27,9 @@ import {
     GetCategoryByNameData,
     GetCategoryByNameVars,
 } from '../../GraphQL/categories-query';
-import {PinnedCategories} from '../../../components/PinnedCategories/PinnedCategories';
+import {sizeFormItem} from '../../styles/sizeFormItem';
+
+const {Search} = Input;
 
 export const ProductsUpdate: FC = () => {
     const params = useParams();
@@ -90,8 +91,9 @@ export const ProductsUpdate: FC = () => {
         });
         if (response.data && !response.errors) {
             navigate('..');
-        } else
-            console.log('error:', response.errors);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     const selectPhotoHandler = async (value: string) => {
@@ -105,7 +107,7 @@ export const ProductsUpdate: FC = () => {
         if (!response.errors) {
             setPhotos([...photos, response.data.getFileByName]);
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -128,7 +130,7 @@ export const ProductsUpdate: FC = () => {
                 message.warning('Photos with current name not found');
             }
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -147,7 +149,7 @@ export const ProductsUpdate: FC = () => {
         if (!response.errors) {
             setCategories([...categories, response.data.getCategoryByName]);
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -168,7 +170,7 @@ export const ProductsUpdate: FC = () => {
                 message.warning('Categories with current name not found');
             }
         } else {
-            console.log(response.errors);
+            response.errors?.forEach(error => message.error(error.message));
         }
     };
 
@@ -194,16 +196,18 @@ export const ProductsUpdate: FC = () => {
                   description: getProductQuery.data?.getProduct.description,
                   characteristics: getProductQuery.data?.getProduct.characteristics,
               }}>
-            <Form.Item name="id" className={s.inputId}>
-                <Input type={'hidden'} className={s.inputId}/>
+            <Form.Item name="id" style={{display: 'none'}}>
+                <Input type={'hidden'} style={{display: 'none'}}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 name="isShown"
                 label="Is shown"
             >
                 <Switch size={'small'} checked={isShown} onChange={setIsShown}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 name="name"
                 label="Name"
                 rules={[
@@ -216,19 +220,17 @@ export const ProductsUpdate: FC = () => {
                 <Input placeholder="Name"/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 label="Photos"
             >
-                <div className={s.photosAdd}>
-                    <AutoComplete
-                        options={searchedPhotosNames}
-                        placeholder="Find in uploaded files"
-                        onSearch={searchPhotoHandler}
-                        onSelect={selectPhotoHandler}
-                    />
-                    <div className={s.wrapperLoading}>
-                        {getFileByName.loading && <Loading/>}
-                    </div>
-                </div>
+                <AutoComplete
+                    options={searchedPhotosNames}
+                    onSearch={searchPhotoHandler}
+                    onSelect={selectPhotoHandler}
+                >
+                    <Search placeholder="Find in uploaded files" enterButton
+                            loading={getFileByName.loading || getFilesQuery.loading}/>
+                </AutoComplete>
             </Form.Item>
             {photos.length > 0 && (
                 <Form.Item>
@@ -237,6 +239,7 @@ export const ProductsUpdate: FC = () => {
                 </Form.Item>
             )}
             <Form.Item
+                {...sizeFormItem}
                 name="quantity"
                 label="Quantity"
                 rules={[
@@ -249,6 +252,7 @@ export const ProductsUpdate: FC = () => {
                 <Input placeholder="Quantity" type={'number'}/>
             </Form.Item>
             <Form.Item
+                {...sizeFormItem}
                 name="priceUAH"
                 label="Price"
                 rules={[
@@ -260,7 +264,10 @@ export const ProductsUpdate: FC = () => {
             >
                 <Input placeholder="Price" type={'number'} addonAfter="UAH"/>
             </Form.Item>
-            <Form.Item label={'Description'}>
+            <Form.Item
+                {...sizeFormItem}
+                label={'Description'}
+            >
                 <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
             {/*<Form.Item*/}

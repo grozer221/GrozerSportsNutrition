@@ -15,7 +15,7 @@ import {
     TeamOutlined,
     UserOutlined,
 } from '@ant-design/icons';
-import s from './AppMenu.module.css';
+import s from './MyMenu.module.css';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {s_getAuthData} from '../../../redux/auth-selectors';
@@ -25,7 +25,7 @@ const {Sider} = Layout;
 const {SubMenu} = Menu;
 
 
-export const AppMenu: FC = () => {
+export const MyMenu: FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const authData = useSelector(s_getAuthData);
     const dispatch = useDispatch();
@@ -67,12 +67,12 @@ export const AppMenu: FC = () => {
                             Brands
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="51">
+                    <Menu.Item key="60">
                         <Link to={'/admin/goals'}>
                             Goals
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="60" icon={<PercentageOutlined/>}>
+                    <Menu.Item key="70" icon={<PercentageOutlined/>}>
                         <Link to={'/admin/discounts'}>
                             Discounts
                         </Link>
@@ -98,15 +98,15 @@ export const AppMenu: FC = () => {
                         Pages
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="111" icon={<SettingOutlined/>}>
+                <Menu.Item key="120" icon={<SettingOutlined/>}>
                     <Link to={'/admin/settings'}>
                         Settings
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="120" icon={<UserOutlined/>}>
+                <Menu.Item key="130" icon={<UserOutlined/>}>
                     <Link to={'/'}>Client side</Link>
                 </Menu.Item>
-                <Menu.Item key="130" icon={<LogoutOutlined/>} onClick={() => dispatch(logout())}>
+                <Menu.Item key="140" icon={<LogoutOutlined/>} onClick={() => dispatch(logout())}>
                     Logout
                 </Menu.Item>
                 <div style={{height: '48px'}}/>

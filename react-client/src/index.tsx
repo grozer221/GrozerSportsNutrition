@@ -17,12 +17,14 @@ const client = new ApolloClient({
     },
     defaultOptions: {
         watchQuery: {
-            fetchPolicy: 'no-cache',
+            fetchPolicy: 'network-only',
             errorPolicy: 'all',
+            notifyOnNetworkStatusChange: true,
         },
         query: {
-            fetchPolicy: 'no-cache',
+            fetchPolicy: 'network-only',
             errorPolicy: 'all',
+            notifyOnNetworkStatusChange: true,
         },
     },
     typeDefs: schema,

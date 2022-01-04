@@ -5,8 +5,10 @@ import {Home} from '../Home/Home';
 import {Error} from '../Error/Error';
 import {Pages} from '../Pages/Pages';
 import {MyBreadcrumb} from '../../components/MyBreadcrumb/MyBreadcrumb';
+import {EditableTable} from './Editable';
 
 export const ClientLayout: FC = () => {
+    console.log('client layout');
     return (
         <>
             <div className={s.wrapperPages}>
@@ -19,6 +21,7 @@ export const ClientLayout: FC = () => {
                 <div>
                     <Routes>
                         <Route path={'/'} element={<Home/>}/>
+                        <Route path={'/editable'} element={<EditableTable/>}/>
                         <Route path={'*'} element={<Error/>}/>
                     </Routes>
                 </div>

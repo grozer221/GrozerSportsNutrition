@@ -1,4 +1,4 @@
-import {Avatar, Button, Form} from 'antd';
+import {Avatar, Button, Form, message} from 'antd';
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {CREATE_FILE_MUTATION, CreateFileData, CreateFileVars} from '../../GraphQL/files-mutation';
@@ -12,11 +12,10 @@ import {s_getLoading, s_getUploadedFiles} from '../../../redux/files.selectors';
 
 export const FilesCreate: FC = () => {
     const dispatch = useDispatch();
-    const [createFile, {
-        loading,
-    }] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION);
+    const [createFile, createFileOptions] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION);
     const navigate = useNavigate();
     const [files, setFiles] = useState([] as File[]);
+    const [filesNames, setFilesNames] = useState([] as string[]);
     const uploadedFiles = useSelector(s_getUploadedFiles);
     const loadingUpload = useSelector(s_getLoading);
 
@@ -27,8 +26,9 @@ export const FilesCreate: FC = () => {
                 const response = await createFile({
                     variables: {createFileInput: {...file}},
                 });
-                if (response.errors)
-                    console.log(response.errors);
+                if (response.errors) {
+                    response.errors?.forEach(error => message.error(error.message));
+                }
             });
             dispatch(actions.setUploadedFiles([]));
             navigate('..');
@@ -43,7 +43,9 @@ export const FilesCreate: FC = () => {
 
     const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
-            setFiles([...files, ...Array.from(e.target.files)]);
+            const newFiles = Array.from(e.target.files);
+            setFilesNames([...filesNames, ...newFiles.map(file => file.name)]);
+            setFiles([...files, ...newFiles]);
         }
     };
 
@@ -59,11 +61,12 @@ export const FilesCreate: FC = () => {
             {files.length > 0 && (
                 <>
                     <Form.Item>
-                        <PinnedFiles loading={loading || loadingUpload} files={files} setFiles={setFiles}/>
+                        <PinnedFiles loading={createFileOptions.loading || loadingUpload} files={files}
+                                     setFiles={setFiles}/>
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType={'submit'} loading={loading || loadingUpload}>
+                        <Button type="primary" htmlType={'submit'} loading={createFileOptions.loading || loadingUpload}>
                             Create
                         </Button>
                     </Form.Item>

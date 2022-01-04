@@ -3,7 +3,7 @@ import {Link, Navigate, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
 import {Loading} from '../../../components/Loading/Loading';
-import {Avatar, Card, Carousel, Table, Tag} from 'antd';
+import {Avatar, Card, Carousel, message, Table, Tag} from 'antd';
 import s from './ProductsView.module.css';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {REMOVE_PRODUCT_MUTATION, RemoveProductData, RemoveProductVars} from '../../GraphQL/products-mutation';
@@ -34,8 +34,9 @@ export const ProductsView: FC = () => {
         const response = await removeProduct({variables: {slug: slug}});
         if (response.data)
             navigate(`../`);
-        else
-            console.log(response.errors);
+        else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
     };
 
     if (!productSlug)

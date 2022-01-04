@@ -23,14 +23,6 @@ export const PinnedProducts: React.FC<Props> = ({loading, products, setProducts}
             dataIndex: 'id',
             render: (text: any, product: Product) => <>#{product.id}</>,
         },
-        // {
-        //     title: 'Is shown',
-        //     dataIndex: 'isShown',
-        //     render: (text: any, product: Product) => (
-        //         <Switch size={'small'} checked={product.isShown}
-        //                 onChange={(flag) => toggleIsShownHandler(product, flag)}/>
-        //     ),
-        // },
         {
             title: 'Image',
             dataIndex: 'fileImage',
@@ -64,6 +56,6 @@ export const PinnedProducts: React.FC<Props> = ({loading, products, setProducts}
     ];
 
     return (
-        <Table columns={columns} dataSource={products} pagination={false} loading={loading}/>
+        <Table columns={columns} dataSource={products} pagination={false} loading={loading} rowKey={'id'}/>
     );
 };
