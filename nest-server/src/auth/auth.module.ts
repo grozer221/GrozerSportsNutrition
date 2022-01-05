@@ -6,16 +6,20 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthResolver } from './auth.resolver';
-import { jwtConstants } from './auth.constants';
+import { config } from 'dotenv';
+import { MailModule } from '../mail/mail.module';
+
+config();
 
 @Module({
     imports: [
         UsersModule,
         PassportModule,
         JwtModule.register({
-            secret: jwtConstants.secret,
-            signOptions: { expiresIn: jwtConstants.expiresIn },
+            secret: process.env.JWT_SECRET,
+            signOptions: { expiresIn: process.env.AUTH_JWT_EXPIRES_IN },
         }),
+        MailModule,
     ],
     providers: [
         AuthService,
@@ -23,7 +27,9 @@ import { jwtConstants } from './auth.constants';
         LocalStrategy,
         JwtStrategy,
     ],
-    exports: [AuthService],
+    exports: [
+        AuthService,
+    ],
 })
 
 export class AuthModule {

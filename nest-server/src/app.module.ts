@@ -12,6 +12,7 @@ import { FilesModule } from './files/files.module';
 import { CategoriesModule } from './categories/categories.module';
 import { PagesModule } from './pages/pages.module';
 import { OrdersModule } from './orders/orders.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
 	imports: [
@@ -49,6 +50,7 @@ import { OrdersModule } from './orders/orders.module';
 		CategoriesModule,
 		PagesModule,
 		OrdersModule,
+		MailModule,
 	],
 	providers: [
 		AppService,

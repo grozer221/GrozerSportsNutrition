@@ -1,41 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="prettified forms, added search inside autocomplete">
+    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added editing files names before upload">
+      <change beforePath="$PROJECT_DIR$/../nest-server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/nest-cli.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/nest-cli.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/enums/order-by-type.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/files.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/files.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/pages/dto/get-pages.input.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/pages/pages.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/pages/pages.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/pages/pages.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/pages/pages.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/pages/pages.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/pages/pages.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema.gql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/strategies/jwt.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/strategies/jwt.strategy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/pages-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/pages-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/GraphQL/pages-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/GraphQL/pages-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesController.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesUpdate.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesUpdate.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/files-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/files-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/Layout/ClientLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/Layout/ClientLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/Layout/Editable.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/Pages/Pages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/Pages/Pages.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PinnedFiles/PinnedFiles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/files-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/files-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +127,7 @@
       <workItem from="1641211868137" duration="11906000" />
       <workItem from="1641284205451" duration="17479000" />
       <workItem from="1641328767743" duration="2387000" />
-      <workItem from="1641372983253" duration="10244000" />
+      <workItem from="1641372983253" duration="12804000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>
@@ -197,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641313802316</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added editing files names before upload">
+      <created>1641385560348</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1641385560348</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +211,7 @@
     <MESSAGE value="added drag to pages and wysiwyg for text and description" />
     <MESSAGE value="added base client layout and changed get by id to get by slug" />
     <MESSAGE value="prettified forms, added search inside autocomplete" />
-    <option name="LAST_COMMIT_MESSAGE" value="prettified forms, added search inside autocomplete" />
+    <MESSAGE value="added editing files names before upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="added editing files names before upload" />
   </component>
 </project>

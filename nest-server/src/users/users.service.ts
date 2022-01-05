@@ -49,4 +49,12 @@ export class UsersService {
             where: { email },
         });
     }
+
+    async confirmEmail(email: string): Promise<User> {
+        const user = await this.getByEmailWithRolesAsync(email);
+        if (user.confirmedEmail)
+            throw new Error('Email already confirmed');
+        user.confirmedEmail = true;
+        return await this.usersRepository.save(user);
+    }
 }

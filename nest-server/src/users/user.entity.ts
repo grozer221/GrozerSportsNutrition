@@ -5,7 +5,8 @@ import {
     CreateDateColumn,
     Entity,
     JoinTable,
-    ManyToMany, OneToMany,
+    ManyToMany,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
@@ -20,6 +21,10 @@ export class User {
     @PrimaryGeneratedColumn()
     @Field(() => Int)
     id: number;
+
+    @Column('boolean', { default: false })
+    @Field(() => Boolean)
+    confirmedEmail: boolean;
 
     @Column()
     @Field()
