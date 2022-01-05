@@ -22,15 +22,7 @@ import {arrayMoveImmutable} from 'array-move';
 import {MenuOutlined} from '@ant-design/icons';
 
 export const PagesIndex: FC = () => {
-    const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY, {
-        variables: {
-            getPagesInput: {
-                orderBy: 'sorting',
-                orderByType: 'ASC',
-                isShown: true,
-            },
-        },
-    });
+    const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY);
     const [pages, setPages] = useState<Page[]>([]);
     const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION);
     const [updatePage, updatePageOptions] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION);
@@ -42,16 +34,10 @@ export const PagesIndex: FC = () => {
             setPages(getPagesQuery.data.getPages);
     }, [getPagesQuery.data?.getPages]);
 
-    const onRemove = async (id: number) => {
-        const response = await removePage({variables: {id: id}});
+    const onRemove = async (slug: string) => {
+        const response = await removePage({variables: {slug: slug}});
         if (response.data)
-            await getPagesQuery.refetch({
-                getPagesInput: {
-                    orderBy: 'sorting',
-                    orderByType: 'ASC',
-                    isShown: true,
-                },
-            });
+            await getPagesQuery.refetch();
         else {
             response.errors?.forEach(error => message.error(error.message));
         }
@@ -89,7 +75,11 @@ export const PagesIndex: FC = () => {
             dataIndex: 'sort',
             width: 30,
             className: 'drag-visible',
-            render: () => <DragHandle/>,
+            render: () => (
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <DragHandle/>
+                </div>
+            ),
         },
         {
             title: 'Id',
@@ -116,8 +106,8 @@ export const PagesIndex: FC = () => {
             dataIndex: 'actions',
             key: 'actions',
             render: (text: any, page: Page) => (
-                <ButtonsVUR viewUrl={`${page.id}`} updateUrl={`update/${page.id}`}
-                            onRemove={() => onRemove(page.id)}/>
+                <ButtonsVUR viewUrl={`${page.slug}`} updateUrl={`update/${page.slug}`}
+                            onRemove={() => onRemove(page.slug)}/>
             ),
         },
     ];

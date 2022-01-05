@@ -69,10 +69,10 @@ export const UPDATE_PAGES_MUTATION = gql`
 
 // DELETE PAGE
 export type RemovePageData = { removePage: boolean }
-export type RemovePageVars = { id: number }
+export type RemovePageVars = { slug: string }
 
 export const REMOVE_PAGE_MUTATION = gql`
-    mutation RemovePage($id: Int!){
-        removePage(id: $id)
+    mutation RemovePage($slug: String!){
+        removePage(slug: $slug)
     }
 `;

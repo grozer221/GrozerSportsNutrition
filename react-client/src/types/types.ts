@@ -71,5 +71,9 @@ export type Page = {
     sorting: number,
 }
 
-
 export type OrderByType = 'ASC' | 'DESC';
+
+export type FileName = {
+    originalName: string,
+    newName: string,
+}

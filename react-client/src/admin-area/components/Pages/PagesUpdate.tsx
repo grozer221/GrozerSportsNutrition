@@ -2,7 +2,6 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import s from './PagesUpdate.module.css';
 import {Loading} from '../../../components/Loading/Loading';
 import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../GraphQL/pages-query';
 import {UPDATE_PAGE_MUTATION, UpdatePageData, UpdatePageVars} from '../../GraphQL/pages-mutation';
@@ -10,10 +9,10 @@ import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
 
 export const PagesUpdate: FC = () => {
     const params = useParams();
-    const pageId = params.id ? parseInt(params.id) : 0;
+    const pageSlug = params.slug || '';
     const getPageQuery = useQuery<GetPageData, GetPageVars>(
         GET_PAGE_QUERY,
-        {variables: {id: pageId}},
+        {variables: {slug: pageSlug}},
     );
     const [updatePage] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION);
     const navigate = useNavigate();
@@ -52,14 +51,11 @@ export const PagesUpdate: FC = () => {
         }
     };
 
-    if (!params.id)
+    if (!pageSlug || getPageQuery.error)
         return <Navigate to={'../../error'}/>;
 
     if (getPageQuery.loading)
         return <Loading/>;
-
-    if (getPageQuery.error)
-        console.log(getPageQuery.error);
 
     return (
         <Form name="updateProduct" onFinish={onFinish}
@@ -68,14 +64,13 @@ export const PagesUpdate: FC = () => {
                   name: getPageQuery.data?.getPage.name,
                   sorting: getPageQuery.data?.getPage.sorting,
               }}>
-            <Form.Item name="id" className={s.inputId}>
-                <Input type={'hidden'} className={s.inputId}/>
+            <Form.Item name="id" style={{display: 'none'}}>
+                <Input type={'hidden'}/>
             </Form.Item>
-            <Form.Item name="sorting" className={s.inputId}>
-                <Input type={'hidden'} className={s.inputId}/>
+            <Form.Item name="sorting" style={{display: 'none'}}>
+                <Input type={'hidden'}/>
             </Form.Item>
             <Form.Item
-                name="isShown"
                 label="Is shown"
             >
                 <Switch size={'small'} checked={isShown} onChange={setIsShown}/>

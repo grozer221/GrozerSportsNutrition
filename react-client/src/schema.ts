@@ -127,8 +127,8 @@ export const schema = gql`
         getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
         getCategory(slug: String!): Category!
         getCategoryByName(name: String!): Category!
-        getPages(getPagesInput: GetPagesInput!): [Page!]!
-        getPage(id: Int!): Page!
+        getPages: [Page!]!
+        getPage(slug: String!): Page!
         getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
         getOrder(id: Int!): Order!
     }
@@ -161,21 +161,6 @@ export const schema = gql`
         skip: Int!
     }
 
-    input GetPagesInput {
-        orderBy: GetPagesOrderBy!
-        orderByType: OrderByType!
-        isShown: Boolean!
-    }
-
-    enum GetPagesOrderBy {
-        sorting
-    }
-
-    enum OrderByType {
-        ASC
-        DESC
-    }
-
     input GetOrdersInput {
         take: Int!
         skip: Int!
@@ -196,7 +181,7 @@ export const schema = gql`
         createPage(createPageInput: CreatePageInput!): Page!
         updatePage(updatePageInput: UpdatePageInput!): Page!
         updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
-        removePage(id: Int!): Boolean!
+        removePage(slug: String!): Boolean!
         createOrder(createOrderInput: CreateOrderInput!): Order!
         updateOrder(updateOrderInput: UpdateOrderInput!): Order!
         removeOrder(id: Int!): Boolean!

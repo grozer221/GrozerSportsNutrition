@@ -8,15 +8,7 @@ import {RoleName} from '../../types/types';
 import s from './Pages.module.css';
 
 export const Pages: FC = () => {
-    const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY, {
-        variables: {
-            getPagesInput: {
-                orderBy: 'sorting',
-                orderByType: 'ASC',
-                isShown: true,
-            },
-        },
-    });
+    const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY);
     const authData = useSelector(s_getAuthData);
 
     return (

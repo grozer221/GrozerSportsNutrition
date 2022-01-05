@@ -30,11 +30,6 @@ export class ProductsResolver {
         return await this.productsService.getCategoriesByProductId(product.id);
     }
 
-    // @ResolveField(() => String)
-    // async slug(@Parent() product: Product): Promise<string> {
-    //     return getSlug(product.name);
-    // }
-
     @Query(() => GetProductsResponse)
     async getProducts(
         @Args('getProductsInput', { type: () => GetProductsInput }) getProductsInput: GetProductsInput,

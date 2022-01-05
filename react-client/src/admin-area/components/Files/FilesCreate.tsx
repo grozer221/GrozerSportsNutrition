@@ -9,13 +9,16 @@ import {PlusOutlined} from '@ant-design/icons';
 import s from './FilesCreate.module.css';
 import {actions, upload} from '../../../redux/files-reducer';
 import {s_getLoading, s_getUploadedFiles} from '../../../redux/files.selectors';
+import {FileName} from '../../../types/types';
+
+
 
 export const FilesCreate: FC = () => {
     const dispatch = useDispatch();
     const [createFile, createFileOptions] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION);
     const navigate = useNavigate();
     const [files, setFiles] = useState([] as File[]);
-    const [filesNames, setFilesNames] = useState([] as string[]);
+    const [filesNames, setFilesNames] = useState([] as FileName[]);
     const uploadedFiles = useSelector(s_getUploadedFiles);
     const loadingUpload = useSelector(s_getLoading);
 
@@ -37,14 +40,14 @@ export const FilesCreate: FC = () => {
 
     const onFinish = async () => {
         if (files.length) {
-            dispatch(upload(files));
+            dispatch(upload(files, filesNames));
         }
     };
 
     const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
             const newFiles = Array.from(e.target.files);
-            setFilesNames([...filesNames, ...newFiles.map(file => file.name)]);
+            setFilesNames([...filesNames, ...newFiles.map(file => ({newName: file.name, originalName: file.name}))]);
             setFiles([...files, ...newFiles]);
         }
     };
@@ -62,7 +65,7 @@ export const FilesCreate: FC = () => {
                 <>
                     <Form.Item>
                         <PinnedFiles loading={createFileOptions.loading || loadingUpload} files={files}
-                                     setFiles={setFiles}/>
+                                     setFiles={setFiles} filesNames={filesNames} setFilesNames={setFilesNames}/>
                     </Form.Item>
 
                     <Form.Item>

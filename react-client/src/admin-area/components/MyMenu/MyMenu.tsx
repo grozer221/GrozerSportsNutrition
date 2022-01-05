@@ -35,8 +35,8 @@ export const MyMenu: FC = () => {
             <div className={s.logo}/>
             <div className={s.userInfo}>
                 <div className={s.userFirstLastName}>
-                    <span>{authData?.user.firstName}</span>
-                    <span>{authData?.user.lastName}</span>
+                    <span className={s.name}>{authData?.user.firstName}</span>
+                    <span className={s.name}>{authData?.user.lastName}</span>
                 </div>
                 <div className={s.roles}>
                     {authData?.user.roles.map(role => (

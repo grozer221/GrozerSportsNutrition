@@ -15,7 +15,7 @@ import debounce from 'lodash.debounce';
 import Search from 'antd/es/input/Search';
 
 export const FilesIndex: FC = () => {
-    const {loading, error, data, refetch} = useQuery<GetFilesData, GetFilesVars>(
+    const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(
         GET_FILES_QUERY,
         {
             variables: {
@@ -42,7 +42,7 @@ export const FilesIndex: FC = () => {
         if (response.data && !response.errors) {
             dispatch(actions.setLoading(true));
             if (searchFileName.trim() === '') {
-                await refetch({
+                await getFilesQuery.refetch({
                     getFilesInput: {
                         skip: pageSkip,
                         take: pageTake,
@@ -134,10 +134,12 @@ export const FilesIndex: FC = () => {
     const debouncedSearch = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => debouncedSearch(e.target.value);
 
-    if (loading)
+    if (getFilesQuery.loading)
         return <Loading/>;
-    if (error)
-        console.log(error);
+
+    if (getFilesQuery.error) {
+        message.error(getFilesQuery.error.message);
+    }
 
     return (
         <>
@@ -148,25 +150,25 @@ export const FilesIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <Search placeholder="Search" onChange={handleSearch} enterButton className={s.search}/>
+                <Search placeholder="Search" onChange={handleSearch} enterButton className={s.search} loading={searchFilesQuery.loading}/>
             </div>
-            <Divider/>;
+            <Divider/>
             <div>
                 <Table
-                    loading={loading || removeFileOptions.loading || uploadLoading || searchFilesQuery.loading}
+                    loading={getFilesQuery.loading || removeFileOptions.loading || uploadLoading || searchFilesQuery.loading}
                     rowSelection={{...rowSelection}}
                     columns={columns}
                     dataSource={searchFileName.trim() === ''
-                        ? data?.getFiles.files.map(file => ({key: file.id, ...file}))
+                        ? getFilesQuery.data?.getFiles.files.map(file => ({key: file.id, ...file}))
                         : searchFilesQuery.data?.getFiles.files.map(file => ({key: file.id, ...file}))
                     }
                     pagination={{
-                        total: searchFileName.trim() === '' ? data?.getFiles.total : searchFilesQuery.data?.getFiles.total,
+                        total: searchFileName.trim() === '' ? getFilesQuery.data?.getFiles.total : searchFilesQuery.data?.getFiles.total,
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
                             setPageSkip(pageSkip);
                             if (searchFileName.trim() === '') {
-                                await refetch({
+                                await getFilesQuery.refetch({
                                     getFilesInput: {
                                         skip: pageSkip,
                                         take: pageTake,
@@ -184,7 +186,6 @@ export const FilesIndex: FC = () => {
                                     },
                                 });
                             }
-
                         },
                         // onShowSizeChange: async (pageNumber, pageSize) => {
                         //     setPageTake(pageSize);

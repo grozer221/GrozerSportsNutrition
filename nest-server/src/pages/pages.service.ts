@@ -6,7 +6,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Page } from './page.entity';
 import { UpdatePagesInput } from './dto/update-pages.input';
-import { GetPagesInput, GetPagesOrderBy } from './dto/get-pages.input';
 
 @Injectable()
 export class PagesService {
@@ -27,29 +26,22 @@ export class PagesService {
         return await this.pageRepository.save(page);
     }
 
-    async getAsync(getPagesInput: GetPagesInput): Promise<Page[]> {
-        let order: any;
-        switch (getPagesInput.orderBy) {
-            case GetPagesOrderBy.sorting:
-                order = {
-                    sorting: getPagesInput.orderByType,
-                };
-        }
-        let where: any;
-        if (!getPagesInput.isShown)
-            where = { isShown: getPagesInput.isShown };
+    async getAsync(): Promise<Page[]> {
         return await this.pageRepository.find({
-            order,
-            where,
+            order: {
+                sorting: 'ASC',
+            },
         });
     }
 
-    async getByIdAsync(id: number): Promise<Page> {
-        return await this.pageRepository.findOneOrFail(id);
+    async getBySlugAsync(slug: string): Promise<Page> {
+        return await this.pageRepository.findOneOrFail({ where: { slug: slug } });
     }
 
     async updateAsync(updatePageInput: UpdatePageInput): Promise<Page> {
-        return await this.pageRepository.save(updatePageInput);
+        const page = this.pageRepository.create(updatePageInput);
+        page.slug = getSlug(page.name);
+        return await this.pageRepository.save(page);
     }
 
     async updateAllAsync(updatePagesInput: UpdatePagesInput): Promise<Page[]> {
@@ -61,8 +53,8 @@ export class PagesService {
         return returnPages;
     }
 
-    async removeAsync(id: number): Promise<Page> {
-        const page = await this.getByIdAsync(id);
+    async removeAsync(slug: string): Promise<Page> {
+        const page = await this.getBySlugAsync(slug);
         return await this.pageRepository.remove(page);
     }
 

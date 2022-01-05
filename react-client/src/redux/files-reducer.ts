@@ -1,6 +1,6 @@
 import {BaseThunkType, InferActionsTypes} from './redux-store';
 import {filesAPI} from '../api/files-api';
-import {FileType} from '../types/types';
+import {FileName, FileType} from '../types/types';
 
 let initialState = {
     loading: false,
@@ -35,9 +35,9 @@ export const actions = {
     } as const),
 };
 
-export const upload = (files: File[]): ThunkType => async (dispatch) => {
+export const upload = (files: File[], filesNames: FileName[]): ThunkType => async (dispatch) => {
     dispatch(actions.setLoading(true));
-    let data = await filesAPI.upload(files);
+    let data = await filesAPI.upload(files, filesNames);
     if (data.result === true) {
         dispatch(actions.setUploadedFiles(data.files));
     }

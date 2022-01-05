@@ -11,7 +11,7 @@ import parse from 'html-react-parser';
 
 export const ProductsView: FC = () => {
     const params = useParams();
-    const productSlug = params.slug || ''
+    const productSlug = params.slug || '';
     const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
         {variables: {slug: productSlug}},
@@ -39,14 +39,11 @@ export const ProductsView: FC = () => {
         }
     };
 
-    if (!productSlug)
+    if (!productSlug || getProductQuery.error)
         return <Navigate to={'../../error'}/>;
 
     if (getProductQuery.loading)
         return <Loading/>;
-
-    if (getProductQuery.error)
-        console.log(getProductQuery.error);
 
     const product = getProductQuery.data?.getProduct;
     return (

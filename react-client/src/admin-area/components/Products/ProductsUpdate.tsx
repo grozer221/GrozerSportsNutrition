@@ -177,14 +177,11 @@ export const ProductsUpdate: FC = () => {
     const debouncedSearchCategoriesHandler = useCallback(debounce(nextValue => onSearchCategoryHandler(nextValue), 500), []);
     const searchCategoriesHandler = (value: string) => debouncedSearchCategoriesHandler(value);
 
-    if (!productSlug)
+    if (!productSlug || getProductQuery.error)
         return <Navigate to={'../../error'}/>;
 
     if (getProductQuery.loading)
         return <Loading/>;
-
-    if (getProductQuery.error)
-        console.log(getProductQuery.error);
 
     return (
         <Form name="updateProduct" onFinish={onFinish}
@@ -197,7 +194,7 @@ export const ProductsUpdate: FC = () => {
                   characteristics: getProductQuery.data?.getProduct.characteristics,
               }}>
             <Form.Item name="id" style={{display: 'none'}}>
-                <Input type={'hidden'} style={{display: 'none'}}/>
+                <Input type={'hidden'}/>
             </Form.Item>
             <Form.Item
                 {...sizeFormItem}

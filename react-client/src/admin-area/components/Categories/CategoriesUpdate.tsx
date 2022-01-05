@@ -113,16 +113,12 @@ export const CategoriesUpdate: FC = () => {
     const debouncedSearchProductHandler = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
     const searchProductHandler = (value: string) => debouncedSearchProductHandler(value);
 
-    if (!categorySlug)
+    if (!categorySlug || getCategoryQuery.error)
         return <Navigate to={'../../error'}/>;
 
     if (getCategoryQuery.loading)
         return <Loading/>;
 
-    if (getCategoryQuery.error)
-        console.log(getCategoryQuery.error);
-
-    console.log(getProductsQuery.loading);
     return (
         <Form name="updateCategory" onFinish={onFinish}
               initialValues={{

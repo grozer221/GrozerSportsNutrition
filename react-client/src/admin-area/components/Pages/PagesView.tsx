@@ -11,16 +11,16 @@ import parse from 'html-react-parser';
 
 export const PagesView: FC = () => {
     const params = useParams();
-    const pageId = params.id ? parseInt(params.id) : 0;
+    const pageSlug = params.slug || '';
     const getPageQuery = useQuery<GetPageData, GetPageVars>(
         GET_PAGE_QUERY,
-        {variables: {id: pageId}},
+        {variables: {slug: pageSlug}},
     );
     const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION);
     const navigate = useNavigate();
 
-    const onRemove = async (id: number) => {
-        const response = await removePage({variables: {id: id}});
+    const onRemove = async (slug: string) => {
+        const response = await removePage({variables: {slug: slug}});
         if (response.data)
             navigate(`../`);
         else {
@@ -28,14 +28,11 @@ export const PagesView: FC = () => {
         }
     };
 
-    if (!params.id)
+    if (!pageSlug || getPageQuery.error)
         return <Navigate to={'../../error'}/>;
 
     if (getPageQuery.loading)
         return <Loading/>;
-
-    if (getPageQuery.error)
-        console.log(getPageQuery.error);
 
     const page = getPageQuery.data?.getPage;
     return (
@@ -43,7 +40,7 @@ export const PagesView: FC = () => {
             <div className={s.photosAndMainInfo}>
 
                 <div>
-                    <ButtonsVUR updateUrl={`../update/${pageId}`} onRemove={() => onRemove(pageId)}/>
+                    <ButtonsVUR updateUrl={`../update/${pageSlug}`} onRemove={() => onRemove(pageSlug)}/>
                     <header>{page?.name}</header>
                     <table className={s.info}>
                         <tbody>

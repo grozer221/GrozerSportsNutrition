@@ -75,14 +75,11 @@ export const CategoriesView: FC = () => {
             }
         };
 
-        if (!categorySlug)
+        if (!categorySlug || getCategoryQuery.error)
             return <Navigate to={'../../error'}/>;
 
         if (getCategoryQuery.loading)
             return <Loading/>;
-
-        if (getCategoryQuery.error)
-            console.log(getCategoryQuery.error);
 
         const category = getCategoryQuery.data?.getCategory;
         return (
