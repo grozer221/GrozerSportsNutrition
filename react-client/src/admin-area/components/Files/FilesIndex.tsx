@@ -1,37 +1,39 @@
 import {useMutation, useQuery} from '@apollo/client';
 import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {GET_FILES_QUERY, GetFilesData, GetFilesVars} from '../../GraphQL/files-query';
-import {Loading} from '../../../components/Loading/Loading';
+import {GET_FILES_QUERY, GetFilesData, GetFilesVars} from '../../gql/files-query';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Avatar, Button, Divider, message, Table} from 'antd';
 import {FileType} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {REMOVE_FILE_MUTATION, RemoveFileData, RemoveFileVars} from '../../GraphQL/files-mutation';
+import {REMOVE_FILE_MUTATION, RemoveFileData, RemoveFileVars} from '../../gql/files-mutation';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions} from '../../../redux/files-reducer';
 import {s_getLoading} from '../../../redux/files.selectors';
 import s from './FilesIndex.module.css';
 import debounce from 'lodash.debounce';
 import Search from 'antd/es/input/Search';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const FilesIndex: FC = () => {
+    const [pageTake, setPageTake] = useState(10);
+    const [pageSkip, setPageSkip] = useState(0);
     const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(
         GET_FILES_QUERY,
         {
             variables: {
                 getFilesInput: {
-                    skip: 0,
-                    take: 10,
+                    skip: pageSkip,
+                    take: pageTake,
                     likeOriginalName: '',
                     likeMimetype: '',
                 },
             },
+            context: {gqlLink: gqlLinks.admin},
         },
     );
-    const searchFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
-    const [removeFile, removeFileOptions] = useMutation<RemoveFileData, RemoveFileVars>(REMOVE_FILE_MUTATION);
-    const [pageTake, setPageTake] = useState(10);
-    const [pageSkip, setPageSkip] = useState(0);
+    const searchFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY, {context: {gqlLink: gqlLinks.admin}});
+    const [removeFile, removeFileOptions] = useMutation<RemoveFileData, RemoveFileVars>(REMOVE_FILE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const [selectedFiles, setSelectedFiles] = useState<FileType[]>([]);
     const uploadLoading = useSelector(s_getLoading);
     const dispatch = useDispatch();
@@ -150,7 +152,8 @@ export const FilesIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <Search placeholder="Search" onChange={handleSearch} enterButton className={s.search} loading={searchFilesQuery.loading}/>
+                <Search placeholder="Search" onChange={handleSearch} enterButton className={s.search}
+                        loading={searchFilesQuery.loading}/>
             </div>
             <Divider/>
             <div>
@@ -211,7 +214,8 @@ export const FilesIndex: FC = () => {
                         // },
                     }}
                 />
-            </div>;
+            </div>
+            ;
         </>
     );
 };

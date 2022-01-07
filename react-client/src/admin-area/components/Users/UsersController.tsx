@@ -4,7 +4,6 @@ import {UsersIndex} from './UsersIndex';
 import {Error} from '../Error/Error';
 
 export const UsersController: FC = () => {
-    console.log('UsersController');
     return (
         <Routes>
             <Route path={'/'} element={<UsersIndex/>}/>

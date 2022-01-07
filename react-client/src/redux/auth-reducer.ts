@@ -1,5 +1,5 @@
-import {BaseThunkType, InferActionsTypes} from "./redux-store";
-import {Auth} from "../types/types";
+import {BaseThunkType, InferActionsTypes} from './redux-store';
+import {Auth} from '../types/types';
 
 let initialState = {
     authData: null as null | Auth,
@@ -21,14 +21,19 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
 export const actions = {
     setAuthData: (authData: Auth | null, isAuth: boolean) => ({
         type: 'SET_AUTH_DATA',
-        payload: {authData, isAuth}
+        payload: {authData, isAuth},
     } as const),
-}
+};
+
+export const login = (login: Auth): ThunkType => async (dispatch) => {
+    localStorage.setItem('token', login.accessToken);
+    dispatch(actions.setAuthData(login, true));
+};
 
 export const logout = (): ThunkType => async (dispatch) => {
     localStorage.removeItem('token');
     dispatch(actions.setAuthData(null, false));
-}
+};
 
 export default authReducer;
 

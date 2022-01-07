@@ -2,8 +2,8 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Avatar, Button, Carousel, Divider, message, Switch, Table, Tag} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Loading} from '../../../components/Loading/Loading';
-import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../GraphQL/products-query';
+import {Loading} from '../../../common-area/components/Loading/Loading';
+import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../gql/products-query';
 import {Product} from '../../../types/types';
 import {
     REMOVE_PRODUCT_MUTATION,
@@ -12,22 +12,26 @@ import {
     UPDATE_PRODUCT_MUTATION,
     UpdateProductData,
     UpdateProductVars,
-} from '../../GraphQL/products-mutation';
+} from '../../gql/products-mutation';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './ProductsIndex.module.css';
-import {updateFileInput} from '../../GraphQL/files-mutation';
+import {updateFileInput} from '../../gql/files-mutation';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const ProductsIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
     const [pageSkip, setSkipTake] = useState(0);
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(
         GET_PRODUCTS_QUERY,
-        {variables: {getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}}},
+        {
+            variables: {getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}},
+            context: {gqlLink: gqlLinks.admin}
+        },
     );
-    const [productsObj, setProductsObj] = useState<getProductsObject>({products: [], total: 0});
-    const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION);
-    const [updateProduct, updateProductOptions] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
+    const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
+    const [updateProduct, updateProductOptions] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+    const [productsObj, setProductsObj] = useState<getProductsObject>({products: [], total: 0});
 
     useEffect(() => {
         if (getProductsQuery.data?.getProducts)
@@ -95,7 +99,7 @@ export const ProductsIndex: FC = () => {
             key: 'fileImage',
             render: (text: any, product: Product) => (
                 <Carousel className={s.carousel}>
-                    {product.files.map(file => (
+                    {product.files?.map(file => (
                         <Avatar key={file.id} className={s.image} shape={'square'} size={64} src={file.fileImage}
                                 alt={file.fileName}/>
                     ))}

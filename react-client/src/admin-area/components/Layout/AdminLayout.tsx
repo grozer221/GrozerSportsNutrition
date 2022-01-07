@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {s_getIsAuth} from '../../../redux/auth-selectors';
 import {Layout} from 'antd';
 import {MyMenu} from '../MyMenu/MyMenu';
-import {MyBreadcrumb} from '../../../components/MyBreadcrumb/MyBreadcrumb';
+import {MyBreadcrumb} from '../../../common-area/components/MyBreadcrumb/MyBreadcrumb';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Home} from '../Home/Home';
 import {UsersController} from '../Users/UsersController';
@@ -21,7 +21,7 @@ export const AdminLayout: FC = () => {
     const isAuth = useSelector(s_getIsAuth);
 
     if (!isAuth)
-        return <Navigate to={'/admin/login'}/>;
+        return <Navigate to={'/admin/auth/login'}/>;
 
     return (
         <Layout className={s.layout}>

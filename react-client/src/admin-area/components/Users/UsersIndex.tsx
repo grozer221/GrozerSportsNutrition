@@ -1,25 +1,30 @@
 import {useQuery} from '@apollo/client';
 import React, {FC} from 'react';
-import {Loading} from '../../../components/Loading/Loading';
-import {GetUsersData, GetUsersVars, GET_USERS_QUERY} from '../../GraphQL/users-query';
+import {Loading} from '../../../common-area/components/Loading/Loading';
+import {GET_USERS_QUERY, GetUsersData, GetUsersVars} from '../../gql/users-query';
+import {gqlLinks} from '../../../common-area/gql/client';
+import {message} from 'antd';
 
 export const UsersIndex: FC = () => {
-    console.log('UsersIndex')
-    const {loading, error, data} = useQuery<GetUsersData, GetUsersVars>(
+    const getUserQuery = useQuery<GetUsersData, GetUsersVars>(
         GET_USERS_QUERY,
-        {variables: {getUsersInput: {skip: 0, take: 5}}}
+        {
+            variables: {getUsersInput: {skip: 0, take: 5}},
+            context: {gqlLink: gqlLinks.admin},
+        },
     );
 
-    if (loading)
-        return <Loading/>
+    if (getUserQuery.loading)
+        return <Loading/>;
 
-    if (error)
-        console.log(error)
+    if (getUserQuery.error) {
+        message.error(getUserQuery.error);
+    }
 
     return (
         <>
             <ul>
-                {data?.getUsers.map(user => (
+                {getUserQuery.data?.getUsers.map(user => (
                     <li key={user.id}>
                         <div>{user.email}</div>
                         <div>{user.firstName}</div>
@@ -31,5 +36,5 @@ export const UsersIndex: FC = () => {
                 ))}
             </ul>
         </>
-    )
-}
+    );
+};

@@ -5,7 +5,7 @@ export const filesAPI = {
     upload(files: File[], filesNames: FileName[]) {
         let formData = new FormData;
         files.forEach((file, i) => {
-            formData.append(`files[]`, file, filesNames[i].newName);
+            formData.append("files[]", file, filesNames[i].newName);
         });
         return instance.post<ResponseType>('files/upload', formData, {
             headers: {'Content-Type': 'multipart-form-data'},

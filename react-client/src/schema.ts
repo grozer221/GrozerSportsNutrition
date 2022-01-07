@@ -55,6 +55,7 @@ export const schema = gql`
 
     type User {
         id: Int!
+        confirmedEmail: Boolean!
         email: String!
         firstName: String!
         lastName: String!
@@ -168,7 +169,8 @@ export const schema = gql`
 
     type Mutation {
         login(loginInput: LoginInput!): AuthResponse!
-        register(registerInput: RegisterInput!): AuthResponse!
+        register(registerInput: RegisterInput!): String!
+        confirmationEmail(token: String!): AuthResponse!
         createProduct(createProductInput: CreateProductInput!): Product!
         updateProduct(updateProductInput: UpdateProductInput!): Product!
         removeProduct(slug: String!): Boolean!

@@ -2,7 +2,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {AutoComplete, Button, Form, Input, message, Space, Switch} from 'antd';
 import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_PRODUCT_MUTATION, CreateProductData, CreateProductVars} from '../../GraphQL/products-mutation';
+import {CREATE_PRODUCT_MUTATION, CreateProductData, CreateProductVars} from '../../gql/products-mutation';
 import debounce from 'lodash.debounce';
 import {
     GET_FILE_BY_NAME_QUERY,
@@ -11,19 +11,20 @@ import {
     GetFileByNameVars,
     GetFilesData,
     GetFilesVars,
-} from '../../GraphQL/files-query';
+} from '../../gql/files-query';
 import {Characteristic, FileType} from '../../../types/types';
-import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
+import {PinnedUploadedFiles} from '../../../common-area/components/PinnedUploadedFiles/PinnedUploadedFiles';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
-import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {sizeFormItem} from '../../styles/sizeFormItem';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 const {Search} = Input;
 
 export const ProductsCreate: FC = () => {
-    const [createProduct, createProductOption] = useMutation<CreateProductData, CreateProductVars>(CREATE_PRODUCT_MUTATION);
-    const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
-    const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
+    const [createProduct, createProductOption] = useMutation<CreateProductData, CreateProductVars>(CREATE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
+    const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY, {context: {gqlLink: gqlLinks.admin}});
+    const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY, {context: {gqlLink: gqlLinks.admin}});
     const navigate = useNavigate();
     const [photos, setPhotos] = useState([] as FileType[]);
     const [options, setOptions] = useState<{ value: string }[]>([]);

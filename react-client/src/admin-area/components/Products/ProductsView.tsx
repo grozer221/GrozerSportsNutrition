@@ -1,22 +1,26 @@
 import React, {FC} from 'react';
 import {Link, Navigate, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
-import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
-import {Loading} from '../../../components/Loading/Loading';
+import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../gql/products-query';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Avatar, Card, Carousel, message, Table, Tag} from 'antd';
 import s from './ProductsView.module.css';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {REMOVE_PRODUCT_MUTATION, RemoveProductData, RemoveProductVars} from '../../GraphQL/products-mutation';
+import {REMOVE_PRODUCT_MUTATION, RemoveProductData, RemoveProductVars} from '../../gql/products-mutation';
 import parse from 'html-react-parser';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const ProductsView: FC = () => {
     const params = useParams();
     const productSlug = params.slug || '';
     const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
-        {variables: {slug: productSlug}},
+        {
+            variables: {slug: productSlug},
+            context: {gqlLink: gqlLinks.admin},
+        },
     );
-    const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION);
+    const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const navigate = useNavigate();
 
     const columns = [

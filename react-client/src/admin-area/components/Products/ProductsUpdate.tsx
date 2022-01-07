@@ -2,10 +2,10 @@ import {useMutation, useQuery} from '@apollo/client';
 import {AutoComplete, Button, Form, Input, message, Space, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../GraphQL/products-mutation';
-import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
-import {Loading} from '../../../components/Loading/Loading';
-import {PinnedUploadedFiles} from '../../../components/PinnedUploadedFiles/PinnedUploadedFiles';
+import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../gql/products-mutation';
+import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../gql/products-query';
+import {Loading} from '../../../common-area/components/Loading/Loading';
+import {PinnedUploadedFiles} from '../../../common-area/components/PinnedUploadedFiles/PinnedUploadedFiles';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import debounce from 'lodash.debounce';
 import {
@@ -15,10 +15,10 @@ import {
     GetFileByNameVars,
     GetFilesData,
     GetFilesVars,
-} from '../../GraphQL/files-query';
+} from '../../gql/files-query';
 import {Category, Characteristic, FileType} from '../../../types/types';
-import {updateFileInput} from '../../GraphQL/files-mutation';
-import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+import {updateFileInput} from '../../gql/files-mutation';
+import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {
     GET_CATEGORIES_QUERY,
     GET_CATEGORY_BY_NAME_QUERY,
@@ -26,8 +26,9 @@ import {
     GetCategoriesVars,
     GetCategoryByNameData,
     GetCategoryByNameVars,
-} from '../../GraphQL/categories-query';
+} from '../../gql/categories-query';
 import {sizeFormItem} from '../../styles/sizeFormItem';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 const {Search} = Input;
 
@@ -36,20 +37,23 @@ export const ProductsUpdate: FC = () => {
     const productSlug = params.slug || '';
     const getProductQuery = useQuery<GetProductData, GetProductVars>(
         GET_PRODUCT_QUERY,
-        {variables: {slug: productSlug}},
+        {
+            variables: {slug: productSlug},
+            context: {gqlLink: gqlLinks.admin},
+        },
     );
-    const [updateProduct] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION);
+    const [updateProduct] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const navigate = useNavigate();
     const [isShown, setIsShown] = useState<boolean>(false);
     const [description, setDescription] = useState<string>('');
 
-    const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY);
-    const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY);
+    const getFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY, {context: {gqlLink: gqlLinks.admin}});
+    const getFileByName = useQuery<GetFileByNameData, GetFileByNameVars>(GET_FILE_BY_NAME_QUERY, {context: {gqlLink: gqlLinks.admin}});
     const [searchedPhotosNames, setSearchedPhotosNames] = useState<{ value: string }[]>([]);
     const [photos, setPhotos] = useState([] as FileType[]);
 
-    const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(GET_CATEGORIES_QUERY);
-    const getCategoryByName = useQuery<GetCategoryByNameData, GetCategoryByNameVars>(GET_CATEGORY_BY_NAME_QUERY);
+    const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(GET_CATEGORIES_QUERY, {context: {gqlLink: gqlLinks.admin}});
+    const getCategoryByName = useQuery<GetCategoryByNameData, GetCategoryByNameVars>(GET_CATEGORY_BY_NAME_QUERY, {context: {gqlLink: gqlLinks.admin}});
     const [searchedCategoryNames, setSearchedCategoryNames] = useState<{ value: string }[]>([]);
     const [categories, setCategories] = useState([] as Category[]);
 

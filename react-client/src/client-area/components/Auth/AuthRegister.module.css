@@ -1,0 +1,36 @@
+.loginForm {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 70px 50px;
+    border-radius: 10px;
+    background-color: #001529;
+}
+
+.title {
+    color: white;
+    margin-bottom: 30px;
+    text-align: center;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: start;
+}
+
+.white {
+    color: white;
+}
+
+.rememberMe {
+    float: left;
+}
+
+.forgotPass {
+    float: right;
+}
+
+.submit {
+    width: 100%;
+}

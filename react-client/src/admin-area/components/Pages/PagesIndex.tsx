@@ -2,10 +2,10 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Button, Divider, message, Switch, Table} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Loading} from '../../../components/Loading/Loading';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Page} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {GET_PAGES_QUERY, GetPagesData, GetPagesVars} from '../../GraphQL/pages-query';
+import {GET_PAGES_QUERY, GetPagesData, GetPagesVars} from '../../gql/pages-query';
 import {
     REMOVE_PAGE_MUTATION,
     RemovePageData,
@@ -16,17 +16,18 @@ import {
     UpdatePagesData,
     UpdatePagesVars,
     UpdatePageVars,
-} from '../../GraphQL/pages-mutation';
+} from '../../gql/pages-mutation';
 import {SortableContainer, SortableElement, SortableHandle} from 'react-sortable-hoc';
 import {arrayMoveImmutable} from 'array-move';
 import {MenuOutlined} from '@ant-design/icons';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const PagesIndex: FC = () => {
     const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY);
     const [pages, setPages] = useState<Page[]>([]);
-    const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION);
-    const [updatePage, updatePageOptions] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION);
-    const [updatePages, updatePagesOptions] = useMutation<UpdatePagesData, UpdatePagesVars>(UPDATE_PAGES_MUTATION);
+    const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
+    const [updatePage, updatePageOptions] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
+    const [updatePages, updatePagesOptions] = useMutation<UpdatePagesData, UpdatePagesVars>(UPDATE_PAGES_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const [selectedPages, setSelectedPages] = useState<Page[]>([]);
 
     useEffect(() => {

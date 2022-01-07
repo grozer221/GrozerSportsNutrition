@@ -3,17 +3,17 @@ import {Button, Form, Input} from 'antd';
 import React, {FC} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import s from './FilesUpdate.module.css';
-import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../GraphQL/products-query';
-import {Loading} from '../../../components/Loading/Loading';
+import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../gql/products-query';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 
 export const FilesUpdate: FC = () => {
     const params = useParams();
 
     // const {loading, error, data} = useQuery<GetProductData, GetProductVars>(
     //     GET_PRODUCT_QUERY,
-    //     {variables: {id: params.id ? parseInt(params.id) : 0}},
+    //     {variables: {id: params.id ? parseInt(params.id) : 0}, context: {gqlLink: gqlLinks.graphqlAdmin}},
     // );
-    // const [createProduct] = useMutation<ProductUpdateData, ProductUpdateVars>(PRODUCT_UPDATE_MUTATION);
+    // const [createProduct] = useMutation<ProductUpdateData, ProductUpdateVars>(PRODUCT_UPDATE_MUTATION, {context: {gqlLink: gqlLinks.graphqlAdmin}});
     const navigate = useNavigate();
 
     if (!params.id)

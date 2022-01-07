@@ -68,3 +68,11 @@ a {
     font-size: 14px;
     color: red;
 }
+
+
+.badge {
+    background-color: #1890FF;
+    border-radius: 5px;
+    padding: 0 4px;
+    font-size: 14px;
+}

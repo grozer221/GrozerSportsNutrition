@@ -7,7 +7,7 @@ import {
     GetCategoriesData,
     getCategoriesObject,
     GetCategoriesVars,
-} from '../../GraphQL/categories-query';
+} from '../../gql/categories-query';
 import {Category} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {
@@ -17,20 +17,29 @@ import {
     UPDATE_CATEGORY_MUTATION,
     UpdateCategoryData,
     UpdateCategoryVars,
-} from '../../GraphQL/categories-mutation';
-import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
+} from '../../gql/categories-mutation';
+import {updateProductWithoutFilesInput} from '../../gql/products-mutation';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const CategoriesIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
     const [pageSkip, setSkipTake] = useState(0);
-    const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(
-        GET_CATEGORIES_QUERY,
-        {variables: {getCategoriesInput: {skip: pageSkip, take: pageTake}}},
-    );
     const [categoriesObj, setCategoriesObj] = useState<getCategoriesObject>({categories: [], total: 0});
     const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
-    const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION);
-    const [updateCategory, updateCategoryOptions] = useMutation<UpdateCategoryData, UpdateCategoryVars>(UPDATE_CATEGORY_MUTATION);
+
+    const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(
+        GET_CATEGORIES_QUERY,
+        {
+            variables: {getCategoriesInput: {skip: pageSkip, take: pageTake}},
+            context: {gqlLink: gqlLinks.admin},
+        },
+    );
+    const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+    const [updateCategory, updateCategoryOptions] = useMutation<UpdateCategoryData, UpdateCategoryVars>(UPDATE_CATEGORY_MUTATION,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
 
     useEffect(() => {
         if (getCategoriesQuery.data?.getCategories)

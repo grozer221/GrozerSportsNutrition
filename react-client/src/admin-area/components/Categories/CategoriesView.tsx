@@ -1,25 +1,32 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
-import {Loading} from '../../../components/Loading/Loading';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Avatar, Card, Carousel, message, Table, Tag} from 'antd';
-import {GET_CATEGORY_QUERY, GetCategoryData, GetCategoryVars} from '../../GraphQL/categories-query';
+import {GET_CATEGORY_QUERY, GetCategoryData, GetCategoryVars} from '../../gql/categories-query';
 import {Product} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {REMOVE_CATEGORY_MUTATION, RemoveCategoryData, RemoveCategoryVars} from '../../GraphQL/categories-mutation';
+import {REMOVE_CATEGORY_MUTATION, RemoveCategoryData, RemoveCategoryVars} from '../../gql/categories-mutation';
 import s from './CategoriesView.module.css';
 import parse from 'html-react-parser';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const CategoriesView: FC = () => {
         const [pageTake, setPageTake] = useState(10);
         const [pageSkip, setSkipTake] = useState(0);
         const params = useParams();
         const categorySlug = params.slug || '';
-        const getCategoryQuery = useQuery<GetCategoryData, GetCategoryVars>(
-            GET_CATEGORY_QUERY, {variables: {slug: categorySlug}});
-        const [products, setProducts] = useState<Product[]>([]);
-        const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION);
         const navigate = useNavigate();
+        const [products, setProducts] = useState<Product[]>([]);
+
+        const getCategoryQuery = useQuery<GetCategoryData, GetCategoryVars>(
+            GET_CATEGORY_QUERY, {
+                variables: {slug: categorySlug},
+                context: {gqlLink: gqlLinks.admin},
+            });
+        const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION,
+            {context: {gqlLink: gqlLinks.admin}}
+        );
 
         useEffect(() => {
             if (getCategoryQuery.data?.getCategory)

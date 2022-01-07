@@ -1,21 +1,20 @@
 import {Avatar, Button, Form, message} from 'antd';
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {CREATE_FILE_MUTATION, CreateFileData, CreateFileVars} from '../../GraphQL/files-mutation';
+import {CREATE_FILE_MUTATION, CreateFileData, CreateFileVars} from '../../gql/files-mutation';
 import {useMutation} from '@apollo/client';
 import {useDispatch, useSelector} from 'react-redux';
-import {PinnedFiles} from '../../../components/PinnedFiles/PinnedFiles';
+import {PinnedFiles} from '../../../common-area/components/PinnedFiles/PinnedFiles';
 import {PlusOutlined} from '@ant-design/icons';
 import s from './FilesCreate.module.css';
 import {actions, upload} from '../../../redux/files-reducer';
 import {s_getLoading, s_getUploadedFiles} from '../../../redux/files.selectors';
 import {FileName} from '../../../types/types';
-
-
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const FilesCreate: FC = () => {
+    const [createFile, createFileOptions] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const dispatch = useDispatch();
-    const [createFile, createFileOptions] = useMutation<CreateFileData, CreateFileVars>(CREATE_FILE_MUTATION);
     const navigate = useNavigate();
     const [files, setFiles] = useState([] as File[]);
     const [filesNames, setFilesNames] = useState([] as FileName[]);

@@ -4,7 +4,7 @@ import React, {FC, useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import debounce from 'lodash.debounce';
 import {Product} from '../../../types/types';
-import {PinnedProducts} from '../../../components/PinnedProducts/PinnedProducts';
+import {PinnedProducts} from '../../../common-area/components/PinnedProducts/PinnedProducts';
 import {
     GET_PRODUCT_BY_NAME_QUERY,
     GET_PRODUCTS_QUERY,
@@ -12,18 +12,25 @@ import {
     GetProductByNameVars,
     GetProductsData,
     GetProductsVars,
-} from '../../GraphQL/products-query';
-import {CREATE_CATEGORY_MUTATION, CreateCategoryData, CreateCategoryVars} from '../../GraphQL/categories-mutation';
-import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
-import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
+} from '../../gql/products-query';
+import {CREATE_CATEGORY_MUTATION, CreateCategoryData, CreateCategoryVars} from '../../gql/categories-mutation';
+import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
+import {updateProductWithoutFilesInput} from '../../gql/products-mutation';
 import {sizeFormItem} from '../../styles/sizeFormItem';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 const {Search} = Input;
 
 export const CategoriesCreate: FC = () => {
-    const [createCategory, createCategoryOptions] = useMutation<CreateCategoryData, CreateCategoryVars>(CREATE_CATEGORY_MUTATION);
-    const getProductByName = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY);
-    const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY);
+    const [createCategory, createCategoryOptions] = useMutation<CreateCategoryData, CreateCategoryVars>(CREATE_CATEGORY_MUTATION,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+    const getProductByName = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+    const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
     const navigate = useNavigate();
     const [products, setProducts] = useState([] as Product[]);
     const [options, setOptions] = useState<{ value: string }[]>([]);
@@ -131,7 +138,8 @@ export const CategoriesCreate: FC = () => {
                     onSearch={handleSearch}
                     onSelect={selectProductHandler}
                 >
-                    <Search placeholder="Search in products" enterButton loading={getProductsQuery.loading || getProductByName.loading}/>
+                    <Search placeholder="Search in products" enterButton
+                            loading={getProductsQuery.loading || getProductByName.loading}/>
                 </AutoComplete>
             </Form.Item>
             {products.length > 0 && (

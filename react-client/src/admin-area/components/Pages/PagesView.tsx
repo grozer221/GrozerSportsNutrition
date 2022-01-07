@@ -1,22 +1,26 @@
 import React, {FC} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
-import {Loading} from '../../../components/Loading/Loading';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Card, message, Tag} from 'antd';
 import s from './PagesView.module.css';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
-import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../GraphQL/pages-query';
-import {REMOVE_PAGE_MUTATION, RemovePageData, RemovePageVars} from '../../GraphQL/pages-mutation';
+import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../gql/pages-query';
+import {REMOVE_PAGE_MUTATION, RemovePageData, RemovePageVars} from '../../gql/pages-mutation';
 import parse from 'html-react-parser';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const PagesView: FC = () => {
     const params = useParams();
     const pageSlug = params.slug || '';
     const getPageQuery = useQuery<GetPageData, GetPageVars>(
         GET_PAGE_QUERY,
-        {variables: {slug: pageSlug}},
+        {
+            variables: {slug: pageSlug},
+            context: {gqlLink: gqlLinks.admin}
+        },
     );
-    const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION);
+    const [removePage, removePageOptions] = useMutation<RemovePageData, RemovePageVars>(REMOVE_PAGE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const navigate = useNavigate();
 
     const onRemove = async (slug: string) => {

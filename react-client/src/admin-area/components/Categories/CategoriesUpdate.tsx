@@ -2,12 +2,12 @@ import {useMutation, useQuery} from '@apollo/client';
 import {AutoComplete, Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {Loading} from '../../../components/Loading/Loading';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 import debounce from 'lodash.debounce';
 import {Product} from '../../../types/types';
-import {GET_CATEGORY_QUERY, GetCategoryData, GetCategoryVars} from '../../GraphQL/categories-query';
-import {PinnedProducts} from '../../../components/PinnedProducts/PinnedProducts';
-import {UPDATE_CATEGORY_MUTATION, UpdateCategoryData, UpdateCategoryVars} from '../../GraphQL/categories-mutation';
+import {GET_CATEGORY_QUERY, GetCategoryData, GetCategoryVars} from '../../gql/categories-query';
+import {PinnedProducts} from '../../../common-area/components/PinnedProducts/PinnedProducts';
+import {UPDATE_CATEGORY_MUTATION, UpdateCategoryData, UpdateCategoryVars} from '../../gql/categories-mutation';
 import {
     GET_PRODUCT_BY_NAME_QUERY,
     GET_PRODUCTS_QUERY,
@@ -15,10 +15,11 @@ import {
     GetProductByNameVars,
     GetProductsData,
     GetProductsVars,
-} from '../../GraphQL/products-query';
-import {updateProductWithoutFilesInput} from '../../GraphQL/products-mutation';
-import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+} from '../../gql/products-query';
+import {updateProductWithoutFilesInput} from '../../gql/products-mutation';
+import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {sizeFormItem} from '../../styles/sizeFormItem';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 const {Search} = Input;
 
@@ -27,14 +28,23 @@ export const CategoriesUpdate: FC = () => {
     const categorySlug = params.slug || '';
     const getCategoryQuery = useQuery<GetCategoryData, GetCategoryVars>(
         GET_CATEGORY_QUERY,
-        {variables: {slug: categorySlug}},
+        {
+            variables: {slug: categorySlug},
+            context: {gqlLink: gqlLinks.admin},
+        },
     );
-    const [updateCategory, updateCategoryOption] = useMutation<UpdateCategoryData, UpdateCategoryVars>(UPDATE_CATEGORY_MUTATION);
+    const [updateCategory, updateCategoryOption] = useMutation<UpdateCategoryData, UpdateCategoryVars>(UPDATE_CATEGORY_MUTATION,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+    const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+    const getProductByNameQuery = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
     const navigate = useNavigate();
     const [isShown, setIsShown] = useState<boolean>(false);
     const [options, setOptions] = useState<{ value: string }[]>([]);
-    const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY);
-    const getProductByNameQuery = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY);
     const [products, setProducts] = useState([] as Product[]);
     const [description, setDescription] = useState<string>('');
 

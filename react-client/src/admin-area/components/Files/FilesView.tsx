@@ -1,30 +1,34 @@
 import React, {FC} from 'react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
-import {Loading} from '../../../components/Loading/Loading';
-import {Avatar, Card} from 'antd';
+import {Loading} from '../../../common-area/components/Loading/Loading';
+import {Avatar, Card, message} from 'antd';
 import s from './FilesView.module.css';
-import {GET_FILE_QUERY, GetFileData, GetFileVars} from '../../GraphQL/files-query';
+import {GET_FILE_QUERY, GetFileData, GetFileVars} from '../../gql/files-query';
 import {DeleteOutlined, FormOutlined} from '@ant-design/icons';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 const {Meta} = Card;
 
 export const FilesView: FC = () => {
     const params = useParams();
-
-    const {loading, error, data} = useQuery<GetFileData, GetFileVars>(
+    const getFileQuery = useQuery<GetFileData, GetFileVars>(
         GET_FILE_QUERY,
-        {variables: {id: params.id ? parseInt(params.id) : 0}},
+        {
+            variables: {id: params.id ? parseInt(params.id) : 0},
+            context: {gqlLink: gqlLinks.admin},
+        },
     );
 
     if (!params.id)
         return <Navigate to={'../../error'}/>;
 
-    if (loading)
+    if (getFileQuery.loading)
         return <Loading/>;
 
-    if (error)
-        console.log(error);
+    if (getFileQuery.error) {
+        message.error(getFileQuery.error);
+    }
 
     return (
         <>
@@ -34,24 +38,24 @@ export const FilesView: FC = () => {
                     <Avatar
                         shape={'square'}
                         size={300}
-                        src={data?.getFile.filePath}
+                        src={getFileQuery.data?.getFile.filePath}
                     />
                 }
                 actions={[
-                    <Link to={`../update/${data?.getFile.id}`} className={'buttonUpdate'}>
+                    <Link to={`../update/${getFileQuery.data?.getFile.id}`} className={'buttonUpdate'}>
                         <Avatar size={28} icon={<FormOutlined/>}/>
                     </Link>,
-                    <Link to={`../remove/${data?.getFile.id}`} className={'buttonRemove'}>
+                    <Link to={`../remove/${getFileQuery.data?.getFile.id}`} className={'buttonRemove'}>
                         <Avatar size={28} icon={<DeleteOutlined/>}/>
                     </Link>,
                 ]}
             >
                 <Meta
-                    title={data?.getFile.originalName}
+                    title={getFileQuery.data?.getFile.originalName}
                     description={(
                         <>
-                            <div>Size: {data?.getFile.size}</div>
-                            <div>Mimetype: {data?.getFile.mimetype}</div>
+                            <div>Size: {getFileQuery.data?.getFile.size}</div>
+                            <div>Mimetype: {getFileQuery.data?.getFile.mimetype}</div>
                         </>
                     )}
                 />

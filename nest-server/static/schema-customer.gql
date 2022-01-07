@@ -1,0 +1,139 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Role {
+  id: Int!
+  name: RoleName!
+  color: String!
+  users: [User!]!
+}
+
+enum RoleName {
+  admin
+  moderator
+  customer
+}
+
+type User {
+  id: Int!
+  confirmedEmail: Boolean!
+  email: String!
+  firstName: String!
+  lastName: String!
+  roles: [Role!]!
+}
+
+type File {
+  id: Int!
+  originalName: String!
+  mimetype: String!
+  destination: String!
+  fileName: String!
+  filePath: String!
+  fileImage: String!
+  size: Int!
+  products: [Product!]!
+}
+
+type Product {
+  id: Int!
+  isShown: Boolean!
+  name: String!
+  slug: String!
+  quantity: Float!
+  priceUAH: Float!
+  description: String!
+  characteristics: [Characteristic!]
+  files: [File!]!
+  categories: [Category!]
+}
+
+type Characteristic {
+  name: String
+  value: String
+}
+
+type Category {
+  id: Int!
+  isShown: Boolean!
+  name: String!
+  slug: String!
+  description: String!
+  products: [Product!]
+}
+
+type AuthResponse {
+  user: User!
+  accessToken: String!
+}
+
+type GetProductsResponse {
+  products: [Product!]!
+  total: Int!
+}
+
+type GetFilesResponse {
+  files: [File!]!
+  total: Int!
+}
+
+type GetCategoriesResponse {
+  categories: [Category!]!
+  total: Int!
+}
+
+type Page {
+  id: Int!
+  isShown: Boolean!
+  name: String!
+  slug: String!
+  text: String!
+  sorting: Int!
+}
+
+type Order {
+  id: Int!
+  customerFirstName: String!
+  customerLastName: String!
+  customerMiddleName: String!
+  customerPhoneNumber: String!
+  orderStatus: OrderStatus!
+}
+
+enum OrderStatus {
+  new
+  picking
+  delivering
+  waitingForTheCustomerAtThePickUpPoint
+  completed
+}
+
+type GetOrdersResponse {
+  orders: [Order!]!
+  total: Int!
+}
+
+type Query {
+  me: AuthResponse!
+  getPage(slug: String!): Page!
+  getPages: [Page!]!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): AuthResponse!
+  register(registerInput: RegisterInput!): AuthResponse!
+  confirmEmail(token: String!): AuthResponse!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}

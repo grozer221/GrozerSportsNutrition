@@ -2,19 +2,23 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Button, Form, Input, message, Switch} from 'antd';
 import React, {FC, useEffect, useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import {Loading} from '../../../components/Loading/Loading';
-import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../GraphQL/pages-query';
-import {UPDATE_PAGE_MUTATION, UpdatePageData, UpdatePageVars} from '../../GraphQL/pages-mutation';
-import {WysiwygEditor} from '../../../components/WysiwygEditor/WysiwygEditor';
+import {Loading} from '../../../common-area/components/Loading/Loading';
+import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../gql/pages-query';
+import {UPDATE_PAGE_MUTATION, UpdatePageData, UpdatePageVars} from '../../gql/pages-mutation';
+import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 export const PagesUpdate: FC = () => {
     const params = useParams();
     const pageSlug = params.slug || '';
     const getPageQuery = useQuery<GetPageData, GetPageVars>(
         GET_PAGE_QUERY,
-        {variables: {slug: pageSlug}},
+        {
+            variables: {slug: pageSlug},
+            context: {gqlLink: gqlLinks.admin}
+        },
     );
-    const [updatePage] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION);
+    const [updatePage] = useMutation<UpdatePageData, UpdatePageVars>(UPDATE_PAGE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const navigate = useNavigate();
     const [isShown, setIsShown] = useState<boolean>(false);
     const [text, setText] = useState<string>('');

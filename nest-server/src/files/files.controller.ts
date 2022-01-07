@@ -1,16 +1,16 @@
-import { Controller, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { Roles } from '../roles/roles.decorators';
-import { RoleName } from '../roles/role.entity';
-import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
+import {Controller, Post, UploadedFiles, UseGuards, UseInterceptors} from '@nestjs/common';
+import {FilesInterceptor} from '@nestjs/platform-express';
+import {diskStorage} from 'multer';
+import {Roles} from '../roles/roles.decorators';
+import {RoleName} from '../roles/role.entity';
+import {RolesGuard} from '../auth/guards/roles.guard';
+import {JwtAuthGuard} from '../auth/guards/jwt-auth.guard';
 
 @Controller('api/files')
 export class FilesController {
 
     @Roles(RoleName.moderator, RoleName.admin)
-    @UseGuards(GqlAuthGuard, RolesGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Post('upload')
     @UseInterceptors(
         FilesInterceptor('files[]', 20, {
