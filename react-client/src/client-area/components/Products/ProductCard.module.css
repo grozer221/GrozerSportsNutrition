@@ -1,0 +1,52 @@
+.productCard {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 2px solid #ebebeb;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 2px 3px;
+}
+
+.productCard:hover {
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+
+.nameAndPhotos {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.name {
+    color: black;
+}
+
+.carousel {
+    width: 128px;
+}
+
+.priceAndAddToBasket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 20px;
+}
+
+.addToBasket {
+    background-color: #0094e9;
+    color: white;
+    border-radius: 5px;
+    padding: 2px 7px;
+    cursor: pointer;
+}
+
+

@@ -1,5 +1,5 @@
 import {BaseThunkType, InferActionsTypes} from './redux-store';
-import {filesAPI} from '../api/files-api';
+import {filesAPI} from '../admin-area/api/files-api';
 import {FileName, FileType} from '../types/types';
 
 let initialState = {

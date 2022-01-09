@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { User } from './user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { RegisterInput } from '../auth/dto/register.input';
-import { Role, RoleName } from '../roles/role.entity';
-import { RolesService } from '../roles/roles.service';
-import { rolesConstants } from '../roles/roles.constants';
+import {Injectable} from '@nestjs/common';
+import {User} from './user.entity';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
+import {RegisterInput} from '../auth/dto/register.input';
+import {Role, RoleName} from '../roles/role.entity';
+import {RolesService} from '../roles/roles.service';
+import {rolesConstants} from '../roles/roles.constants';
+import {ordersConstants} from '../orders/orders.constants';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +24,7 @@ export class UsersService {
     }
 
     async getAsync(take: number, skip: number): Promise<User[]> {
-        return await this.usersRepository.find({ take, skip });
+        return await this.usersRepository.find({take, skip});
     }
 
     async getByIdAsync(id: number): Promise<User> {
@@ -39,14 +40,14 @@ export class UsersService {
 
     async getByEmailAsync(email: string): Promise<User> {
         return await this.usersRepository.findOne({
-            where: { email },
+            where: {email},
         });
     }
 
     async getByEmailWithRolesAsync(email: string): Promise<User> {
         return await this.usersRepository.findOne({
             relations: [rolesConstants.tableName],
-            where: { email },
+            where: {email},
         });
     }
 

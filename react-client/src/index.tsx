@@ -5,7 +5,7 @@ import {BrowserRouter} from 'react-router-dom';
 import store from './redux/redux-store';
 import {Provider} from 'react-redux';
 import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client';
-import {baseURL} from './api/api';
+import {baseURL} from './admin-area/api/api';
 import {schema} from './schema';
 import {client} from './common-area/gql/client';
 

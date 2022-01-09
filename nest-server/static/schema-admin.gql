@@ -54,6 +54,32 @@ type Product {
   categories: [Category!]
 }
 
+type Order {
+  id: Int!
+  email: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  address: String!
+  shippingMethod: ShippingMethod!
+  orderStatus: OrderStatus!
+  user: User!
+  userId: Float!
+}
+
+enum ShippingMethod {
+  warehouse
+  courier
+}
+
+enum OrderStatus {
+  new
+  picking
+  delivering
+  waitingForTheCustomerAtThePickUpPoint
+  completed
+}
+
 type User {
   id: Int!
   confirmedEmail: Boolean!
@@ -61,6 +87,7 @@ type User {
   firstName: String!
   lastName: String!
   roles: [Role!]!
+  orders: [Order!]!
 }
 
 type AuthResponse {
@@ -92,23 +119,6 @@ type Page {
   sorting: Int!
 }
 
-type Order {
-  id: Int!
-  customerFirstName: String!
-  customerLastName: String!
-  customerMiddleName: String!
-  customerPhoneNumber: String!
-  orderStatus: OrderStatus!
-}
-
-enum OrderStatus {
-  new
-  picking
-  delivering
-  waitingForTheCustomerAtThePickUpPoint
-  completed
-}
-
 type GetOrdersResponse {
   orders: [Order!]!
   total: Int!
@@ -120,19 +130,19 @@ type Query {
   getUser(id: Int!): User!
   getRoles(getRolesInput: GetRolesInput!): [Role!]!
   getRole(id: Int!): Role!
+  getPages: [Page!]!
+  getPage(slug: String!): Page!
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
   getProduct(slug: String!): Product!
   getProductByName(name: String!): Product!
+  getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
+  getOrder(id: Int!): Order!
   getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
   getFile(id: Int!): File!
   getFileByName(fileName: String!): File!
   getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
   getCategory(slug: String!): Category!
   getCategoryByName(name: String!): Category!
-  getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
-  getOrder(id: Int!): Order!
-  getPages: [Page!]!
-  getPage(slug: String!): Page!
 }
 
 input GetUsersInput {
@@ -151,6 +161,11 @@ input GetProductsInput {
   likeName: String!
 }
 
+input GetOrdersInput {
+  take: Int!
+  skip: Int!
+}
+
 input GetFilesInput {
   take: Int!
   skip: Int!
@@ -163,31 +178,26 @@ input GetCategoriesInput {
   skip: Int!
 }
 
-input GetOrdersInput {
-  take: Int!
-  skip: Int!
-}
-
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
   register(registerInput: RegisterInput!): AuthResponse!
   confirmEmail(token: String!): AuthResponse!
+  createPage(createPageInput: CreatePageInput!): Page!
+  updatePage(updatePageInput: UpdatePageInput!): Page!
+  updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
+  removePage(slug: String!): Boolean!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(slug: String!): Boolean!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  removeOrder(id: Int!): Boolean!
   createFile(createFileInput: CreateFileInput!): File!
   updateFile(updateFileInput: UpdateFileInput!): File!
   removeFile(id: Int!): Boolean!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   removeCategory(slug: String!): Boolean!
-  createOrder(createOrderInput: CreateOrderInput!): Order!
-  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
-  removeOrder(id: Int!): Boolean!
-  createPage(createPageInput: CreatePageInput!): Page!
-  updatePage(updatePageInput: UpdatePageInput!): Page!
-  updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
-  removePage(slug: String!): Boolean!
 }
 
 input LoginInput {
@@ -200,6 +210,24 @@ input RegisterInput {
   password: String!
   firstName: String!
   lastName: String!
+}
+
+input CreatePageInput {
+  isShown: Boolean!
+  name: String!
+  text: String!
+}
+
+input UpdatePageInput {
+  isShown: Boolean
+  name: String
+  text: String
+  id: Int!
+  sorting: Int!
+}
+
+input UpdatePagesInput {
+  updatePagesInput: [UpdatePageInput!]!
 }
 
 input CreateProductInput {
@@ -237,6 +265,26 @@ input UpdateProductInput {
   id: Int!
 }
 
+input CreateOrderInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  address: String!
+  shippingMethod: ShippingMethod!
+}
+
+input UpdateOrderInput {
+  email: String
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  address: String
+  shippingMethod: ShippingMethod
+  id: Int!
+  orderStatus: OrderStatus!
+}
+
 input CreateFileInput {
   originalName: String!
   mimetype: String!
@@ -268,36 +316,4 @@ input UpdateCategoryInput {
   description: String
   products: [UpdateProductWithoutFilesInput!]
   id: Int!
-}
-
-input CreateOrderInput {
-  customerFirstName: String!
-  customerLastName: String!
-  customerMiddleName: String!
-}
-
-input UpdateOrderInput {
-  customerFirstName: String
-  customerLastName: String
-  customerMiddleName: String
-  id: Int!
-  orderStatus: OrderStatus!
-}
-
-input CreatePageInput {
-  isShown: Boolean!
-  name: String!
-  text: String!
-}
-
-input UpdatePageInput {
-  isShown: Boolean
-  name: String
-  text: String
-  id: Int!
-  sorting: Int!
-}
-
-input UpdatePagesInput {
-  updatePagesInput: [UpdatePageInput!]!
 }

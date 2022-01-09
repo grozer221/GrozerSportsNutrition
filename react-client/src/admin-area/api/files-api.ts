@@ -1,5 +1,5 @@
 import {instance} from './api';
-import {FileName, FileType} from '../types/types';
+import {FileName, FileType} from '../../types/types';
 
 export const filesAPI = {
     upload(files: File[], filesNames: FileName[]) {

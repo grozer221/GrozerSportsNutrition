@@ -13,18 +13,12 @@ import { GetProductsResponse } from './dto/get-products.response';
 import { categoriesConstants } from '../categories/categories.constants';
 import { getSlug } from '../utils/get-slug';
 
-@Injectable({ scope: Scope.REQUEST })
-export class ProductsService {
-    origin;
+@Injectable()
+export class AdminProductsService {
 
     constructor(
         @InjectRepository(Product) private productsRepository: Repository<Product>,
-        @Inject(REQUEST) private readonly request: Request,
     ) {
-        // @ts-ignore
-        const rawHeaders: string[] = this.request.req.rawHeaders;
-        // @ts-ignore
-        this.origin = this.request.req.protocol + '://' + rawHeaders[rawHeaders.indexOf('Host') + 1];
     }
 
     async getFilesByProductId(id: number): Promise<File[]> {

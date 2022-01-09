@@ -9,14 +9,8 @@ export const MyBreadcrumb: FC = () => {
 
     return (
         <Breadcrumb>
-            {modules.map((module, i) => {
-                return (
-                    <>
-                        {i === 0 && <Breadcrumb.Item key={'-1'}> </Breadcrumb.Item>}
-                        <Breadcrumb.Item key={i}>{module}</Breadcrumb.Item>
-                    </>
-                );
-            })}
+            <Breadcrumb.Item key={'-1'}>.</Breadcrumb.Item>
+            {modules.map((module, i) => <Breadcrumb.Item key={i}>{module}</Breadcrumb.Item>)}
         </Breadcrumb>
     );
 };

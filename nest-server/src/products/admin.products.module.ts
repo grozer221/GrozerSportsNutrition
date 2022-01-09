@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { ProductsResolver } from './products.resolver';
+import { AdminProductsService } from './admin.products.service';
+import { AdminProductsResolver } from './admin.products.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 
@@ -9,9 +9,9 @@ import { Product } from './product.entity';
         TypeOrmModule.forFeature([Product]),
     ],
     providers: [
-        ProductsResolver,
-        ProductsService,
+        AdminProductsResolver,
+        AdminProductsService,
     ],
 })
-export class ProductsModule {
+export class AdminProductsModule {
 }

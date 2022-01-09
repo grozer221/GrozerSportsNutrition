@@ -22,6 +22,33 @@ type User {
   firstName: String!
   lastName: String!
   roles: [Role!]!
+  orders: [Order!]!
+}
+
+type Order {
+  id: Int!
+  email: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  address: String!
+  shippingMethod: ShippingMethod!
+  orderStatus: OrderStatus!
+  user: User!
+  userId: Float!
+}
+
+enum ShippingMethod {
+  warehouse
+  courier
+}
+
+enum OrderStatus {
+  new
+  picking
+  delivering
+  waitingForTheCustomerAtThePickUpPoint
+  completed
 }
 
 type File {
@@ -92,23 +119,6 @@ type Page {
   sorting: Int!
 }
 
-type Order {
-  id: Int!
-  customerFirstName: String!
-  customerLastName: String!
-  customerMiddleName: String!
-  customerPhoneNumber: String!
-  orderStatus: OrderStatus!
-}
-
-enum OrderStatus {
-  new
-  picking
-  delivering
-  waitingForTheCustomerAtThePickUpPoint
-  completed
-}
-
 type GetOrdersResponse {
   orders: [Order!]!
   total: Int!
@@ -118,12 +128,22 @@ type Query {
   me: AuthResponse!
   getPage(slug: String!): Page!
   getPages: [Page!]!
+  getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
+  getProduct(slug: String!): Product!
+  getProductByName(name: String!): Product!
+}
+
+input GetProductsInput {
+  take: Int!
+  skip: Int!
+  likeName: String!
 }
 
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
   register(registerInput: RegisterInput!): AuthResponse!
   confirmEmail(token: String!): AuthResponse!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
 }
 
 input LoginInput {
@@ -136,4 +156,13 @@ input RegisterInput {
   password: String!
   firstName: String!
   lastName: String!
+}
+
+input CreateOrderInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  address: String!
+  shippingMethod: ShippingMethod!
 }

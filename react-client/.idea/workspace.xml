@@ -2,7 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="separate pages for customers and admins">
+      <change afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketIndex.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/dto/create-order.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/dto/create-order.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/order.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/order.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/orders.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/orders.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/orders.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/files-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/api/files-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common-area/components/MyBreadcrumb/MyBreadcrumb.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/components/MyBreadcrumb/MyBreadcrumb.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common-area/gql/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/gql/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/files-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/files-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/redux-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/redux-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,17 +78,17 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\gql" />
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\redux" />
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\components\Basket" />
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\components\Products" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\Auth" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Auth" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\Pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\components" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\common-area" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\Auth" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Auth" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\GraphQL" />
     </key>
   </component>
   <component name="RunManager">
@@ -116,6 +145,9 @@
       <workItem from="1641372983253" duration="12804000" />
       <workItem from="1641455226385" duration="20966000" />
       <workItem from="1641542309269" duration="10022000" />
+      <workItem from="1641572790944" duration="166000" />
+      <workItem from="1641627533581" duration="16157000" />
+      <workItem from="1641718427643" duration="17564000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>

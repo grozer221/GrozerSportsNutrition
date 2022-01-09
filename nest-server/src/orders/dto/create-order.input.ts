@@ -1,13 +1,23 @@
-import { Field, InputType } from '@nestjs/graphql';
+import {Field, InputType} from '@nestjs/graphql';
+import {ShippingMethod} from '../order.entity';
 
 @InputType()
 export class CreateOrderInput {
     @Field()
-    customerFirstName: string;
+    email: string;
 
     @Field()
-    customerLastName: string;
+    firstName: string;
 
     @Field()
-    customerMiddleName: string;
+    lastName: string;
+
+    @Field()
+    phoneNumber: string;
+
+    @Field()
+    address: string;
+
+    @Field(() => ShippingMethod)
+    shippingMethod: ShippingMethod;
 }

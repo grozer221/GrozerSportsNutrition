@@ -7,13 +7,15 @@ import {TypeOrmCoreModule} from '@nestjs/typeorm/dist/typeorm-core.module';
 import {ServeStaticModule} from '@nestjs/serve-static';
 import {AuthModule} from './auth/auth.module';
 import {RolesModule} from './roles/roles.module';
-import {ProductsModule} from './products/products.module';
+import {AdminProductsModule} from './products/admin.products.module';
 import {FilesModule} from './files/files.module';
 import {CategoriesModule} from './categories/categories.module';
 import {CustomerPagesModule} from './pages/customer.pages.module';
-import {OrdersModule} from './orders/orders.module';
+import {AdminOrdersModule} from './orders/admin.orders.module';
 import {MailModule} from './mail/mail.module';
 import {AdminPagesModule} from './pages/admin.pages.module';
+import {CustomerProductsModule} from './products/customer.products.module';
+import {CustomerOrdersModule} from './orders/customer.orders.module';
 
 @Module({
     imports: [
@@ -32,10 +34,10 @@ import {AdminPagesModule} from './pages/admin.pages.module';
 
                 UsersModule,
                 RolesModule,
-                ProductsModule,
+                AdminProductsModule,
                 FilesModule,
                 CategoriesModule,
-                OrdersModule,
+                AdminOrdersModule,
             ],
             debug: true,
         }),
@@ -51,6 +53,8 @@ import {AdminPagesModule} from './pages/admin.pages.module';
                 MailModule,
 
                 CustomerPagesModule,
+                CustomerProductsModule,
+                CustomerOrdersModule,
             ],
         }),
         TypeOrmCoreModule.forRoot({
@@ -77,15 +81,17 @@ import {AdminPagesModule} from './pages/admin.pages.module';
         MailModule,
 
         CustomerPagesModule,
+        CustomerProductsModule,
+        CustomerOrdersModule,
+
+        AdminPagesModule,
+        AdminProductsModule,
+        AdminOrdersModule,
 
         UsersModule,
         RolesModule,
-        ProductsModule,
         FilesModule,
         CategoriesModule,
-        OrdersModule,
-
-        AdminPagesModule,
     ],
     providers: [
         AppService,

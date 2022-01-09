@@ -77,3 +77,36 @@ export type FileName = {
     originalName: string,
     newName: string,
 }
+
+export type ProductInBasket = {
+    product: Product,
+    quantity: number,
+}
+
+export type ShippingMethod = 'warehouse' | 'courier'
+
+export type Order = {
+    email: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    address: string,
+    shippingMethod: ShippingMethod,
+}
+
+export type City = {
+    Present: string,
+    Warehouses: number,
+    MainDescription: string,
+    Area: string,
+    Region: string,
+    SettlementTypeCode: string,
+    DeliveryCity: string,
+}
+
+export type Warehouse = {
+    Description: string,
+    ShortAddress: string,
+    Number: string,
+    CityDescription: string,
+}

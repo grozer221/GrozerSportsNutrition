@@ -1,5 +1,5 @@
 import {ApolloClient, ApolloLink, HttpLink, InMemoryCache} from '@apollo/client';
-import {baseURL} from '../../api/api';
+import {baseURL} from '../../admin-area/api/api';
 import {schema} from '../../schema';
 import {authorizationHeader} from '../../authorizationHeader';
 

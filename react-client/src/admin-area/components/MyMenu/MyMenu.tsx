@@ -104,7 +104,7 @@ export const MyMenu: FC = () => {
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="130" icon={<UserOutlined/>}>
-                    <Link to={'/'}>Client side</Link>
+                    <Link to={'/'}>Customer side</Link>
                 </Menu.Item>
                 <Menu.Item key="140" icon={<LogoutOutlined/>} onClick={() => dispatch(logout())}>
                     Logout

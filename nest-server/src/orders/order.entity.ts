@@ -1,6 +1,7 @@
-import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { ordersConstants } from './orders.constants';
+import {Field, Int, ObjectType, registerEnumType} from '@nestjs/graphql';
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {ordersConstants} from './orders.constants';
+import {User} from '../users/user.entity';
 
 export enum OrderStatus {
     new = 'new',
@@ -10,7 +11,14 @@ export enum OrderStatus {
     completed = 'completed',
 }
 
-registerEnumType(OrderStatus, { name: 'OrderStatus' });
+registerEnumType(OrderStatus, {name: 'OrderStatus'});
+
+export enum ShippingMethod {
+    warehouse = 'warehouse',
+    courier = 'courier',
+}
+
+registerEnumType(ShippingMethod, {name: 'ShippingMethod'});
 
 @Entity(ordersConstants.tableName)
 @ObjectType()
@@ -21,19 +29,31 @@ export class Order {
 
     @Column()
     @Field()
-    customerFirstName: string;
+    email: string;
 
     @Column()
     @Field()
-    customerLastName: string;
+    firstName: string;
 
     @Column()
     @Field()
-    customerMiddleName: string;
+    lastName: string;
 
     @Column()
     @Field()
-    customerPhoneNumber: string;
+    phoneNumber: string;
+
+    @Column()
+    @Field()
+    address: string;
+
+    @Column({
+        type: 'enum',
+        enum: ShippingMethod,
+        default: ShippingMethod.warehouse,
+    })
+    @Field(() => ShippingMethod)
+    shippingMethod: ShippingMethod;
 
     @Column({
         type: 'enum',
@@ -43,9 +63,17 @@ export class Order {
     @Field(() => OrderStatus)
     orderStatus: OrderStatus;
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+    @ManyToOne(() => User, user => user.orders)
+    @Field(() => User)
+    user: User;
+
+    @Column({ nullable: false })
+    @Field(() => Number)
+    userId: number;
+
+    @CreateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)'})
     createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    @UpdateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)'})
     updatedAt: Date;
 }

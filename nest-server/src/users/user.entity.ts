@@ -14,6 +14,7 @@ import { hash } from 'bcrypt';
 import { Role } from '../roles/role.entity';
 import { usersConstants } from './users.constants';
 import { Product } from '../products/product.entity';
+import {Order} from '../orders/order.entity';
 
 @Entity(usersConstants.tableName)
 @ObjectType()
@@ -48,6 +49,10 @@ export class User {
 
     @OneToMany(() => Product, product => product.user)
     products: Product[];
+
+    @OneToMany(() => Order, order => order.user)
+    @Field(() => [Order])
+    orders: Order[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
     createdAt: Date;

@@ -3,7 +3,15 @@
     margin: 0 auto;
 }
 
-.wrapperPages{
+.wrapperPages {
     background-color: #333333;
     padding: 5px 0;
+}
+
+.wrapperMenu {
+    background-color: #0094E9;
+}
+
+.breadcrumb {
+    margin: 16px 0;
 }

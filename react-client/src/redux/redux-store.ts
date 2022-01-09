@@ -2,10 +2,14 @@ import {Action, applyMiddleware, combineReducers, compose, createStore} from 're
 import authReducer from './auth-reducer';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import filesReducer from './files-reducer';
+import basketReducer from './basket-reducer';
+import novaPoshtaReducer from './nova-poshta-reducer';
 
 let rootReducer = combineReducers({
     auth: authReducer,
     files: filesReducer,
+    basket: basketReducer,
+    novaPoshta: novaPoshtaReducer,
 });
 
 type RootReducerType = typeof rootReducer;

@@ -1,0 +1,47 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.logo{
+    margin: 0;
+}
+
+.grozer {
+    color: #0094E9;
+    margin-bottom: -20px;
+    font-weight: bold;
+}
+
+.search {
+
+}
+
+.phoneNumber{
+    align-self: center;
+}
+
+.phoneNumber h3 {
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+.basket {
+    height: 50px;
+    width: 100px;
+    background: url("https://belok.ua/catalog/view/theme/default/image/banka1.png") no-repeat;
+    background-size: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.basketPrice {
+    background-color: #fbb41b;
+    padding: 1px 8px;
+    border-radius: 30px;
+    transform: translateY(55%);
+    font-size: 12px;
+}

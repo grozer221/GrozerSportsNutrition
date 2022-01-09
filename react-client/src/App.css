@@ -3,6 +3,8 @@
     padding: 0;
     box-sizing: border-box;
     font-weight: 550;
+    font-family: 'Mukta', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .wrapperHeader {
@@ -75,4 +77,20 @@ a {
     border-radius: 5px;
     padding: 0 4px;
     font-size: 14px;
+}
+
+.buttonSubmit {
+    background-color: #ff5722;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .5s all ease;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    color: white;
+}
+
+.buttonSubmit:hover {
+    background-color: #5EC2F4;
 }

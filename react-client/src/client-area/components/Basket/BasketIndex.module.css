@@ -1,0 +1,46 @@
+.productInBasket {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.productInBasketInner {
+    display: flex;
+    gap: 30px;
+    align-items: start;
+}
+
+.carousel {
+    width: 64px;
+}
+
+.quantity {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.quantityNumber {
+    padding: 0 7px;
+    border: 1px solid #c5cdd8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonPlusMinus {
+    border: 1px solid #c5cdd8;
+    padding: 2px 5px;
+    background-color: #F2F6F9;
+    cursor: pointer;
+}
+
+.placeAnOrder {
+
+}
+
+.placeAnOrder:hover {
+}
+

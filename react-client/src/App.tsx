@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {ClientLayout} from './client-area/components/Layout/ClientLayout';
-import {useMutation, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import {ME_QUERY, MeData, MeVars} from './common-area/gql/auth-query';
 import {useDispatch} from 'react-redux';
 import {actions} from './redux/auth-reducer';
@@ -11,8 +11,6 @@ import {AuthLogin} from './admin-area/components/Auth/AuthLogin';
 import 'antd/dist/antd.css';
 import './App.css';
 import {gqlLinks} from './common-area/gql/client';
-import {message} from 'antd';
-import {CREATE_PAGE_MUTATION, CreatePageData, CreatePageVars} from './admin-area/gql/pages-mutation';
 
 export const App: FC = () => {
         const dispatch = useDispatch();
