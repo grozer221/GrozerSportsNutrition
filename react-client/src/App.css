@@ -94,3 +94,17 @@ a {
 .buttonSubmit:hover {
     background-color: #5EC2F4;
 }
+
+
+
+.infoTable, .infoTable tr, .infoTable td{
+    padding: 5px;
+}
+
+.infoTable tr td:first-child{
+    color: grey;
+}
+
+.infoTable tr td:last-child > *{
+    border-bottom: 2px dotted gray;
+}

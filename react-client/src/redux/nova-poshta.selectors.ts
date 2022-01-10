@@ -16,3 +16,7 @@ export const s_getCities = (state: AppStateType) => {
 export const s_getWarehouses = (state: AppStateType) => {
     return state.novaPoshta.warehouses;
 };
+
+export const s_getCitiesError = (state: AppStateType) => {
+    return state.novaPoshta.citiesError
+};

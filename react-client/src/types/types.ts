@@ -35,6 +35,7 @@ export type Product = {
     user: User,
     files: FileType[],
     categories: Category[],
+    productsInOrder: ProductInOrder[];
 }
 
 export type FileType = {
@@ -80,20 +81,48 @@ export type FileName = {
 
 export type ProductInBasket = {
     product: Product,
-    quantity: number,
+    productQuantity: number,
 }
 
-export type ShippingMethod = 'warehouse' | 'courier'
+export enum ShippingMethod {
+    warehouse = 'warehouse',
+    courier = 'courier',
+}
+
+export enum OrderStatus {
+    new = 'new',
+    picking = 'picking',
+    delivering = 'delivering',
+    waitingForTheCustomerAtThePickUpPoint = 'waitingForTheCustomerAtThePickUpPoint',
+    completed = 'completed',
+}
 
 export type Order = {
+    id: number,
     email: string,
     firstName: string,
     lastName: string,
     phoneNumber: string,
     address: string,
+    totalPrice: number,
     shippingMethod: ShippingMethod,
+    orderStatus: OrderStatus;
+    user: User;
+    userId: number;
+    productsInOrder: ProductInOrder[];
 }
 
+export type ProductInOrder = {
+    id: number;
+    product: Product;
+    productId: number;
+    productQuantity: number;
+    order: Order;
+    orderId: number;
+}
+
+
+// Nova Poshta types //
 export type City = {
     Present: string,
     Warehouses: number,

@@ -1,7 +1,16 @@
-import {Field, Int, ObjectType, registerEnumType} from '@nestjs/graphql';
-import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {Field, Float, Int, ObjectType, registerEnumType} from '@nestjs/graphql';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import {ordersConstants} from './orders.constants';
 import {User} from '../users/user.entity';
+import {ProductInOrder} from './product-in-order.entity';
 
 export enum OrderStatus {
     new = 'new',
@@ -47,6 +56,10 @@ export class Order {
     @Field()
     address: string;
 
+    @Column('decimal', {default: 0})
+    @Field(() => Float)
+    totalPrice: number;
+
     @Column({
         type: 'enum',
         enum: ShippingMethod,
@@ -67,9 +80,13 @@ export class Order {
     @Field(() => User)
     user: User;
 
-    @Column({ nullable: false })
-    @Field(() => Number)
+    @Column('int', {nullable: false})
+    @Field(() => Int)
     userId: number;
+
+    @OneToMany(() => ProductInOrder, productInOrder => productInOrder.product)
+    @Field(() => [ProductInOrder])
+    productsInOrder: ProductInOrder[];
 
     @CreateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)'})
     createdAt: Date;

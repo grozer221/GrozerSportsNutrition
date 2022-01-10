@@ -40,6 +40,42 @@ export const schema = gql`
         value: String
     }
 
+    type Order {
+        id: Int!
+        email: String!
+        firstName: String!
+        lastName: String!
+        phoneNumber: String!
+        address: String!
+        shippingMethod: ShippingMethod!
+        orderStatus: OrderStatus!
+        user: User!
+        userId: Int!
+        productsInOrder: [ProductInOrder!]!
+    }
+
+    enum ShippingMethod {
+        warehouse
+        courier
+    }
+
+    enum OrderStatus {
+        new
+        picking
+        delivering
+        waitingForTheCustomerAtThePickUpPoint
+        completed
+    }
+
+    type ProductInOrder {
+        id: Int!
+        product: Product!
+        productId: Int!
+        productQuantity: Int!
+        order: Order!
+        orderId: Int!
+    }
+
     type Product {
         id: Int!
         isShown: Boolean!
@@ -60,6 +96,7 @@ export const schema = gql`
         firstName: String!
         lastName: String!
         roles: [Role!]!
+        orders: [Order!]!
     }
 
     type AuthResponse {
@@ -91,47 +128,30 @@ export const schema = gql`
         sorting: Int!
     }
 
-    type Order {
-        id: Int!
-        customerFirstName: String!
-        customerLastName: String!
-        customerMiddleName: String!
-        customerPhoneNumber: String!
-        orderStatus: OrderStatus!
-    }
-
-    enum OrderStatus {
-        new
-        picking
-        delivering
-        waitingForTheCustomerAtThePickUpPoint
-        completed
-    }
-
     type GetOrdersResponse {
         orders: [Order!]!
         total: Int!
     }
 
     type Query {
+        me: AuthResponse!
         getUsers(getUsersInput: GetUsersInput!): [User!]!
         getUser(id: Int!): User!
         getRoles(getRolesInput: GetRolesInput!): [Role!]!
         getRole(id: Int!): Role!
-        me: AuthResponse!
         getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
         getProduct(slug: String!): Product!
         getProductByName(name: String!): Product!
+        getPages: [Page!]!
+        getPage(slug: String!): Page!
+        getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
+        getOrder(id: Int!): Order!
         getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
         getFile(id: Int!): File!
         getFileByName(fileName: String!): File!
         getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
         getCategory(slug: String!): Category!
         getCategoryByName(name: String!): Category!
-        getPages: [Page!]!
-        getPage(slug: String!): Page!
-        getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
-        getOrder(id: Int!): Order!
     }
 
     input GetUsersInput {
@@ -150,6 +170,11 @@ export const schema = gql`
         likeName: String!
     }
 
+    input GetOrdersInput {
+        take: Int!
+        skip: Int!
+    }
+
     input GetFilesInput {
         take: Int!
         skip: Int!
@@ -162,24 +187,13 @@ export const schema = gql`
         skip: Int!
     }
 
-    input GetOrdersInput {
-        take: Int!
-        skip: Int!
-    }
-
     type Mutation {
         login(loginInput: LoginInput!): AuthResponse!
-        register(registerInput: RegisterInput!): String!
-        confirmationEmail(token: String!): AuthResponse!
+        register(registerInput: RegisterInput!): AuthResponse!
+        confirmEmail(token: String!): AuthResponse!
         createProduct(createProductInput: CreateProductInput!): Product!
         updateProduct(updateProductInput: UpdateProductInput!): Product!
         removeProduct(slug: String!): Boolean!
-        createFile(createFileInput: CreateFileInput!): File!
-        updateFile(updateFileInput: UpdateFileInput!): File!
-        removeFile(id: Int!): Boolean!
-        createCategory(createCategoryInput: CreateCategoryInput!): Category!
-        updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
-        removeCategory(slug: String!): Boolean!
         createPage(createPageInput: CreatePageInput!): Page!
         updatePage(updatePageInput: UpdatePageInput!): Page!
         updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
@@ -187,6 +201,12 @@ export const schema = gql`
         createOrder(createOrderInput: CreateOrderInput!): Order!
         updateOrder(updateOrderInput: UpdateOrderInput!): Order!
         removeOrder(id: Int!): Boolean!
+        createFile(createFileInput: CreateFileInput!): File!
+        updateFile(updateFileInput: UpdateFileInput!): File!
+        removeFile(id: Int!): Boolean!
+        createCategory(createCategoryInput: CreateCategoryInput!): Category!
+        updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+        removeCategory(slug: String!): Boolean!
     }
 
     input LoginInput {
@@ -236,6 +256,51 @@ export const schema = gql`
         id: Int!
     }
 
+    input CreatePageInput {
+        isShown: Boolean!
+        name: String!
+        text: String!
+    }
+
+    input UpdatePageInput {
+        isShown: Boolean
+        name: String
+        text: String
+        id: Int!
+        sorting: Int!
+    }
+
+    input UpdatePagesInput {
+        updatePagesInput: [UpdatePageInput!]!
+    }
+
+    input CreateOrderInput {
+        email: String!
+        firstName: String!
+        lastName: String!
+        phoneNumber: String!
+        address: String!
+        shippingMethod: ShippingMethod!
+        createProductInOrder: [CreateProductInOrderInput!]!
+    }
+
+    input CreateProductInOrderInput {
+        productId: Float!
+        productQuantity: Float!
+    }
+
+    input UpdateOrderInput {
+        email: String
+        firstName: String
+        lastName: String
+        phoneNumber: String
+        address: String
+        shippingMethod: ShippingMethod
+        createProductInOrder: [CreateProductInOrderInput!]
+        id: Int!
+        orderStatus: OrderStatus!
+    }
+
     input CreateFileInput {
         originalName: String!
         mimetype: String!
@@ -267,38 +332,6 @@ export const schema = gql`
         description: String
         products: [UpdateProductWithoutFilesInput!]
         id: Int!
-    }
-
-    input CreatePageInput {
-        isShown: Boolean!
-        name: String!
-        text: String!
-    }
-
-    input UpdatePageInput {
-        isShown: Boolean
-        name: String
-        text: String
-        id: Int!
-        sorting: Int!
-    }
-
-    input UpdatePagesInput {
-        updatePagesInput: [UpdatePageInput!]!
-    }
-
-    input CreateOrderInput {
-        customerFirstName: String!
-        customerLastName: String!
-        customerMiddleName: String!
-    }
-
-    input UpdateOrderInput {
-        customerFirstName: String
-        customerLastName: String
-        customerMiddleName: String
-        id: Int!
-        orderStatus: OrderStatus!
     }
 `
 

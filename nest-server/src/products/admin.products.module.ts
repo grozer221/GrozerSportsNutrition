@@ -12,6 +12,9 @@ import { Product } from './product.entity';
         AdminProductsResolver,
         AdminProductsService,
     ],
+    exports: [
+        AdminProductsService,
+    ]
 })
 export class AdminProductsModule {
 }

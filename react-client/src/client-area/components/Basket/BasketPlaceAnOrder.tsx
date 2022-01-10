@@ -6,6 +6,7 @@ import {ShippingMethod} from '../../../types/types';
 import Search from 'antd/es/input/Search';
 import {
     s_getCities,
+    s_getCitiesError,
     s_getCitiesLoading,
     s_getWarehouses,
     s_getWarehousesLoading,
@@ -13,6 +14,10 @@ import {
 import debounce from 'lodash.debounce';
 import {actions, loadCities, loadWarehouses} from '../../../redux/nova-poshta-reducer';
 import {message} from 'antd/es';
+import {useMutation} from '@apollo/client';
+import {CREATE_ORDER_MUTATION, CreateOrderData, CreateOrderVars} from '../../gql/orders-mutation';
+import {s_getProductsInBasket} from '../../../redux/basket.selectors';
+import {gqlLinks} from '../../../common-area/gql/client';
 
 const formItemLayout = {
     labelCol: {
@@ -35,30 +40,62 @@ export const BasketPlaceAnOrder = () => {
     const [form] = Form.useForm();
     const authData = useSelector(s_getAuthData);
     const dispatch = useDispatch();
-    const [shippingMethod, setShippingMethod] = useState<ShippingMethod>('warehouse');
+    const [shippingMethod, setShippingMethod] = useState<ShippingMethod>(ShippingMethod.warehouse);
     const cities = useSelector(s_getCities);
     const warehouses = useSelector(s_getWarehouses);
     const citiesLoading = useSelector(s_getCitiesLoading);
     const warehousesLoading = useSelector(s_getWarehousesLoading);
     const [selectedCity, setSelectedCity] = useState<{ value?: string, deliveryCity?: string } | null>(null);
+    const [createOrderMutation, createOrderMutationOption] = useMutation<CreateOrderData, CreateOrderVars>(CREATE_ORDER_MUTATION,
+        {context: {gqlLink: gqlLinks.customer}},
+    );
+    const productsInBasket = useSelector(s_getProductsInBasket);
+    const citiesError = useSelector(s_getCitiesError);
 
     useEffect(() => {
+        if (citiesError) {
+            form.setFields([
+                {
+                    name: 'city',
+                    errors: [citiesError],
+                },
+            ]);
+            dispatch(actions.setCitiesError(null));
+        }
+
         return () => {
             dispatch(actions.clearState());
         };
-    }, []);
+    }, [citiesError]);
 
-    const onFinish = (values: {
+    const onFinish = async (values: {
         email: string, phoneNumber: string,
         firstName: string, lastName: string,
         shippingMethod: ShippingMethod, address: string, city: string, warehouse: string
     }) => {
+        const {city, warehouse, address, ...restValues} = values;
         console.log('Received values of form: ', values);
-        let address = values.address;
-        if (shippingMethod === 'warehouse') {
-            address = values.city + ' ' + values.warehouse;
+        let newAddress = values.address;
+        if (shippingMethod === 'warehouse')
+            newAddress = values.city + ' ' + values.warehouse;
+        const response = await createOrderMutation({
+            variables: {
+                createOrderInput: {
+                    ...restValues,
+                    address: newAddress,
+                    createProductInOrder: productsInBasket.map(productsInBasket => ({
+                        productId: productsInBasket.product.id,
+                        productQuantity: productsInBasket.productQuantity,
+                    })),
+                },
+            },
+        });
+        if (!response.errors) {
+            console.log(response.data?.createOrder);
+            message.success('added');
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
         }
-
     };
 
     const onSearchCityHandler = async (value: string) => {

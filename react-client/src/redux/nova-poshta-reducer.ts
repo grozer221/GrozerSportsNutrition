@@ -7,6 +7,7 @@ let initialState = {
     wareHousesLoading: false,
     cities: [] as City[],
     warehouses: [] as Warehouse[],
+    citiesError: null as null | string,
 };
 
 const novaPoshtaReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -39,6 +40,11 @@ const novaPoshtaReducer = (state = initialState, action: ActionsType): InitialSt
                 cities: [],
                 warehouses: [],
             };
+        case 'SET_CITIES_ERROR':
+            return {
+                ...state,
+                citiesError: action.error,
+            };
         default:
             return state;
     }
@@ -64,13 +70,20 @@ export const actions = {
     clearState: () => ({
         type: 'CLEAR_STATE',
     } as const),
+    setCitiesError: (error: string | null) => ({
+        type: 'SET_CITIES_ERROR',
+        error,
+    } as const),
 };
 
 export const loadCities = (likeCityName: string): ThunkType =>
     async (dispatch) => {
         dispatch(actions.setCitiesLoading(true));
         const getCitiesResponse = await novaPoshtaAPI.getCities(likeCityName);
-        dispatch(actions.setCities(getCitiesResponse.data[0].Addresses));
+        if (getCitiesResponse.data[0] && getCitiesResponse.data[0].Addresses.length > 0)
+            dispatch(actions.setCities(getCitiesResponse.data[0].Addresses));
+        else
+            dispatch(actions.setCitiesError('City is not found'));
         dispatch(actions.setCitiesLoading(false));
     };
 

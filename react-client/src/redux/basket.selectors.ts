@@ -12,3 +12,4 @@ export const s_getTotalPrice = (state: AppStateType) => {
 export const s_getProductsInBasket = (state: AppStateType) => {
     return state.basket.productsInBasket;
 };
+

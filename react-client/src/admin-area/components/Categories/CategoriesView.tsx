@@ -93,7 +93,7 @@ export const CategoriesView: FC = () => {
             <>
                 <ButtonsVUR updateUrl={`../update/${categorySlug}`} onRemove={() => onRemove(categorySlug)}/>
                 <header>{category?.name}</header>
-                <table className={s.info}>
+                <table className='infoTable'>
                     <tbody>
                     <tr>
                         <td>Id:</td>

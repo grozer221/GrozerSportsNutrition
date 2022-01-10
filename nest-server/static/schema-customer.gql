@@ -32,10 +32,12 @@ type Order {
   lastName: String!
   phoneNumber: String!
   address: String!
+  totalPrice: Float!
   shippingMethod: ShippingMethod!
   orderStatus: OrderStatus!
   user: User!
-  userId: Float!
+  userId: Int!
+  productsInOrder: [ProductInOrder!]!
 }
 
 enum ShippingMethod {
@@ -51,16 +53,13 @@ enum OrderStatus {
   completed
 }
 
-type File {
+type ProductInOrder {
   id: Int!
-  originalName: String!
-  mimetype: String!
-  destination: String!
-  fileName: String!
-  filePath: String!
-  fileImage: String!
-  size: Int!
-  products: [Product!]!
+  product: Product!
+  productId: Int!
+  productQuantity: Int!
+  order: Order!
+  orderId: Int!
 }
 
 type Product {
@@ -79,6 +78,18 @@ type Product {
 type Characteristic {
   name: String
   value: String
+}
+
+type File {
+  id: Int!
+  originalName: String!
+  mimetype: String!
+  destination: String!
+  fileName: String!
+  filePath: String!
+  fileImage: String!
+  size: Int!
+  products: [Product!]!
 }
 
 type Category {
@@ -165,4 +176,10 @@ input CreateOrderInput {
   phoneNumber: String!
   address: String!
   shippingMethod: ShippingMethod!
+  createProductInOrder: [CreateProductInOrderInput!]!
+}
+
+input CreateProductInOrderInput {
+  productId: Int!
+  productQuantity: Int!
 }

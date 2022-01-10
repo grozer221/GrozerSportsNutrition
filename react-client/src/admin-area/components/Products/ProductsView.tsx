@@ -61,7 +61,7 @@ export const ProductsView: FC = () => {
                 <div>
                     <ButtonsVUR updateUrl={`../update/${productSlug}`} onRemove={() => onRemove(productSlug)}/>
                     <header>{product?.name}</header>
-                    <table className={s.info}>
+                    <table className="infoTable">
                         <tbody>
                         <tr>
                             <td>Id:</td>

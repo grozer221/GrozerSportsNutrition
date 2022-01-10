@@ -53,13 +53,13 @@ export const BasketIndex = () => {
                                         onClick={() => decrementProductInBasketHandler(productInBasket)}>
                                     <MinusOutlined/>
                                 </button>
-                                <div className={s.quantityNumber}>{productInBasket.quantity}</div>
+                                <div className={s.quantityNumber}>{productInBasket.productQuantity}</div>
                                 <button className={s.buttonPlusMinus}
                                         onClick={() => incrementProductInBasketHandler(productInBasket)}>
                                     <PlusOutlined/>
                                 </button>
                             </div>
-                            <div>{productInBasket.product.priceUAH * productInBasket.quantity}</div>
+                            <div>{productInBasket.product.priceUAH * productInBasket.productQuantity}</div>
                         </div>
                     </div>
                 ))}

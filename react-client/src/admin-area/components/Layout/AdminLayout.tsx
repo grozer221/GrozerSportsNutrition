@@ -14,6 +14,7 @@ import {CategoriesController} from '../Categories/CategoriesController';
 import {FilesController} from '../Files/FilesController';
 import {Settings} from '../Settings/Settings';
 import {PagesController} from '../Pages/PagesController';
+import {OrdersController} from '../Orders/OrdersController';
 
 const {Content} = Layout;
 
@@ -32,6 +33,7 @@ export const AdminLayout: FC = () => {
                     <div className={s.siteLayoutBackground}>
                         <Routes>
                             <Route path={'/'} element={<Home/>}/>
+                            <Route path={'orders/*'} element={<OrdersController/>}/>
                             <Route path={'products/*'} element={<ProductsController/>}/>
                             <Route path={'categories/*'} element={<CategoriesController/>}/>
                             <Route path={'files/*'} element={<FilesController/>}/>

@@ -1,5 +1,6 @@
 import {Field, InputType} from '@nestjs/graphql';
 import {ShippingMethod} from '../order.entity';
+import {CreateProductInOrderInput} from './create-product-in-order.input';
 
 @InputType()
 export class CreateOrderInput {
@@ -20,4 +21,7 @@ export class CreateOrderInput {
 
     @Field(() => ShippingMethod)
     shippingMethod: ShippingMethod;
+
+    @Field(() => [CreateProductInOrderInput])
+    createProductInOrder: CreateProductInOrderInput[];
 }

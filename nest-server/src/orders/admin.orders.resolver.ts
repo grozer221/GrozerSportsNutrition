@@ -11,17 +11,24 @@ import {GetOrdersResponse} from './dto/get-orders.response';
 import {CreateOrderInput} from './dto/create-order.input';
 import {UpdateOrderInput} from './dto/update-order.input';
 import {User} from '../users/user.entity';
+import {ProductInOrder} from './product-in-order.entity';
+import {CurrentUser} from '../auth/auth.decorators';
 
 @Resolver(() => Order)
 export class AdminOrdersResolver {
     constructor(
-        private readonly ordersService: AdminOrdersService,
+        private readonly adminOrdersService: AdminOrdersService,
     ) {
+    }
+
+    @ResolveField(() => [ProductInOrder])
+    async productsInOrder(@Parent() order: Order): Promise<ProductInOrder[]> {
+        return await this.adminOrdersService.getProductsInOrderByOrderIdAsync(order.id);
     }
 
     @ResolveField(() => User)
     async user(@Parent() order: Order): Promise<User> {
-        return await this.ordersService.getUserByOrderIdAsync(order.id);
+        return await this.adminOrdersService.getUserByOrderIdAsync(order.id);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)
@@ -30,14 +37,14 @@ export class AdminOrdersResolver {
     async getOrders(
         @Args('getOrdersInput', {type: () => GetOrdersInput}) getOrdersInput: GetOrdersInput,
     ): Promise<GetOrdersResponse> {
-        return await this.ordersService.getAsync(getOrdersInput);
+        return await this.adminOrdersService.getAsync(getOrdersInput);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => Order)
     async getOrder(@Args('id', {type: () => Int}) id: number): Promise<Order> {
-        return await this.ordersService.getByIdAsync(id);
+        return await this.adminOrdersService.getByIdAsync(id);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)
@@ -45,8 +52,9 @@ export class AdminOrdersResolver {
     @Mutation(() => Order)
     async createOrder(
         @Args('createOrderInput', {type: () => CreateOrderInput}) createOrderInput: CreateOrderInput,
+        @CurrentUser() currentUser: User,
     ): Promise<Order> {
-        return await this.ordersService.createAsync(createOrderInput);
+        return await this.adminOrdersService.createAsync(createOrderInput, currentUser);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)
@@ -55,14 +63,14 @@ export class AdminOrdersResolver {
     async updateOrder(
         @Args('updateOrderInput', {type: () => UpdateOrderInput}) updateOrderInput: UpdateOrderInput,
     ): Promise<Order> {
-        return await this.ordersService.updateAsync(updateOrderInput);
+        return await this.adminOrdersService.updateAsync(updateOrderInput);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Mutation(() => Boolean)
     async removeOrder(@Args('id', {type: () => Int}) id: number): Promise<boolean> {
-        await this.ordersService.removeAsync(id);
+        await this.adminOrdersService.removeAsync(id);
         return true;
     }
 }

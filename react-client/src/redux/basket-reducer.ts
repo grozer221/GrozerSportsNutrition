@@ -23,14 +23,14 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                         productInBasket.product === action.product
                             ? {
                                 ...productInBasket,
-                                quantity: productInBasket.quantity + 1,
+                                productQuantity: productInBasket.productQuantity + 1,
                             }
                             : productInBasket),
                     totalPrice: newTotalPrice,
                 };
             return {
                 ...state,
-                productsInBasket: [...state.productsInBasket, {product: action.product, quantity: 1}],
+                productsInBasket: [...state.productsInBasket, {product: action.product, productQuantity: 1}],
                 totalPrice: newTotalPrice,
             };
         }
@@ -42,14 +42,14 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                     productInBasket === action.productInBasket
                         ? {
                             ...productInBasket,
-                            quantity: productInBasket.quantity + 1,
+                            productQuantity: productInBasket.productQuantity + 1,
                         }
                         : productInBasket),
                 totalPrice: newTotalPrice,
             };
         }
         case 'DECREMENT_PRODUCT_IN_BASKET': {
-            if (action.productInBasket.quantity === 1)
+            if (action.productInBasket.productQuantity === 1)
                 return state;
 
             const newTotalPrice = state.totalPrice - action.productInBasket.product.priceUAH;
@@ -59,14 +59,14 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                     productInBasket === action.productInBasket
                         ? {
                             ...productInBasket,
-                            quantity: productInBasket.quantity - 1,
+                            productQuantity: productInBasket.productQuantity - 1,
                         }
                         : productInBasket),
                 totalPrice: newTotalPrice,
             };
         }
         case 'REMOVE_PRODUCT_FROM_BASKET': {
-            const newTotalPrice = state.totalPrice - (action.productInBasket.product.priceUAH * action.productInBasket.quantity);
+            const newTotalPrice = state.totalPrice - (action.productInBasket.product.priceUAH * action.productInBasket.productQuantity);
             return {
                 ...state,
                 productsInBasket: state.productsInBasket.filter(productInBasket => productInBasket !== action.productInBasket),

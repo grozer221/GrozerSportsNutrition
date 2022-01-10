@@ -1,17 +1,15 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
-import { CreateProductInput } from './dto/create-product.input';
-import { UpdateProductInput } from './dto/update-product.input';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
-import { Product } from './product.entity';
-import { filesConstants } from '../files/files.constants';
-import { File } from '../files/file.entity';
-import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
-import { Category } from '../categories/category.entity';
-import { GetProductsResponse } from './dto/get-products.response';
-import { categoriesConstants } from '../categories/categories.constants';
-import { getSlug } from '../utils/get-slug';
+import {Injectable} from '@nestjs/common';
+import {CreateProductInput} from './dto/create-product.input';
+import {UpdateProductInput} from './dto/update-product.input';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Like, Repository} from 'typeorm';
+import {Product} from './product.entity';
+import {filesConstants} from '../files/files.constants';
+import {File} from '../files/file.entity';
+import {Category} from '../categories/category.entity';
+import {GetProductsResponse} from './dto/get-products.response';
+import {categoriesConstants} from '../categories/categories.constants';
+import {getSlug} from '../utils/get-slug';
 
 @Injectable()
 export class AdminProductsService {
@@ -64,12 +62,16 @@ export class AdminProductsService {
         return getProductsResponse;
     }
 
+    async getByIdAsync(id: number): Promise<Product> {
+        return await this.productsRepository.findOne(id);
+    }
+
     async getBySlugAsync(slug: string): Promise<Product> {
-        return await this.productsRepository.findOneOrFail({ where: { slug } });
+        return await this.productsRepository.findOneOrFail({where: {slug}});
     }
 
     async getByNameAsync(name: string): Promise<Product> {
-        return await this.productsRepository.findOneOrFail({ where: { name: name } });
+        return await this.productsRepository.findOneOrFail({where: {name: name}});
     }
 
     async updateAsync(updateProductInput: UpdateProductInput): Promise<Product> {

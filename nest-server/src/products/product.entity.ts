@@ -5,7 +5,7 @@ import {
     Entity,
     JoinTable,
     ManyToMany,
-    ManyToOne,
+    ManyToOne, OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
@@ -14,6 +14,7 @@ import { File } from '../files/file.entity';
 import { User } from '../users/user.entity';
 import { Category } from '../categories/category.entity';
 import { Characteristic } from './characteristic.entity';
+import {ProductInOrder} from '../orders/product-in-order.entity';
 
 @Entity(productsConstants.tableName)
 @ObjectType()
@@ -65,6 +66,9 @@ export class Product {
 
     @ManyToOne(() => User, user => user.products)
     user: User;
+
+    @OneToMany(() => ProductInOrder, productInOrder => productInOrder.product)
+    productsInOrder: ProductInOrder[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
     createdAt: Date;
