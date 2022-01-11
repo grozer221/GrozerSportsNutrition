@@ -102,8 +102,6 @@ export const ProductsCreate: FC = () => {
         }
     };
 
-
-
     return (
         <Form name="createProduct" onFinish={onFinish}>
             <Form.Item

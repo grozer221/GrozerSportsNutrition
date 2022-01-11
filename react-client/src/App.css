@@ -81,9 +81,6 @@ a {
 
 .buttonSubmit {
     background-color: #ff5722;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     transition: .5s all ease;
     padding: 5px 10px;
     border-radius: 5px;

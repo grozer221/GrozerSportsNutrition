@@ -13,31 +13,24 @@ import {
 } from '../../../redux/nova-poshta.selectors';
 import debounce from 'lodash.debounce';
 import {actions, loadCities, loadWarehouses} from '../../../redux/nova-poshta-reducer';
+import {actions as basketActions} from '../../../redux/basket-reducer';
 import {message} from 'antd/es';
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {CREATE_ORDER_MUTATION, CreateOrderData, CreateOrderVars} from '../../gql/orders-mutation';
 import {s_getProductsInBasket} from '../../../redux/basket.selectors';
 import {gqlLinks} from '../../../common-area/gql/client';
-import {useNavigate} from 'react-router-dom';
+import {sizeFormItem} from '../../styles/sizeFormItem';
+import {
+    GET_PRODUCT_BY_NAME_QUERY,
+    GET_PRODUCTS_QUERY,
+    GetProductByNameData,
+    GetProductByNameVars,
+    GetProductsData,
+    GetProductsVars,
+} from '../../gql/products-query';
+import {PinnedProductsInOrder} from '../../../common-area/components/PinnedProductsInOrder/PinnedProductsInOrder';
 
-const formItemLayout = {
-    labelCol: {
-        xs: {span: 24},
-        sm: {span: 4},
-    },
-    wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16},
-    },
-};
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 16, offset: 4},
-    },
-};
-
-export const BasketPlaceAnOrder = () => {
+export const OrdersCreate = () => {
     const [form] = Form.useForm();
     const authData = useSelector(s_getAuthData);
     const dispatch = useDispatch();
@@ -50,9 +43,16 @@ export const BasketPlaceAnOrder = () => {
     const [createOrderMutation, createOrderMutationOption] = useMutation<CreateOrderData, CreateOrderVars>(CREATE_ORDER_MUTATION,
         {context: {gqlLink: gqlLinks.customer}},
     );
-    const productsInBasket = useSelector(s_getProductsInBasket);
     const citiesError = useSelector(s_getCitiesError);
-    const navigate = useNavigate();
+
+    const productsInBasket = useSelector(s_getProductsInBasket);
+    const [options, setOptions] = useState<{ value: string }[]>([]);
+    const getProductByName = useQuery<GetProductByNameData, GetProductByNameVars>(GET_PRODUCT_BY_NAME_QUERY,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+    const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
 
     useEffect(() => {
         if (citiesError) {
@@ -64,6 +64,11 @@ export const BasketPlaceAnOrder = () => {
             ]);
             dispatch(actions.setCitiesError(null));
         }
+
+        return () => {
+            dispatch(actions.clearState());
+            dispatch(basketActions.clearState());
+        };
     }, [citiesError]);
 
     const onFinish = async (values: {
@@ -81,18 +86,16 @@ export const BasketPlaceAnOrder = () => {
                 createOrderInput: {
                     ...restValues,
                     address: newAddress,
-                    createProductInOrder: productsInBasket.map(productsInBasket => ({
-                        productId: productsInBasket.product.id,
-                        productQuantity: productsInBasket.productQuantity,
+                    createProductInOrder: productsInBasket.map(productInBasket => ({
+                        productId: productInBasket.product.id,
+                        productQuantity: productInBasket.productQuantity,
                     })),
                 },
             },
         });
         if (!response.errors) {
             console.log(response.data?.createOrder);
-            dispatch(actions.clearState());
-            message.success('Order successfully created');
-            navigate('/');
+            message.success('added');
         } else {
             response.errors?.forEach(error => message.error(error.message));
         }
@@ -117,12 +120,53 @@ export const BasketPlaceAnOrder = () => {
         dispatch(loadWarehouses(option.deliveryCity));
     };
 
+    const onSearchProductHandler = async (value: string) => {
+        if (value.trim() === '') {
+            setOptions([]);
+            return;
+        }
+        const response = await getProductsQuery.refetch({
+            getProductsInput: {
+                skip: 0,
+                take: 5,
+                likeName: value,
+            },
+        });
+        if (!response.errors) {
+            setOptions(response.data.getProducts.products.map(product => ({value: product.name})));
+            if (!response.data.getProducts.total) {
+                message.warning('Product with current name not found');
+            }
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
+    };
+
+    const debouncedSearchProductHandler = useCallback(debounce(nextValue => onSearchProductHandler(nextValue), 500), []);
+    const searchProductHandler = (value: string) => debouncedSearchProductHandler(value);
+
+    const selectProductHandler = async (value: string, options: any) => {
+        if (productsInBasket.some(productInBasket => productInBasket.product.name === value)) {
+            message.warning('You already added this product');
+            return;
+        }
+        console.log('selected: ' + value);
+        const response = await getProductByName.refetch({
+            name: value,
+        });
+        if (!response.errors) {
+            dispatch(basketActions.addProductToBasket(response.data.getProductByName));
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
+    };
+
     return (
         <div>
             <Form
-                {...formItemLayout}
+                {...sizeFormItem}
                 form={form}
-                name="place-an-order"
+                name="createOrder"
                 onFinish={onFinish}
                 initialValues={{
                     email: authData?.user.email,
@@ -224,7 +268,22 @@ export const BasketPlaceAnOrder = () => {
                         </Form.Item>
                     )
                 }
-                <Form.Item {...tailFormItemLayout}>
+                <Form.Item label="Products">
+                    <AutoComplete
+                        options={options}
+                        onSearch={searchProductHandler}
+                        onSelect={selectProductHandler}
+                    >
+                        <Search placeholder="Search products" enterButton
+                                loading={getProductsQuery.loading || getProductByName.loading}/>
+                    </AutoComplete>
+                </Form.Item>
+                {productsInBasket.length > 0 && (
+                    <Form.Item>
+                        <PinnedProductsInOrder loading={getProductsQuery.loading || getProductByName.loading}/>
+                    </Form.Item>
+                )}
+                <Form.Item>
                     <Button type="primary" htmlType="submit">Create</Button>
                 </Form.Item>
             </Form>

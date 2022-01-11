@@ -5,3 +5,27 @@
 .image {
     object-fit: cover;
 }
+
+.quantity {
+    display: flex;
+    align-items: stretch;
+}
+
+.quantityNumber {
+    width: 40px;
+    border: 1px solid #c5cdd8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonPlusMinus {
+    border: 1px solid #c5cdd8;
+    padding: 2px 5px;
+    background-color: #F2F6F9;
+    cursor: pointer;
+}
+
+.totalPrice{
+    text-align: right;
+}

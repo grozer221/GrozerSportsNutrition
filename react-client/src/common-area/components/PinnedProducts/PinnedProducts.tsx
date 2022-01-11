@@ -28,7 +28,7 @@ export const PinnedProducts: React.FC<Props> = ({loading, products, setProducts}
             dataIndex: 'fileImage',
             render: (text: any, product: Product) => (
                 <Carousel className={s.carousel}>
-                    {product.files.map(file => (
+                    {product?.files?.map(file => (
                         <Avatar key={file.id} className={s.image} shape={'square'} size={64} src={file.fileImage}
                                 alt={file.fileName}/>
                     ))}

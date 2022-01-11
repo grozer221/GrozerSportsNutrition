@@ -73,6 +73,14 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                 totalPrice: newTotalPrice,
             };
         }
+        case 'CLEAR_STATE': {
+            return {
+                ...state,
+                loading: false,
+                productsInBasket: [] as ProductInBasket[],
+                totalPrice: 0,
+            };
+        }
         default:
             return state;
     }
@@ -98,6 +106,9 @@ export const actions = {
     removeProductFromBasket: (productInBasket: ProductInBasket) => ({
         type: 'REMOVE_PRODUCT_FROM_BASKET',
         productInBasket,
+    } as const),
+    clearState: () => ({
+        type: 'CLEAR_STATE',
     } as const),
 };
 

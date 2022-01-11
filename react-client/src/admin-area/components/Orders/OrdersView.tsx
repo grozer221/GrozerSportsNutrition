@@ -94,6 +94,7 @@ export const OrdersView: FC = () => {
             <div className={s.photosAndMainInfo}>
                 <div>
                     <ButtonsVUR updateUrl={`../update/${orderId}`} onRemove={() => onRemove(orderId)}/>
+                    <header>{order?.id}</header>
                     <table className="infoTable">
                         <tbody>
                         <tr>
@@ -149,6 +150,12 @@ export const OrdersView: FC = () => {
                             <td>
                                 <Link
                                     to={`../../users/${order?.user.email}`}>{order?.user.firstName} {order?.user.lastName}</Link>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total price:</td>
+                            <td>
+                                <span>{order?.totalPrice} UAH</span>
                             </td>
                         </tr>
                         </tbody>

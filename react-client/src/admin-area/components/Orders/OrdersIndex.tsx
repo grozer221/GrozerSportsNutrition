@@ -76,6 +76,7 @@ export const OrdersIndex: FC = () => {
             title: 'Total price',
             dataIndex: 'totalPrice',
             key: 'totalPrice',
+            render: (text: any, order: Order) => <span>{order.totalPrice} UAH</span>
         },
         {
             title: 'Actions',

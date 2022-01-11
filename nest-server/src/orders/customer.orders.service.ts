@@ -28,7 +28,7 @@ export class CustomerOrdersService {
             await this.productInOrderRepository.save(createProductInOrder);
 
             const product = await this.adminProductsService.getByIdAsync(createProductInOrder.productId);
-            totalPrice += product.priceUAH;
+            totalPrice += product.priceUAH * createOrderInput.createProductInOrder[key].productQuantity;
         }
         order.totalPrice = totalPrice;
         order = await this.ordersRepository.save(order);

@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="separate pages for customers and admins">
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.resolver.ts" afterDir="false" />
+    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added orders on frontend">
       <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/dto/create-order.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/dto/create-order.input.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/order.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/order.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/orders.constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/orders.constants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/admin.products.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersController.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersController.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Basket/BasketIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketIndex.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client-area/components/Basket/BasketIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketIndex.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/gql/orders-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/gql/orders-mutation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common-area/components/PinnedProducts/PinnedProducts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/components/PinnedProducts/PinnedProducts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common-area/components/PinnedProductsInOrder/PinnedProductsInOrder.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/components/PinnedProductsInOrder/PinnedProductsInOrder.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common-area/components/PinnedProductsInOrder/PinnedProductsInOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/components/PinnedProductsInOrder/PinnedProductsInOrder.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/basket-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/basket-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/basket.selectors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/basket.selectors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/nova-poshta-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/nova-poshta-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/nova-poshta.selectors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/nova-poshta.selectors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +52,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/common-area/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/admin-area/components/Orders" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
@@ -77,9 +61,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Orders" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\common-area\components" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\gql" />
-      <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\admin-area\components\Orders" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\gql" />
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\redux" />
     </key>
@@ -148,7 +132,8 @@
       <workItem from="1641572790944" duration="166000" />
       <workItem from="1641627533581" duration="16157000" />
       <workItem from="1641718427643" duration="17701000" />
-      <workItem from="1641808534278" duration="11420000" />
+      <workItem from="1641808534278" duration="11673000" />
+      <workItem from="1641888433299" duration="9620000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>
@@ -213,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641564215187</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added orders on frontend">
+      <created>1641839821001</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1641839821001</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,6 +233,7 @@
     <MESSAGE value="prettified forms, added search inside autocomplete" />
     <MESSAGE value="added editing files names before upload" />
     <MESSAGE value="separate pages for customers and admins" />
-    <option name="LAST_COMMIT_MESSAGE" value="separate pages for customers and admins" />
+    <MESSAGE value="added orders on frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="added orders on frontend" />
   </component>
 </project>
