@@ -1,15 +1,12 @@
 import React, {FC, useState} from 'react';
 import {Layout, Menu, Tag} from 'antd';
 import {
-    AccountBookOutlined,
     AppstoreAddOutlined,
     FileOutlined,
     FunnelPlotOutlined,
     LineChartOutlined,
     LogoutOutlined,
-    PercentageOutlined,
     SettingOutlined,
-    ShopOutlined,
     ShoppingCartOutlined,
     ShoppingOutlined,
     TeamOutlined,
@@ -51,48 +48,24 @@ export const MyMenu: FC = () => {
                 <Menu.Item key="20" icon={<ShoppingCartOutlined/>}>
                     <Link to={'/admin/orders'}>Orders</Link>
                 </Menu.Item>
-                <SubMenu key="sub10" icon={<ShopOutlined/>} title="Shop">
-                    <Menu.Item key="30" icon={<ShoppingOutlined/>}>
-                        <Link to={'/admin/products'}>
-                            Products
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="40" icon={<FunnelPlotOutlined/>}>
-                        <Link to={'/admin/categories'}>
-                            Categories
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="50" icon={<AccountBookOutlined/>}>
-                        <Link to={'/admin/brands'}>
-                            Brands
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="60">
-                        <Link to={'/admin/goals'}>
-                            Goals
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="70" icon={<PercentageOutlined/>}>
-                        <Link to={'/admin/discounts'}>
-                            Discounts
-                        </Link>
-                    </Menu.Item>
-                </SubMenu>
+                <Menu.Item key="30" icon={<ShoppingOutlined/>}>
+                    <Link to={'/admin/products'}>
+                        Products
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="40" icon={<FunnelPlotOutlined/>}>
+                    <Link to={'/admin/categories'}>
+                        Categories
+                    </Link>
+                </Menu.Item>
                 <Menu.Item key="80" icon={<FileOutlined/>}>
                     <Link to={'/admin/files'}>Files</Link>
                 </Menu.Item>
-                <SubMenu key="sub20" icon={<TeamOutlined/>} title="Users">
-                    <Menu.Item key="90">
-                        <Link to={'/admin/users'}>
-                            Customers
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="100">
-                        <Link to={'/admin/users'}>
-                            Employees
-                        </Link>
-                    </Menu.Item>
-                </SubMenu>
+                <Menu.Item key="90" icon={<TeamOutlined/>}>
+                    <Link to={'/admin/users'}>
+                        Users
+                    </Link>
+                </Menu.Item>
                 <Menu.Item key="110" icon={<AppstoreAddOutlined/>}>
                     <Link to={'/admin/pages'}>
                         Pages

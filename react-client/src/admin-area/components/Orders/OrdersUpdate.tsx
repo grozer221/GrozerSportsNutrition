@@ -113,15 +113,6 @@ export const OrdersUpdate = () => {
             deliveryCityName = selectedCity?.value as string;
             deliveryWarehouse = selectedWarehouse;
         }
-        console.log({
-            ...restValues,
-            id: numberId,
-            address: newAddress,
-            createProductInOrder: productsInBasket.map(productInBasket => ({
-                productId: productInBasket.product.id,
-                productQuantity: productInBasket.productQuantity,
-            })),
-        });
         const response = await updateOrder({
             variables: {
                 updateOrderInput: {

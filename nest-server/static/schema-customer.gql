@@ -41,6 +41,8 @@ type Order {
   user: User!
   userId: Int!
   productsInOrder: [ProductInOrder!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum ShippingMethod {
@@ -54,6 +56,7 @@ enum OrderStatus {
   delivering
   waitingForTheCustomerAtThePickUpPoint
   completed
+  canceled
 }
 
 type ProductInOrder {
@@ -104,6 +107,11 @@ type Category {
   products: [Product!]
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type AuthResponse {
   user: User!
   accessToken: String!
@@ -145,6 +153,8 @@ type Query {
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
   getProduct(slug: String!): Product!
   getProductByName(name: String!): Product!
+  getMyOrderById(id: Int!): Order!
+  getMyOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
 }
 
 input GetProductsInput {
@@ -153,16 +163,33 @@ input GetProductsInput {
   likeName: String!
 }
 
+input GetOrdersInput {
+  take: Int!
+  skip: Int!
+}
+
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
-  register(registerInput: RegisterInput!): AuthResponse!
+  updateMe(updateMeInput: UpdateMeInput!): AuthResponse!
+  updateEmail(updateEmailInput: UpdateEmailInput!): String!
+  register(registerInput: RegisterInput!): String!
   confirmEmail(token: String!): AuthResponse!
   createOrder(createOrderInput: CreateOrderInput!): Order!
+  cancelOrder(id: Int!): Order!
 }
 
 input LoginInput {
   email: String!
   password: String!
+}
+
+input UpdateMeInput {
+  firstName: String!
+  lastName: String!
+}
+
+input UpdateEmailInput {
+  email: String!
 }
 
 input RegisterInput {

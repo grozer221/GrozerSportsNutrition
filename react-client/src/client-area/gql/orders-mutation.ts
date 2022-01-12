@@ -79,3 +79,65 @@ export const CREATE_ORDER_MUTATION = gql`
         }
     }
 `;
+
+
+export type CancelOrderData = { cancelOrder: Order }
+export type CancelOrderVars = { id: number }
+
+export const CANCEL_ORDER_MUTATION = gql`
+    mutation CancelOrder($id: Int!) {
+        cancelOrder(id: $id) {
+            id
+            email
+            firstName
+            lastName
+            phoneNumber
+            address
+            deliveryCityName
+            deliveryCityCode
+            deliveryWarehouse
+            shippingMethod
+            orderStatus
+            user {
+                id
+                confirmedEmail
+                email
+                firstName
+                lastName
+            }
+            productsInOrder {
+                productQuantity
+                product {
+                    id
+                    name
+                    slug
+                    isShown
+                    quantity
+                    priceUAH
+                    description
+                    characteristics {
+                        name
+                        value
+                    }
+                    files {
+                        id
+                        fileImage
+                        filePath
+                        mimetype
+                        destination
+                        fileName
+                        size
+                        originalName
+                    }
+                    categories {
+                        id
+                        isShown
+                        name
+                        description
+                        slug
+                    }
+                }
+            }
+        }
+    }
+`;

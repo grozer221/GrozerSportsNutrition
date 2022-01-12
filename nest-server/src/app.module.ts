@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {GraphQLModule} from '@nestjs/graphql';
 import {AppService} from './app.service';
-import {UsersModule} from './users/users.module';
+import {AdminUsersModule} from './users/admin.users.module';
 import {join} from 'path';
 import {TypeOrmCoreModule} from '@nestjs/typeorm/dist/typeorm-core.module';
 import {ServeStaticModule} from '@nestjs/serve-static';
@@ -34,7 +34,7 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
                 AdminProductsModule,
                 AdminOrdersModule,
 
-                UsersModule,
+                AdminUsersModule,
                 RolesModule,
                 FilesModule,
                 CategoriesModule,
@@ -88,7 +88,7 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
         AdminProductsModule,
         AdminOrdersModule,
 
-        UsersModule,
+        AdminUsersModule,
         RolesModule,
         FilesModule,
         CategoriesModule,

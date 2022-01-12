@@ -38,15 +38,19 @@ export const CREATE_ORDER_MUTATION = gql`
             shippingMethod
             orderStatus
             totalPrice
+            createdAt
+            updatedAt
             user {
                 id
-                confirmedEmail
                 email
                 firstName
                 lastName
+                roles {
+                    id
+                    name
+                }
             }
             productsInOrder {
-                productQuantity
                 product {
                     id
                     name
@@ -77,6 +81,7 @@ export const CREATE_ORDER_MUTATION = gql`
                         slug
                     }
                 }
+                productQuantity
             }
         }
     }
@@ -104,6 +109,8 @@ export const UPDATE_ORDER_MUTATION = gql`
             shippingMethod
             orderStatus
             totalPrice
+            createdAt
+            updatedAt
             user {
                 id
                 email

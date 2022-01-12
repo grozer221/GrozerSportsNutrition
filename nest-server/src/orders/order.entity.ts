@@ -18,6 +18,7 @@ export enum OrderStatus {
     delivering = 'delivering',
     waitingForTheCustomerAtThePickUpPoint = 'waitingForTheCustomerAtThePickUpPoint',
     completed = 'completed',
+    canceled = 'canceled',
 }
 
 registerEnumType(OrderStatus, {name: 'OrderStatus'});
@@ -100,9 +101,11 @@ export class Order {
     @Field(() => [ProductInOrder])
     productsInOrder: ProductInOrder[];
 
+    @Field(() => Date)
     @CreateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)'})
     createdAt: Date;
 
+    @Field(() => Date)
     @UpdateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)'})
     updatedAt: Date;
 }

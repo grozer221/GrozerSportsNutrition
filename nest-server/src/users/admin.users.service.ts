@@ -6,10 +6,11 @@ import {RegisterInput} from '../auth/dto/register.input';
 import {Role, RoleName} from '../roles/role.entity';
 import {RolesService} from '../roles/roles.service';
 import {rolesConstants} from '../roles/roles.constants';
-import {ordersConstants} from '../orders/orders.constants';
+import {UpdateMeInput} from '../auth/dto/update-me.input';
+import {UpdateEmailInput} from '../auth/dto/update-email.input';
 
 @Injectable()
-export class UsersService {
+export class AdminUsersService {
     constructor(
         @InjectRepository(User) private usersRepository: Repository<User>,
         private readonly rolesService: RolesService,
@@ -31,7 +32,7 @@ export class UsersService {
         return await this.usersRepository.findOneOrFail(id);
     }
 
-    async getRolesByUserId(id: number): Promise<Role[]> {
+    async getRolesByUserIdAsync(id: number): Promise<Role[]> {
         const user = await this.usersRepository.findOneOrFail(id, {
             relations: [rolesConstants.tableName],
         });
@@ -51,11 +52,21 @@ export class UsersService {
         });
     }
 
-    async confirmEmail(email: string): Promise<User> {
+    async confirmEmailAsync(email: string): Promise<User> {
         const user = await this.getByEmailWithRolesAsync(email);
         if (user.confirmedEmail)
             throw new Error('Email already confirmed');
         user.confirmedEmail = true;
         return await this.usersRepository.save(user);
+    }
+
+    async updateByIdAsync(userId: number, updateMeInput: UpdateMeInput): Promise<User> {
+        const user = await this.getByIdAsync(userId);
+        return await this.usersRepository.save({...user, ...updateMeInput});
+    }
+
+    async updateEmailByIdAsync(userId: number, updateEmailInput: UpdateEmailInput): Promise<User> {
+        const user = await this.getByIdAsync(userId);
+        return await this.usersRepository.save({...user, ...updateEmailInput, confirmedEmail: false});
     }
 }

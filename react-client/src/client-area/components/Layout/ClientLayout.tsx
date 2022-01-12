@@ -12,6 +12,7 @@ import {Header} from '../Header/Header';
 import {MyMenu} from '../MyMenu/MyMenu';
 import {ProductsController} from '../Products/ProductsController';
 import {BasketController} from '../Basket/BasketController';
+import {Account} from '../Account/Account';
 
 export const ClientLayout: FC = () => {
     return (
@@ -40,6 +41,7 @@ export const ClientLayout: FC = () => {
                     <Route path={'/confirmation-email/:token'} element={<ConfirmationEmail/>}/>
                     <Route path={'/pages/:slug'} element={<PagesView/>}/>
                     <Route path={'/auth/*'} element={<AuthController/>}/>
+                    <Route path={'/account'} element={<Account/>}/>
                     <Route path={'*'} element={<Error/>}/>
                 </Routes>
             </div>

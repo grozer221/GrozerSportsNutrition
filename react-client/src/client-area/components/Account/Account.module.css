@@ -1,0 +1,33 @@
+.tabPane {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.carousel {
+    width: 48px;
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.products {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.orderHeaderInfo {
+    display: flex;
+    align-items: center;
+    gap: 150px;
+}
+
+.buttonCancelOrder {
+    background-color: red;
+    border: none;
+}

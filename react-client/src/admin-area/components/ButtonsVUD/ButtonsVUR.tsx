@@ -31,8 +31,8 @@ export const ButtonsVUR: FC<Props> = ({viewUrlA, viewUrl, updateUrl, removeUrl, 
                     </Link>
                 }
                 {onUpdate ?
-                    <div className={s.buttonView} onClick={onUpdate}>
-                        <Avatar size={28} icon={<EyeOutlined/>}/>
+                    <div className={s.buttonUpdate} onClick={onUpdate}>
+                        <Avatar size={28} icon={<FormOutlined/>}/>
                     </div>
                     : updateUrl &&
                     <Link to={updateUrl} className={s.buttonUpdate}>

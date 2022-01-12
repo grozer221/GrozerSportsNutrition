@@ -7,7 +7,7 @@ import {GetOrdersResponse} from './dto/get-orders.response';
 import {GetOrdersInput} from './dto/get-orders.input';
 import {UpdateOrderInput} from './dto/update-order.input';
 import {User} from '../users/user.entity';
-import {UsersService} from '../users/users.service';
+import {AdminUsersService} from '../users/admin.users.service';
 import {ProductInOrder} from './product-in-order.entity';
 import {AdminProductsService} from '../products/admin.products.service';
 
@@ -16,13 +16,9 @@ export class AdminOrdersService {
     constructor(
         @InjectRepository(Order) private ordersRepository: Repository<Order>,
         @InjectRepository(ProductInOrder) private productInOrderRepository: Repository<ProductInOrder>,
-        private readonly usersService: UsersService,
+        private readonly usersService: AdminUsersService,
         private readonly adminProductsService: AdminProductsService,
     ) {
-    }
-
-    async getTotalAsync(): Promise<number> {
-        return await this.ordersRepository.count();
     }
 
     async createAsync(createOrderInput: CreateOrderInput, currentUser: User): Promise<Order> {

@@ -3,7 +3,7 @@ import {AdminOrdersService} from './admin.orders.service';
 import {AdminOrdersResolver} from './admin.orders.resolver';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {Order} from './order.entity';
-import {UsersModule} from '../users/users.module';
+import {AdminUsersModule} from '../users/admin.users.module';
 import {ProductInOrder} from './product-in-order.entity';
 import {AdminProductsModule} from '../products/admin.products.module';
 
@@ -11,7 +11,7 @@ import {AdminProductsModule} from '../products/admin.products.module';
     imports: [
         TypeOrmModule.forFeature([Order]),
         TypeOrmModule.forFeature([ProductInOrder]),
-        UsersModule,
+        AdminUsersModule,
         AdminProductsModule,
     ],
     providers: [

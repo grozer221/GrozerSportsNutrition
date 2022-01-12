@@ -7,7 +7,6 @@ import {useMutation} from '@apollo/client';
 import s from './AuthRegister.module.css';
 import {s_getIsAuth} from '../../../redux/auth-selectors';
 import {REGISTER_MUTATION, RegisterData, RegisterVars} from '../../../common-area/gql/auth-mutation';
-import {login} from '../../../redux/auth-reducer';
 
 type FormValues = {
     email: string,
@@ -17,7 +16,6 @@ type FormValues = {
 }
 
 export const AuthRegister: FC = () => {
-    const dispatch = useDispatch();
     const isAuth = useSelector(s_getIsAuth);
     const navigate = useNavigate();
     const [registerMutation, registerMutationOptions] = useMutation<RegisterData, RegisterVars>(REGISTER_MUTATION);

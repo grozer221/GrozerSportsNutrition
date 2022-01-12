@@ -1,21 +1,19 @@
 import {gql} from '@apollo/client';
 import {Order} from '../../types/types';
 
-export type GetOrdersData = { getOrders: getOrders }
-export type getOrders = {
-    orders: Order[],
-    total: number
-}
 
-export type GetOrdersVars = { getOrdersInput: getOrdersInput }
+export type GetMyOrdersData = { getMyOrders: getOrdersObject }
+export type getOrdersObject = { orders: Order[], total: number }
+
+export type GetMyOrdersVars = { getOrdersInput: getOrdersInput }
 export type getOrdersInput = {
     take: number,
     skip: number,
 }
 
-export const GET_ORDERS_QUERY = gql`
-    query GetOrders($getOrdersInput: GetOrdersInput!) {
-        getOrders(getOrdersInput: $getOrdersInput) {
+export const GET_MY_ORDERS_QUERY = gql`
+    query GetMyOrders($getOrdersInput: GetOrdersInput!) {
+        getMyOrders(getOrdersInput: $getOrdersInput) {
             orders {
                 id
                 email
@@ -81,12 +79,12 @@ export const GET_ORDERS_QUERY = gql`
 `;
 
 
-export type GetOrderData = { getOrder: Order }
-export type GetOrderVars = { id: number }
+export type GetMyOrderByIdData = { getMyOrderById: Order }
+export type GetMyOrderByIdVars = { id: string }
 
-export const GET_ORDER_QUERY = gql`
-    query GetOrder($id: Int!) {
-        getOrder(id: $id) {
+export const GET_MY_ORDER_BY_ID_QUERY = gql`
+    query GetMyOrderById($id: Int!) {
+        getMyOrderById(id: $id) {
             id
             email
             firstName

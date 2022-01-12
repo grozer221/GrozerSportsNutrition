@@ -95,6 +95,7 @@ export enum OrderStatus {
     delivering = 'delivering',
     waitingForTheCustomerAtThePickUpPoint = 'waitingForTheCustomerAtThePickUpPoint',
     completed = 'completed',
+    canceled = 'canceled',
 }
 
 export type Order = {
@@ -113,6 +114,8 @@ export type Order = {
     user: User;
     userId: number;
     productsInOrder: ProductInOrder[];
+    createdAt: string,
+    updatedAt: string,
 }
 
 export type ProductInOrder = {

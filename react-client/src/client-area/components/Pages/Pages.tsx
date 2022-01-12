@@ -1,12 +1,13 @@
 import React, {FC} from 'react';
 import {useQuery} from '@apollo/client';
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {s_getAuthData, s_getIsAuth} from '../../../redux/auth-selectors';
 import {RoleName} from '../../../types/types';
 import s from './Pages.module.css';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {GET_PAGES_QUERY, GetPagesData, GetPagesVars} from '../../gql/pages-query';
+import {logout} from '../../../redux/auth-reducer';
 
 export const Pages: FC = () => {
     const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY,
@@ -14,6 +15,7 @@ export const Pages: FC = () => {
     );
     const authData = useSelector(s_getAuthData);
     const isAuth = useSelector(s_getIsAuth);
+    const dipatch = useDispatch();
 
     return (
         <div className={s.wrapperPages}>
@@ -26,7 +28,12 @@ export const Pages: FC = () => {
                 }
             </div>
             {isAuth
-                ? <Link to={'/account'}>Account</Link>
+                ? (
+                    <div className={s.pages}>
+                        <Link to={'/account'}>Account</Link>
+                        <Link to={'/'} onClick={() => dipatch(logout())}>Logout</Link>
+                    </div>
+                )
                 : (
                     <div className={s.pages}>
                         <Link to={'/auth/login'}>Login</Link>
