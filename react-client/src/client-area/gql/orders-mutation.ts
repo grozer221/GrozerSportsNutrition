@@ -10,6 +10,9 @@ export type createOrderInput = {
     lastName: string,
     phoneNumber: string,
     address: string,
+    deliveryCityName: string,
+    deliveryCityCode: string,
+    deliveryWarehouse: string,
     shippingMethod: ShippingMethod,
     createProductInOrder: CreateProductInOrderInput[]
 }
@@ -28,6 +31,9 @@ export const CREATE_ORDER_MUTATION = gql`
             lastName
             phoneNumber
             address
+            deliveryCityName
+            deliveryCityCode
+            deliveryWarehouse
             shippingMethod
             orderStatus
             user {

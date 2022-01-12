@@ -7,6 +7,7 @@ import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../gql/pages-query';
 import {UPDATE_PAGE_MUTATION, UpdatePageData, UpdatePageVars} from '../../gql/pages-mutation';
 import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 export const PagesUpdate: FC = () => {
     const params = useParams();
@@ -56,7 +57,7 @@ export const PagesUpdate: FC = () => {
     };
 
     if (!pageSlug || getPageQuery.error)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getPageQuery.loading)
         return <Loading/>;

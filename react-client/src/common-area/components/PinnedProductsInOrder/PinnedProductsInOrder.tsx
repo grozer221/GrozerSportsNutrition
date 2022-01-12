@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Avatar, Carousel, Table} from 'antd';
 import {ButtonsVUR} from '../../../admin-area/components/ButtonsVUD/ButtonsVUR';
-import {Product, ProductInBasket, ProductInOrder} from '../../../types/types';
+import {ProductInBasket} from '../../../types/types';
 import s from './PinnedProductsInOrder.module.css';
 import {MinusOutlined, PlusOutlined} from '@ant-design/icons';
 import {actions} from '../../../redux/basket-reducer';
@@ -65,12 +65,14 @@ export const PinnedProductsInOrder: React.FC<Props> = ({loading}) => {
             key: 'quantity',
             render: (text: any, productInBasket: ProductInBasket) => (
                 <div className={s.quantity}>
-                    <button className={s.buttonPlusMinus}
+                    <button type={'button'}
+                            className={s.buttonPlusMinus}
                             onClick={() => decrementProductInBasketHandler(productInBasket)}>
                         <MinusOutlined/>
                     </button>
                     <div className={s.quantityNumber}>{productInBasket.productQuantity}</div>
-                    <button className={s.buttonPlusMinus}
+                    <button type={'button'}
+                            className={s.buttonPlusMinus}
                             onClick={() => incrementProductInBasketHandler(productInBasket)}>
                         <PlusOutlined/>
                     </button>

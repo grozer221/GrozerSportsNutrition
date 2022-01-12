@@ -59,7 +59,23 @@ export class AdminOrdersService {
     }
 
     async updateAsync(updateOrderInput: UpdateOrderInput): Promise<Order> {
-        return await this.ordersRepository.save(updateOrderInput);
+        let order = this.ordersRepository.create({...updateOrderInput});
+        let totalPrice = 0;
+        const productsInOrder = await this.productInOrderRepository.find({where: {orderId: updateOrderInput.id}});
+        console.log(productsInOrder);
+        for (const key in productsInOrder)
+            await this.productInOrderRepository.remove(productsInOrder[key]);
+        for (const key in updateOrderInput.createProductInOrder) {
+            const createProductInOrder = this.productInOrderRepository.create(updateOrderInput.createProductInOrder[key]);
+            createProductInOrder.orderId = order.id;
+            await this.productInOrderRepository.save(createProductInOrder);
+
+            const product = await this.adminProductsService.getByIdAsync(updateOrderInput.createProductInOrder[key].productId);
+            totalPrice += product.priceUAH * updateOrderInput.createProductInOrder[key].productQuantity;
+        }
+        order.totalPrice = totalPrice;
+        order = await this.ordersRepository.save(order);
+        return order;
     }
 
     async removeAsync(id: number): Promise<Order> {

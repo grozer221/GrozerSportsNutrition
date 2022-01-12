@@ -9,6 +9,7 @@ import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {REMOVE_PRODUCT_MUTATION, RemoveProductData, RemoveProductVars} from '../../gql/products-mutation';
 import parse from 'html-react-parser';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 export const ProductsView: FC = () => {
     const params = useParams();
@@ -44,7 +45,7 @@ export const ProductsView: FC = () => {
     };
 
     if (!productSlug || getProductQuery.error)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getProductQuery.loading)
         return <Loading/>;

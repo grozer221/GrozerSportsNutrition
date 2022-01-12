@@ -31,13 +31,13 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
                 MailModule,
 
                 AdminPagesModule,
+                AdminProductsModule,
+                AdminOrdersModule,
 
                 UsersModule,
                 RolesModule,
-                AdminProductsModule,
                 FilesModule,
                 CategoriesModule,
-                AdminOrdersModule,
             ],
             debug: true,
         }),

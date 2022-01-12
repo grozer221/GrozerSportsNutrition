@@ -20,6 +20,7 @@ import {updateProductWithoutFilesInput} from '../../gql/products-mutation';
 import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {sizeFormItem} from '../../styles/sizeFormItem';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 const {Search} = Input;
 
@@ -124,7 +125,7 @@ export const CategoriesUpdate: FC = () => {
     const searchProductHandler = (value: string) => debouncedSearchProductHandler(value);
 
     if (!categorySlug || getCategoryQuery.error)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getCategoryQuery.loading)
         return <Loading/>;
@@ -137,7 +138,7 @@ export const CategoriesUpdate: FC = () => {
                   description: getCategoryQuery.data?.getCategory.description,
               }}>
             <Form.Item name="id" style={{display: 'none'}}>
-                <Input type={'hidden'} style={{display: 'none'}}/>
+                <Input type={'hidden'}/>
             </Form.Item>
             <Form.Item
                 {...sizeFormItem}

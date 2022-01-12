@@ -48,6 +48,9 @@ type Order {
   lastName: String!
   phoneNumber: String!
   address: String!
+  deliveryCityCode: String
+  deliveryCityName: String
+  deliveryWarehouse: String
   totalPrice: Float!
   shippingMethod: ShippingMethod!
   orderStatus: OrderStatus!
@@ -282,6 +285,9 @@ input CreateOrderInput {
   lastName: String!
   phoneNumber: String!
   address: String!
+  deliveryCityCode: String
+  deliveryCityName: String
+  deliveryWarehouse: String
   shippingMethod: ShippingMethod!
   createProductInOrder: [CreateProductInOrderInput!]!
 }
@@ -297,6 +303,9 @@ input UpdateOrderInput {
   lastName: String
   phoneNumber: String
   address: String
+  deliveryCityCode: String
+  deliveryCityName: String
+  deliveryWarehouse: String
   shippingMethod: ShippingMethod
   createProductInOrder: [CreateProductInOrderInput!]
   id: Int!

@@ -23,6 +23,9 @@ export const GET_ORDERS_QUERY = gql`
                 lastName
                 phoneNumber
                 address
+                deliveryCityCode
+                deliveryCityName
+                deliveryWarehouse
                 shippingMethod
                 orderStatus
                 totalPrice
@@ -88,6 +91,9 @@ export const GET_ORDER_QUERY = gql`
             lastName
             phoneNumber
             address
+            deliveryCityCode
+            deliveryCityName
+            deliveryWarehouse
             shippingMethod
             orderStatus
             totalPrice
@@ -136,5 +142,4 @@ export const GET_ORDER_QUERY = gql`
             }
         }
     }
-
 `;

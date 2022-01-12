@@ -11,6 +11,9 @@ export type createOrderInput = {
     lastName: string,
     phoneNumber: string,
     address: string,
+    deliveryCityCode: string | null,
+    deliveryCityName: string | null,
+    deliveryWarehouse: string | null,
     shippingMethod: ShippingMethod,
     createProductInOrder: CreateProductInOrderInput[]
 }
@@ -29,6 +32,9 @@ export const CREATE_ORDER_MUTATION = gql`
             lastName
             phoneNumber
             address
+            deliveryCityCode
+            deliveryCityName
+            deliveryWarehouse
             shippingMethod
             orderStatus
             totalPrice
@@ -80,10 +86,10 @@ export const CREATE_ORDER_MUTATION = gql`
 // UPDATE ORDER
 export type UpdateOrderData = { updateOrder: Order }
 
-export type UpdateOrderVars = { updatePageInput: updateOrderInput }
+export type UpdateOrderVars = { updateOrderInput: updateOrderInput }
 export type updateOrderInput = createOrderInput & { id: number, orderStatus: OrderStatus }
 
-export const UPDATE_PAGE_MUTATION = gql`
+export const UPDATE_ORDER_MUTATION = gql`
     mutation UpdateOrder($updateOrderInput: UpdateOrderInput!) {
         updateOrder(updateOrderInput: $updateOrderInput) {
             id
@@ -92,6 +98,9 @@ export const UPDATE_PAGE_MUTATION = gql`
             lastName
             phoneNumber
             address
+            deliveryCityCode
+            deliveryCityName
+            deliveryWarehouse
             shippingMethod
             orderStatus
             totalPrice

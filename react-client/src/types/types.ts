@@ -104,6 +104,9 @@ export type Order = {
     lastName: string,
     phoneNumber: string,
     address: string,
+    deliveryCityCode: string,
+    deliveryCityName: string,
+    deliveryWarehouse: string,
     totalPrice: number,
     shippingMethod: ShippingMethod,
     orderStatus: OrderStatus;

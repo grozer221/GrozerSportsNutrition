@@ -4,6 +4,7 @@ import {Error} from '../Error/Error';
 import {OrdersIndex} from './OrdersIndex';
 import {OrdersView} from './OrdersView';
 import {OrdersCreate} from './OrdersCreate';
+import {OrdersUpdate} from './OrdersUpdate';
 
 export const OrdersController: FC = () => {
     return (
@@ -11,7 +12,7 @@ export const OrdersController: FC = () => {
             <Route path={'/'} element={<OrdersIndex/>}/>
             <Route path={':id'} element={<OrdersView/>}/>
             <Route path={'create'} element={<OrdersCreate/>}/>
-            {/*<Route path={'update/:slug'} element={<PagesUpdate/>}/>*/}
+            <Route path={'update/:id'} element={<OrdersUpdate/>}/>
             <Route path={'*'} element={<Error/>}/>
         </Routes>
     );

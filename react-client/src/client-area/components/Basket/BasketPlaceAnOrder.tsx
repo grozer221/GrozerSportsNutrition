@@ -81,6 +81,9 @@ export const BasketPlaceAnOrder = () => {
                 createOrderInput: {
                     ...restValues,
                     address: newAddress,
+                    deliveryCityCode: selectedCity?.deliveryCity as string,
+                    deliveryCityName: selectedCity?.value as string,
+                    deliveryWarehouse: warehouse,
                     createProductInOrder: productsInBasket.map(productsInBasket => ({
                         productId: productsInBasket.product.id,
                         productQuantity: productsInBasket.productQuantity,
@@ -89,7 +92,6 @@ export const BasketPlaceAnOrder = () => {
             },
         });
         if (!response.errors) {
-            console.log(response.data?.createOrder);
             dispatch(actions.clearState());
             message.success('Order successfully created');
             navigate('/');
@@ -113,6 +115,7 @@ export const BasketPlaceAnOrder = () => {
     const searchCityHandler = (value: string) => debouncedSearchCityHandler(value);
 
     const selectCityHandler = (value: string, option: any) => {
+        console.log(option);
         setSelectedCity(option);
         dispatch(loadWarehouses(option.deliveryCity));
     };

@@ -9,6 +9,7 @@ import {GET_PAGE_QUERY, GetPageData, GetPageVars} from '../../gql/pages-query';
 import {REMOVE_PAGE_MUTATION, RemovePageData, RemovePageVars} from '../../gql/pages-mutation';
 import parse from 'html-react-parser';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 export const PagesView: FC = () => {
     const params = useParams();
@@ -33,7 +34,7 @@ export const PagesView: FC = () => {
     };
 
     if (!pageSlug || getPageQuery.error)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getPageQuery.loading)
         return <Loading/>;

@@ -5,6 +5,7 @@ import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import s from './FilesUpdate.module.css';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../gql/products-query';
 import {Loading} from '../../../common-area/components/Loading/Loading';
+import {Error} from '../Error/Error';
 
 export const FilesUpdate: FC = () => {
     const params = useParams();
@@ -17,7 +18,7 @@ export const FilesUpdate: FC = () => {
     const navigate = useNavigate();
 
     if (!params.id)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     // if (loading)
     //     return <Loading/>;

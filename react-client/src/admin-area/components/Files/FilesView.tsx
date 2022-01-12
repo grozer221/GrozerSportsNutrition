@@ -7,6 +7,7 @@ import s from './FilesView.module.css';
 import {GET_FILE_QUERY, GetFileData, GetFileVars} from '../../gql/files-query';
 import {DeleteOutlined, FormOutlined} from '@ant-design/icons';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 const {Meta} = Card;
 
@@ -21,7 +22,7 @@ export const FilesView: FC = () => {
     );
 
     if (!params.id)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getFileQuery.loading)
         return <Loading/>;

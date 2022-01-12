@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {AutoComplete, Button, Form, Input, Radio, Select} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
-import {ShippingMethod} from '../../../types/types';
+import {OrderStatus, ShippingMethod} from '../../../types/types';
 import Search from 'antd/es/input/Search';
 import {
     s_getCities,
@@ -15,7 +15,6 @@ import {actions, loadCities, loadWarehouses} from '../../../redux/nova-poshta-re
 import {actions as basketActions} from '../../../redux/basket-reducer';
 import {message} from 'antd/es';
 import {useMutation, useQuery} from '@apollo/client';
-import {CREATE_ORDER_MUTATION, CreateOrderData, CreateOrderVars} from '../../gql/orders-mutation';
 import {s_getProductsInBasket} from '../../../redux/basket.selectors';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {sizeFormItem} from '../../styles/sizeFormItem';
@@ -28,9 +27,22 @@ import {
     GetProductsVars,
 } from '../../gql/products-query';
 import {PinnedProductsInOrder} from '../../../common-area/components/PinnedProductsInOrder/PinnedProductsInOrder';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
+import {GET_ORDER_QUERY, GetOrderData, GetOrderVars} from '../../gql/orders-query';
+import {UPDATE_ORDER_MUTATION, UpdateOrderData, UpdateOrderVars} from '../../gql/orders-mutation';
+import {Error} from '../Error/Error';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 
-export const OrdersCreate = () => {
+export const OrdersUpdate = () => {
+    const params = useParams();
+    const orderId = params.id ? parseInt(params.id) : 0;
+    const getOrderQuery = useQuery<GetOrderData, GetOrderVars>(
+        GET_ORDER_QUERY,
+        {
+            variables: {id: orderId},
+            context: {gqlLink: gqlLinks.admin},
+        },
+    );
     const [form] = Form.useForm();
     const dispatch = useDispatch();
     const [shippingMethod, setShippingMethod] = useState<ShippingMethod>(ShippingMethod.warehouse);
@@ -39,8 +51,9 @@ export const OrdersCreate = () => {
     const citiesLoading = useSelector(s_getCitiesLoading);
     const warehousesLoading = useSelector(s_getWarehousesLoading);
     const [selectedCity, setSelectedCity] = useState<{ value?: string, deliveryCity?: string } | null>(null);
-    const [createOrderMutation, createOrderMutationOption] = useMutation<CreateOrderData, CreateOrderVars>(CREATE_ORDER_MUTATION,
-        {context: {gqlLink: gqlLinks.customer}},
+    const [selectedWarehouse, setSelectedWarehouse] = useState<string>('');
+    const [updateOrder, updateOrderOption] = useMutation<UpdateOrderData, UpdateOrderVars>(UPDATE_ORDER_MUTATION,
+        {context: {gqlLink: gqlLinks.admin}},
     );
     const citiesError = useSelector(s_getCitiesError);
 
@@ -53,6 +66,17 @@ export const OrdersCreate = () => {
         {context: {gqlLink: gqlLinks.admin}},
     );
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const order = getOrderQuery.data?.getOrder;
+        if (order) {
+            setShippingMethod(order.shippingMethod);
+            setSelectedCity({value: order.deliveryCityName, deliveryCity: order.deliveryCityCode});
+            setSelectedWarehouse(order.deliveryWarehouse);
+            dispatch(basketActions.setProductsToBasket(order.productsInOrder, order.totalPrice));
+            dispatch(loadWarehouses(order.deliveryCityCode));
+        }
+    }, [getOrderQuery.data?.getOrder]);
 
     useEffect(() => {
         if (citiesError) {
@@ -72,23 +96,41 @@ export const OrdersCreate = () => {
     }, [citiesError]);
 
     const onFinish = async (values: {
-        email: string, phoneNumber: string,
+        id: string, email: string, phoneNumber: string,
         firstName: string, lastName: string,
-        shippingMethod: ShippingMethod, address: string, city: string, warehouse: string
+        shippingMethod: ShippingMethod, address: string, city: string, warehouse: string,
+        orderStatus: OrderStatus
     }) => {
-        const {city, warehouse, address, ...restValues} = values;
-        console.log('Received values of form: ', values);
+        const {city, warehouse, address, id, ...restValues} = values;
+        const numberId = parseInt(id);
         let newAddress = values.address;
-        if (shippingMethod === 'warehouse')
+        let deliveryCityCode = null as null | string;
+        let deliveryCityName = null as null | string;
+        let deliveryWarehouse = null as null | string;
+        if (shippingMethod === 'warehouse') {
             newAddress = values.city + ' ' + values.warehouse;
-        const response = await createOrderMutation({
+            deliveryCityCode = selectedCity?.deliveryCity as string;
+            deliveryCityName = selectedCity?.value as string;
+            deliveryWarehouse = selectedWarehouse;
+        }
+        console.log({
+            ...restValues,
+            id: numberId,
+            address: newAddress,
+            createProductInOrder: productsInBasket.map(productInBasket => ({
+                productId: productInBasket.product.id,
+                productQuantity: productInBasket.productQuantity,
+            })),
+        });
+        const response = await updateOrder({
             variables: {
-                createOrderInput: {
+                updateOrderInput: {
                     ...restValues,
+                    id: numberId,
                     address: newAddress,
-                    deliveryCityName: selectedCity?.value as string,
-                    deliveryCityCode: selectedCity?.deliveryCity as string,
-                    deliveryWarehouse: warehouse,
+                    deliveryCityCode: deliveryCityCode,
+                    deliveryCityName: deliveryCityName,
+                    deliveryWarehouse: deliveryWarehouse,
                     createProductInOrder: productsInBasket.map(productInBasket => ({
                         productId: productInBasket.product.id,
                         productQuantity: productInBasket.productQuantity,
@@ -97,7 +139,7 @@ export const OrdersCreate = () => {
             },
         });
         if (!response.errors) {
-            message.success('Order successfully created');
+            message.success('Order successfully updated');
             navigate('../');
         } else {
             response.errors?.forEach(error => message.error(error.message));
@@ -149,7 +191,6 @@ export const OrdersCreate = () => {
     const searchProductHandler = (value: string) => debouncedSearchProductHandler(value);
 
     const selectProductHandler = async (value: string, options: any) => {
-        debugger
         if (productsInBasket.some(productInBasket => productInBasket.product.name === value)) {
             message.warning('You already added this product');
             return;
@@ -165,18 +206,36 @@ export const OrdersCreate = () => {
         }
     };
 
+    if (!orderId || getOrderQuery.error)
+        return <Error/>;
+
+    if (getOrderQuery.loading)
+        return <Loading/>;
+
+    const order = getOrderQuery.data?.getOrder;
     return (
         <div>
             <Form
                 {...sizeFormItem}
                 form={form}
-                name="createOrder"
+                name="updateOrder"
                 onFinish={onFinish}
                 initialValues={{
-                    shippingMethod: shippingMethod,
+                    id: order?.id,
+                    email: order?.email,
+                    firstName: order?.firstName,
+                    lastName: order?.lastName,
+                    phoneNumber: order?.phoneNumber,
+                    address: order?.address,
+                    city: order?.deliveryCityName,
+                    shippingMethod: order?.shippingMethod,
+                    orderStatus: order?.orderStatus,
                 }}
                 scrollToFirstError
             >
+                <Form.Item name="id" style={{display: 'none'}}>
+                    <Input type={'hidden'}/>
+                </Form.Item>
                 <Form.Item
                     name="email"
                     label="E-mail"
@@ -249,10 +308,15 @@ export const OrdersCreate = () => {
                                     label="Warehouse"
                                     rules={[{required: true, message: 'Please select your warehouse!'}]}
                                 >
-                                    <Select loading={warehousesLoading}>
+                                    <Select loading={warehousesLoading} defaultValue={selectedWarehouse}
+                                            onChange={value => setSelectedWarehouse(value as any)}>
                                         {warehouses.map(warehouse => (
                                             <Select.Option
-                                                value={warehouse.Description}>{warehouse.Description}</Select.Option>
+                                                key={warehouse.Description}
+                                                value={warehouse.Description}
+                                            >
+                                                {warehouse.Description}
+                                            </Select.Option>
                                         ))}
                                     </Select>
                                 </Form.Item>
@@ -284,10 +348,22 @@ export const OrdersCreate = () => {
                         <PinnedProductsInOrder loading={getProductsQuery.loading || getProductByName.loading}/>
                     </Form.Item>
                 )}
+                <Form.Item
+                    name="orderStatus"
+                    label="Order status"
+                    rules={[{required: true, message: 'Please select your order status!'}]}
+                >
+                    <Select>
+                        {(Object.keys(OrderStatus) as Array<keyof typeof OrderStatus>).map((key, i) => (
+                            <Select.Option value={key} key={i}>{key}</Select.Option>
+                        ))}
+                    </Select>
+                </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" loading={createOrderMutationOption.loading}>Create</Button>
+                    <Button type="primary" htmlType="submit" loading={updateOrderOption.loading}>Update</Button>
                 </Form.Item>
             </Form>
         </div>
     );
 };
+

@@ -94,15 +94,9 @@ export const OrdersView: FC = () => {
             <div className={s.photosAndMainInfo}>
                 <div>
                     <ButtonsVUR updateUrl={`../update/${orderId}`} onRemove={() => onRemove(orderId)}/>
-                    <header>{order?.id}</header>
+                    <header>#{order?.id}</header>
                     <table className="infoTable">
                         <tbody>
-                        <tr>
-                            <td>Id:</td>
-                            <td>
-                                <span># {order?.id}</span>
-                            </td>
-                        </tr>
                         <tr>
                             <td>Email:</td>
                             <td>

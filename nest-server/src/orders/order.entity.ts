@@ -56,6 +56,18 @@ export class Order {
     @Field()
     address: string;
 
+    @Column({nullable: true})
+    @Field({nullable: true})
+    deliveryCityCode: string;
+
+    @Column({nullable: true})
+    @Field({nullable: true})
+    deliveryCityName: string;
+
+    @Column({nullable: true})
+    @Field({nullable: true})
+    deliveryWarehouse: string;
+
     @Column('decimal', {default: 0})
     @Field(() => Float)
     totalPrice: number;

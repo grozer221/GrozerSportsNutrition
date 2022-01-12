@@ -29,6 +29,7 @@ import {
 } from '../../gql/categories-query';
 import {sizeFormItem} from '../../styles/sizeFormItem';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 const {Search} = Input;
 
@@ -182,7 +183,7 @@ export const ProductsUpdate: FC = () => {
     const searchCategoriesHandler = (value: string) => debouncedSearchCategoriesHandler(value);
 
     if (!productSlug || getProductQuery.error)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getProductQuery.loading)
         return <Loading/>;

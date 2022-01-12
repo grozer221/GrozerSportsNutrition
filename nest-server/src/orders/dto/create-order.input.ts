@@ -19,6 +19,15 @@ export class CreateOrderInput {
     @Field()
     address: string;
 
+    @Field({nullable: true})
+    deliveryCityCode: string;
+
+    @Field({nullable: true})
+    deliveryCityName: string;
+
+    @Field({nullable: true})
+    deliveryWarehouse: string;
+
     @Field(() => ShippingMethod)
     shippingMethod: ShippingMethod;
 

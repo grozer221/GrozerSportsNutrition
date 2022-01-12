@@ -10,6 +10,7 @@ import {REMOVE_CATEGORY_MUTATION, RemoveCategoryData, RemoveCategoryVars} from '
 import s from './CategoriesView.module.css';
 import parse from 'html-react-parser';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Error} from '../Error/Error';
 
 export const CategoriesView: FC = () => {
         const [pageTake, setPageTake] = useState(10);
@@ -83,7 +84,7 @@ export const CategoriesView: FC = () => {
         };
 
         if (!categorySlug || getCategoryQuery.error)
-            return <Navigate to={'../../error'}/>;
+            return <Error/>;
 
         if (getCategoryQuery.loading)
             return <Loading/>;

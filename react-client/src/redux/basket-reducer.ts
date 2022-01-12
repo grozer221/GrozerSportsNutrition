@@ -14,6 +14,13 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                 ...state,
                 loading: action.loading,
             };
+        case 'SET_PRODUCTS_TO_BASKET': {
+            return {
+                ...state,
+                productsInBasket: action.productsInBasket,
+                totalPrice: action.totalPrice,
+            };
+        }
         case 'ADD_PRODUCT_TO_BASKET': {
             const newTotalPrice = state.totalPrice + action.product.priceUAH;
             if (state.productsInBasket.some(productInBasket => productInBasket.product === action.product))
@@ -90,6 +97,11 @@ export const actions = {
     setLoading: (loading: boolean) => ({
         type: 'SET_LOADING',
         loading,
+    } as const),
+    setProductsToBasket: (productsInBasket: ProductInBasket[], totalPrice: number) => ({
+        type: 'SET_PRODUCTS_TO_BASKET',
+        productsInBasket,
+        totalPrice,
     } as const),
     addProductToBasket: (product: Product) => ({
         type: 'ADD_PRODUCT_TO_BASKET',
