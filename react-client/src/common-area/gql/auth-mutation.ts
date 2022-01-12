@@ -92,6 +92,34 @@ export type UpdateEmailVars = { updateEmailInput: { email: string } }
 
 export const UPDATE_EMAIL_MUTATION = gql`
     mutation UpdateMe($updateEmailInput: UpdateEmailInput!) {
-        updateEmail(updateEmailInput: $updateEmailInput) 
+        updateEmail(updateEmailInput: $updateEmailInput)
     }
+`;
+
+
+export type UpdatePasswordData = { updatePassword: Auth }
+export type UpdatePasswordVars = { updatePasswordInput: updatePasswordInput }
+export type updatePasswordInput = {
+    oldPassword: string,
+    newPassword: string
+}
+
+export const UPDATE_PASSWORD_MUTATION = gql`
+    mutation UpdatePassword($updatePasswordInput: UpdatePasswordInput!) {
+        updatePassword(updatePasswordInput: $updatePasswordInput) {
+            accessToken
+            user {
+                id
+                email
+                firstName
+                lastName
+                roles {
+                    id
+                    name
+                    color
+                }
+            }
+        }
+    }
+
 `;

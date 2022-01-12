@@ -1,5 +1,6 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import {Field, Int, ObjectType} from '@nestjs/graphql';
 import {
+    AfterUpdate,
     BeforeInsert,
     Column,
     CreateDateColumn,
@@ -10,11 +11,11 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { hash } from 'bcrypt';
-import { Role } from '../roles/role.entity';
-import { usersConstants } from './users.constants';
-import { Product } from '../products/product.entity';
+import {Role} from '../roles/role.entity';
+import {usersConstants} from './users.constants';
+import {Product} from '../products/product.entity';
 import {Order} from '../orders/order.entity';
+import {hashPassword} from '../utils/hashPassword';
 
 @Entity(usersConstants.tableName)
 @ObjectType()
@@ -23,7 +24,7 @@ export class User {
     @Field(() => Int)
     id: number;
 
-    @Column('boolean', { default: false })
+    @Column('boolean', {default: false})
     @Field(() => Boolean)
     confirmedEmail: boolean;
 
@@ -54,15 +55,15 @@ export class User {
     @Field(() => [Order])
     orders: Order[];
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+    @CreateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)'})
     createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    @UpdateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)'})
     updatedAt: Date;
 
     @BeforeInsert()
     async hashPassword() {
-        this.password = await hash(this.password, 10);
+        this.password = await hashPassword(this.password);
     }
 }
 

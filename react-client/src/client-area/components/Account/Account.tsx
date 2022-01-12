@@ -24,16 +24,20 @@ import s from './Account.module.css';
 import {
     UPDATE_EMAIL_MUTATION,
     UPDATE_ME_MUTATION,
+    UPDATE_PASSWORD_MUTATION,
     UpdateEmailData,
     UpdateEmailVars,
     UpdateMeData,
     UpdateMeVars,
+    UpdatePasswordData,
+    UpdatePasswordVars,
 } from '../../../common-area/gql/auth-mutation';
 import {Order, OrderStatus} from '../../../types/types';
 import {CANCEL_ORDER_MUTATION, CancelOrderData, CancelOrderVars} from '../../gql/orders-mutation';
-import {ButtonsVUR} from '../../../admin-area/components/ButtonsVUD/ButtonsVUR';
 import {useForm} from 'antd/es/form/Form';
 import {logout} from '../../../redux/auth-reducer';
+import {FormOutlined} from '@ant-design/icons';
+import {Navigate} from 'react-router-dom';
 
 export const Account: FC = () => {
     const authData = useSelector(s_getAuthData);
@@ -62,8 +66,13 @@ export const Account: FC = () => {
     const [updateEmailMutation, updateEmailMutationOptions] = useMutation<UpdateEmailData, UpdateEmailVars>(UPDATE_EMAIL_MUTATION,
         {context: {gqlLink: gqlLinks.customer}},
     );
+    const [updatePasswordMutation, updatePasswordMutationOptions] = useMutation<UpdatePasswordData, UpdatePasswordVars>(UPDATE_PASSWORD_MUTATION,
+        {context: {gqlLink: gqlLinks.customer}},
+    );
     const [isChangeEmailVisible, setIsChangeEmailVisible] = useState(false);
+    const [isChangePasswordVisible, setIsChangePasswordVisible] = useState(false);
     const [updateEmailForm] = useForm();
+    const [updatePasswordForm] = useForm();
 
     useEffect(() => {
         if (getMyOrdersQuery.data?.getMyOrders) {
@@ -102,7 +111,7 @@ export const Account: FC = () => {
                 </div>
                 <div className={s.products}>
                     {order.productsInOrder.map(productInOrder => (
-                        <Carousel autoplay className={s.carousel}>
+                        <Carousel autoplay className={s.carousel} key={productInOrder.id}>
                             {productInOrder?.product?.files.map(file => (
                                 <Avatar key={file.id} className={s.image} shape={'square'} src={file.fileImage}
                                         size={48}/>
@@ -134,9 +143,9 @@ export const Account: FC = () => {
         const email = updateEmailForm.getFieldValue('email');
         updateEmailMutation({variables: {updateEmailInput: {email: email}}})
             .then(response => {
-                message.success(response.data?.updateEmail);
                 dispatch(logout());
                 setIsChangeEmailVisible(false);
+                message.success(response.data?.updateEmail);
             })
             .catch(error => {
                 updateEmailForm.setFields([
@@ -148,8 +157,35 @@ export const Account: FC = () => {
             });
     };
 
-    if (getMyOrdersQuery.error || !isAuth)
+    const changePasswordHandler = async () => {
+        const oldPassword = updatePasswordForm.getFieldValue('oldPassword');
+        const newPassword = updatePasswordForm.getFieldValue('newPassword');
+        updatePasswordMutation({
+            variables: {
+                updatePasswordInput: {oldPassword, newPassword},
+            },
+        })
+            .then(response => {
+                updatePasswordForm.setFields([{name: 'oldPassword', value: ''}]);
+                updatePasswordForm.setFields([{name: 'newPassword', value: ''}]);
+                setIsChangePasswordVisible(false);
+                message.success('Password successfully changed');
+            })
+            .catch(error => {
+                updatePasswordForm.setFields([
+                    {
+                        name: 'oldPassword',
+                        errors: [error.message],
+                    },
+                ]);
+            });
+    };
+
+    if (getMyOrdersQuery.error)
         return <Error/>;
+
+    if(!isAuth)
+        return <Navigate to={'/auth/login'}/>
 
     if (getMyOrdersQuery.loading)
         return <Loading/>;
@@ -197,36 +233,91 @@ export const Account: FC = () => {
                             </Form.Item>
                         </Form>
                     </Card>
-                    <Card title="Card title" bordered={true}>
-                        <span>Email: {authData?.user.email}</span>
-                        <ButtonsVUR onUpdate={() => setIsChangeEmailVisible(true)}/>
-                        <Modal title="Change email" visible={isChangeEmailVisible} onOk={changeEmailHandler}
-                               onCancel={() => setIsChangeEmailVisible(false)}
-                               confirmLoading={updateEmailMutationOptions.loading}
-                        >
-                            <Form name="updateEmail" form={updateEmailForm}
-                                  initialValues={{
-                                      email: authData?.user.email,
-                                  }}>
-                                <Form.Item
-                                    name="email"
-                                    label="Email"
-                                    rules={[
-                                        {
-                                            type: 'email',
-                                            message: 'The input is not valid E-mail!',
-                                        },
-                                        {
-                                            required: true,
-                                            message: 'Please input page email',
-                                            whitespace: true,
-                                        },
-                                    ]}
+                    <Card title="Security" bordered={true}>
+                        <div className={s.changeEmailAndPass}>
+                            <div>
+                                <div style={{marginBottom: '5px'}}>Email: {authData?.user.email}</div>
+                                <Button type={'primary'} onClick={() => setIsChangeEmailVisible(true)}
+                                        icon={<FormOutlined/>}>
+                                    Change
+                                </Button>
+                                <Modal title="Change email" visible={isChangeEmailVisible} onOk={changeEmailHandler}
+                                       onCancel={() => setIsChangeEmailVisible(false)}
+                                       confirmLoading={updateEmailMutationOptions.loading}
                                 >
-                                    <Input placeholder="Email" type={'email'}/>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
+                                    <Form name="updateEmail" form={updateEmailForm}
+                                          initialValues={{
+                                              email: authData?.user.email,
+                                          }}>
+                                        <Form.Item
+                                            name="email"
+                                            label="Email"
+                                            rules={[
+                                                {
+                                                    type: 'email',
+                                                    message: 'The input is not valid E-mail!',
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your email',
+                                                    whitespace: true,
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder="Email" type={'email'}/>
+                                        </Form.Item>
+                                    </Form>
+                                </Modal>
+                            </div>
+                            <div>
+                                <Button type={'primary'} onClick={() => setIsChangePasswordVisible(true)}
+                                        icon={<FormOutlined/>}>
+                                    Change password
+                                </Button>
+                                <Modal title="Change password" visible={isChangePasswordVisible}
+                                       onOk={changePasswordHandler}
+                                       onCancel={() => setIsChangePasswordVisible(false)}
+                                       confirmLoading={updatePasswordMutationOptions.loading}
+                                >
+                                    <Form name="updatePassword" form={updatePasswordForm}>
+                                        <Form.Item
+                                            name="oldPassword"
+                                            label="Old password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your old password',
+                                                    whitespace: true,
+                                                },
+                                                {
+                                                    min: 3,
+                                                    message: 'Length of password must be more then 2 symbols',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder="Old password" type={'password'}/>
+                                        </Form.Item>
+                                        <Form.Item
+                                            name="newPassword"
+                                            label="New password"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your new password',
+                                                    whitespace: true,
+                                                },
+                                                {
+                                                    min: 3,
+                                                    message: 'Length of password must be more then 2 symbols',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder="Password" type={'password'}/>
+                                        </Form.Item>
+                                    </Form>
+                                </Modal>
+                            </div>
+                        </div>
                     </Card>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Orders" key="2">

@@ -17,11 +17,12 @@ export const ConfirmationEmail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = params.token || '';
-    const [confirmationEmailMutation] = useMutation<ConfirmationEmailData, ConfirmationEmailVars>(CONFIRMATION_EMAIL_MUTATION);
+    const [confirmationEmailMutation] = useMutation<ConfirmationEmailData, ConfirmationEmailVars>(CONFIRMATION_EMAIL_MUTATION,
+        {context: {gqlLink: gqlLinks.customer}},
+    );
     useEffect(() => {
         confirmationEmailMutation({
             variables: {token: token},
-            context: {gqlLink: gqlLinks.customer},
         })
             .then(response => {
                 if (response.data) {
@@ -31,6 +32,7 @@ export const ConfirmationEmail = () => {
                 }
             })
             .catch(error => {
+                console.log(error);
                 message.error(error.message);
                 navigate('/');
             });

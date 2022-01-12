@@ -1,7 +1,7 @@
 import {ApolloClient, ApolloLink, HttpLink, InMemoryCache} from '@apollo/client';
 import {baseURL} from '../../admin-area/api/api';
 import {schema} from '../../schema';
-import {authorizationHeader} from '../../authorizationHeader';
+import {getAuthorizationHeader} from '../../authorizationHeader';
 
 export const gqlLinks = {
     customer: 'graphqlCustomer',
@@ -11,13 +11,13 @@ export const gqlLinks = {
 const graphqlAdmin = new HttpLink({
     uri: baseURL + '/graphql-admin',
     headers: {
-        authorization: authorizationHeader
+        authorization: getAuthorizationHeader(),
     },
 });
 const graphqlCustomer = new HttpLink({
     uri: baseURL + '/graphql-customer',
     headers: {
-        authorization: authorizationHeader
+        authorization: getAuthorizationHeader(),
     },
 });
 

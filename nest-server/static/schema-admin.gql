@@ -202,10 +202,11 @@ input GetCategoriesInput {
 
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
+  register(registerInput: RegisterInput!): String!
   updateMe(updateMeInput: UpdateMeInput!): AuthResponse!
   updateEmail(updateEmailInput: UpdateEmailInput!): String!
-  register(registerInput: RegisterInput!): String!
-  confirmEmail(token: String!): AuthResponse!
+  updatePassword(updatePasswordInput: UpdatePasswordInput!): AuthResponse!
+  confirmationEmail(token: String!): AuthResponse!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(slug: String!): Boolean!
@@ -229,6 +230,13 @@ input LoginInput {
   password: String!
 }
 
+input RegisterInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
 input UpdateMeInput {
   firstName: String!
   lastName: String!
@@ -238,11 +246,9 @@ input UpdateEmailInput {
   email: String!
 }
 
-input RegisterInput {
-  email: String!
-  password: String!
-  firstName: String!
-  lastName: String!
+input UpdatePasswordInput {
+  oldPassword: String!
+  newPassword: String!
 }
 
 input CreateProductInput {

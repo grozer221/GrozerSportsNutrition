@@ -89,7 +89,7 @@ export class Order {
     @Field(() => OrderStatus)
     orderStatus: OrderStatus;
 
-    @ManyToOne(() => User, user => user.orders)
+    @ManyToOne(() => User, user => user.orders, {onDelete: 'CASCADE'})
     @Field(() => User)
     user: User;
 

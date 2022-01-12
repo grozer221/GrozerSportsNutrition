@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added orders create page in admin panel">
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.module.ts" afterDir="false" />
+    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added account and orders pages in customer side">
       <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.resolver.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/customer.orders.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/strategies/local.strategy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/strategies/local.strategy.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/order.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/order.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/user.entity.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/ButtonsVUD/ButtonsVUR.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/ButtonsVUD/ButtonsVUR.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/gql/orders-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/gql/orders-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/gql/orders-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/gql/orders-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Auth/AuthRegister.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Auth/AuthRegister.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/authorizationHeader.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/authorizationHeader.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Account/Account.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Account/Account.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Account/Account.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Account/Account.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/ConfirmationEmail/ConfirmationEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/ConfirmationEmail/ConfirmationEmail.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client-area/components/Pages/Pages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Pages/Pages.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/gql/orders-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/gql/orders-mutation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common-area/gql/auth-mutation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/gql/auth-mutation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common-area/gql/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/gql/client.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +139,7 @@
       <workItem from="1641808534278" duration="11673000" />
       <workItem from="1641888433299" duration="9769000" />
       <workItem from="1641979921243" duration="9771000" />
-      <workItem from="1641994699753" duration="11998000" />
+      <workItem from="1641994699753" duration="18320000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>
@@ -227,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641901693392</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added account and orders pages in customer side">
+      <created>1642006921548</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1642006921548</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +255,7 @@
     <MESSAGE value="separate pages for customers and admins" />
     <MESSAGE value="added orders on frontend" />
     <MESSAGE value="added orders create page in admin panel" />
-    <option name="LAST_COMMIT_MESSAGE" value="added orders create page in admin panel" />
+    <MESSAGE value="added account and orders pages in customer side" />
+    <option name="LAST_COMMIT_MESSAGE" value="added account and orders pages in customer side" />
   </component>
 </project>

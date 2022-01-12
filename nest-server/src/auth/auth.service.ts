@@ -21,31 +21,39 @@ export class AuthService {
     ) {
     }
 
-    async validateUser(email: string, password: string): Promise<User> {
+    async validateUserAsync(email: string, password: string): Promise<User> {
         const user = await this.adminUsersService.getByEmailWithRolesAsync(email);
         if (user && await compare(password, user.password))
             return user;
         return null;
     }
 
-    async register(registerInput: RegisterInput): Promise<User> {
+    async registerAsync(registerInput: RegisterInput): Promise<User> {
         return this.adminUsersService.addAsync(registerInput);
     }
 
-    async updateMe(userId: number, updateMeInput: UpdateMeInput, ): Promise<User> {
+    async updateMeAsync(userId: number, updateMeInput: UpdateMeInput): Promise<User> {
         return await this.adminUsersService.updateByIdAsync(userId, updateMeInput);
     }
 
-    async updateEmail(userId: number, updateEmailInput: UpdateEmailInput) {
+    async updateEmailAsync(userId: number, updateEmailInput: UpdateEmailInput) {
         return await this.adminUsersService.updateEmailByIdAsync(userId, updateEmailInput);
     }
 
-    async isEmailFree(email: string): Promise<boolean> {
+    async updatePasswordAsync(userId: number, oldPassword: string, newPassword: string): Promise<User> {
+        let user = await this.adminUsersService.getByIdAsync(userId);
+        user = await this.validateUserAsync(user.email, oldPassword);
+        if (!user)
+            throw new Error('Old password is wrong');
+        return await this.adminUsersService.updatePasswordByIdAsync(userId, newPassword);
+    }
+
+    async isEmailFreeAsync(email: string): Promise<boolean> {
         const user = await this.adminUsersService.getByEmailAsync(email);
         return !user;
     }
 
-    async getAuthJwtToken(id: number, email: string, roles: Role[]): Promise<string> {
+    async getAuthJwtTokenAsync(id: number, email: string, roles: Role[]): Promise<string> {
         const returnRoles = roles.map(role => {
             const {createdAt, updatedAt, ...rest} = role;
             return rest;
@@ -57,14 +65,14 @@ export class AuthService {
         });
     }
 
-    async sendConfirmationEmailToken(user: User): Promise<void> {
-        const confirmationEmailJwtToken = await this.getConfirmationEmailJwtToken(user.id, user.email);
+    async sendConfirmationEmailTokenAsync(user: User): Promise<void> {
+        const confirmationEmailJwtToken = await this.getConfirmationEmailJwtTokenAsync(user.id, user.email);
         this.mailService.sendConfirmationEmail(user, confirmationEmailJwtToken)
             .then((success) => console.log(success))
             .catch((err) => console.log(err));
     }
 
-    async getConfirmationEmailJwtToken(id: number, email: string): Promise<string> {
+    async getConfirmationEmailJwtTokenAsync(id: number, email: string): Promise<string> {
         const payload = {sub: id, email};
         return this.jwtService.sign(payload, {
             secret: process.env.JWT_SECRET,
@@ -72,13 +80,12 @@ export class AuthService {
         });
     }
 
-    async validateConfirmEmailJwtToken(token: string): Promise<User> {
+    async validateConfirmEmailJwtTokenAsync(token: string): Promise<User> {
         return await this.jwtService.verifyAsync(token, {
             secret: process.env.JWT_SECRET,
             ignoreExpiration: false,
         });
     }
-
 
 
 }

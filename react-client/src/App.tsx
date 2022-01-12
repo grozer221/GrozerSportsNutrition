@@ -4,7 +4,7 @@ import {ClientLayout} from './client-area/components/Layout/ClientLayout';
 import {useQuery} from '@apollo/client';
 import {ME_QUERY, MeData, MeVars} from './common-area/gql/auth-query';
 import {useDispatch} from 'react-redux';
-import {actions} from './redux/auth-reducer';
+import {actions, login} from './redux/auth-reducer';
 import {Loading} from './common-area/components/Loading/Loading';
 import {AdminLayout} from './admin-area/components/Layout/AdminLayout';
 import {AuthLogin} from './admin-area/components/Auth/AuthLogin';
@@ -19,7 +19,7 @@ export const App: FC = () => {
 
         useEffect(() => {
             if (meQuery.data && !meQuery.error) {
-                dispatch(actions.setAuthData(meQuery.data.me, true));
+                dispatch(login(meQuery.data.me));
                 setIsInitialised(true);
             }
             if (meQuery.error) {

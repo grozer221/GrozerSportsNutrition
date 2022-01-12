@@ -8,6 +8,7 @@ import {RolesService} from '../roles/roles.service';
 import {rolesConstants} from '../roles/roles.constants';
 import {UpdateMeInput} from '../auth/dto/update-me.input';
 import {UpdateEmailInput} from '../auth/dto/update-email.input';
+import {hashPassword} from '../utils/hashPassword';
 
 @Injectable()
 export class AdminUsersService {
@@ -68,5 +69,11 @@ export class AdminUsersService {
     async updateEmailByIdAsync(userId: number, updateEmailInput: UpdateEmailInput): Promise<User> {
         const user = await this.getByIdAsync(userId);
         return await this.usersRepository.save({...user, ...updateEmailInput, confirmedEmail: false});
+    }
+
+    async updatePasswordByIdAsync(userId: number, password: string) {
+        const user = await this.getByIdAsync(userId);
+        const hashedPassword = await hashPassword(password);
+        return await this.usersRepository.save({...user, password: hashedPassword});
     }
 }

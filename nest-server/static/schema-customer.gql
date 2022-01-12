@@ -170,10 +170,11 @@ input GetOrdersInput {
 
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
+  register(registerInput: RegisterInput!): String!
   updateMe(updateMeInput: UpdateMeInput!): AuthResponse!
   updateEmail(updateEmailInput: UpdateEmailInput!): String!
-  register(registerInput: RegisterInput!): String!
-  confirmEmail(token: String!): AuthResponse!
+  updatePassword(updatePasswordInput: UpdatePasswordInput!): AuthResponse!
+  confirmationEmail(token: String!): AuthResponse!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   cancelOrder(id: Int!): Order!
 }
@@ -181,6 +182,13 @@ type Mutation {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
 }
 
 input UpdateMeInput {
@@ -192,11 +200,9 @@ input UpdateEmailInput {
   email: String!
 }
 
-input RegisterInput {
-  email: String!
-  password: String!
-  firstName: String!
-  lastName: String!
+input UpdatePasswordInput {
+  oldPassword: String!
+  newPassword: String!
 }
 
 input CreateOrderInput {

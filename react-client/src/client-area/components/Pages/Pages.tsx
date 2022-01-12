@@ -15,7 +15,7 @@ export const Pages: FC = () => {
     );
     const authData = useSelector(s_getAuthData);
     const isAuth = useSelector(s_getIsAuth);
-    const dipatch = useDispatch();
+    const dispatch = useDispatch();
 
     return (
         <div className={s.wrapperPages}>
@@ -31,7 +31,7 @@ export const Pages: FC = () => {
                 ? (
                     <div className={s.pages}>
                         <Link to={'/account'}>Account</Link>
-                        <Link to={'/'} onClick={() => dipatch(logout())}>Logout</Link>
+                        <Link to={'#'} onClick={() => dispatch(logout())}>Logout</Link>
                     </div>
                 )
                 : (

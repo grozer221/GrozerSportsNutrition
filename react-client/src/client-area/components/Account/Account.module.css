@@ -31,3 +31,9 @@
     background-color: red;
     border: none;
 }
+
+.changeEmailAndPass{
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+}
