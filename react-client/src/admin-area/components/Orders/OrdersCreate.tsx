@@ -149,7 +149,6 @@ export const OrdersCreate = () => {
     const searchProductHandler = (value: string) => debouncedSearchProductHandler(value);
 
     const selectProductHandler = async (value: string, options: any) => {
-        debugger
         if (productsInBasket.some(productInBasket => productInBasket.product.name === value)) {
             message.warning('You already added this product');
             return;

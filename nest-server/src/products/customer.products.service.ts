@@ -109,7 +109,7 @@ export class CustomerProductsService {
         productsHitOfSales.sort((a, b) => b.quantity - a.quantity);
         console.log(productsHitOfSales);
         return productsHitOfSales.map((productHitOfSales, i) => {
-            if (i > 10)
+            if (i > 5)
                 return;
             return productHitOfSales.product;
         });

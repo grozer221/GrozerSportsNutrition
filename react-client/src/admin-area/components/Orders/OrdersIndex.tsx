@@ -8,6 +8,7 @@ import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {GET_ORDERS_QUERY, GetOrdersData, GetOrdersVars} from '../../gql/orders-query';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
+import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
 
 export const OrdersIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
@@ -71,12 +72,13 @@ export const OrdersIndex: FC = () => {
             title: 'Order status',
             dataIndex: 'orderStatus',
             key: 'orderStatus',
+            render: (text: any, order: Order) => <span>{getStringFromCamelCase(order.orderStatus)}</span>,
         },
         {
             title: 'Total price',
             dataIndex: 'totalPrice',
             key: 'totalPrice',
-            render: (text: any, order: Order) => <span>{order.totalPrice} UAH</span>
+            render: (text: any, order: Order) => <span>{order.totalPrice} UAH</span>,
         },
         {
             title: 'Actions',

@@ -1,6 +1,5 @@
 import {gql} from '@apollo/client';
 import {Category} from '../../types/types';
-import {updateProductInput, updateProductWithoutFilesInput} from './products-mutation';
 
 export type CreateCategoryData = { createCategory: Category }
 
@@ -9,7 +8,6 @@ export type createCategoryInput = {
     isShown: boolean,
     name: string,
     description: string,
-    products: updateProductWithoutFilesInput[],
 }
 
 export const CREATE_CATEGORY_MUTATION = gql`

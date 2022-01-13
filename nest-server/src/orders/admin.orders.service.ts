@@ -64,8 +64,6 @@ export class AdminOrdersService {
     }
 
     async updateAsync(updateOrderInput: UpdateOrderInput): Promise<Order> {
-
-
         let order = this.ordersRepository.create({...updateOrderInput});
         let totalPrice = 0;
         const productsInOrder = await this.productInOrderRepository.find({where: {orderId: updateOrderInput.id}});
@@ -82,7 +80,7 @@ export class AdminOrdersService {
         }
         order.totalPrice = totalPrice;
         order = await this.ordersRepository.save(order);
-        return order;
+        return await this.getByIdAsync(order.id);
     }
 
     async removeAsync(id: number): Promise<Order> {

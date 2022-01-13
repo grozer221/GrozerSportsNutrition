@@ -17,6 +17,7 @@ import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './ProductsIndex.module.css';
 import {updateFileInput} from '../../gql/files-mutation';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {updateCategoryInput} from '../../gql/categories-mutation';
 
 export const ProductsIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
@@ -25,7 +26,7 @@ export const ProductsIndex: FC = () => {
         GET_PRODUCTS_QUERY,
         {
             variables: {getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}},
-            context: {gqlLink: gqlLinks.admin}
+            context: {gqlLink: gqlLinks.admin},
         },
     );
     const [removeProduct, removeProductOptions] = useMutation<RemoveProductData, RemoveProductVars>(REMOVE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
@@ -61,11 +62,16 @@ export const ProductsIndex: FC = () => {
             const {fileImage, filePath, ...rest} = file;
             return rest;
         });
+        const categoriesWithoutExtra: updateCategoryInput[] = categories.map(category => {
+            const {slug, products, ...rest} = category;
+            return rest;
+        });
         const response = await updateProduct({
             variables: {
                 updateProductInput: {
                     ...rest,
                     files: files,
+                    categories: categoriesWithoutExtra,
                 },
             },
         });

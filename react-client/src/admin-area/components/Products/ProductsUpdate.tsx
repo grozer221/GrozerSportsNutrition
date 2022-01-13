@@ -30,6 +30,8 @@ import {
 import {sizeFormItem} from '../../styles/sizeFormItem';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {Error} from '../Error/Error';
+import {PinnedCategories} from '../../../common-area/components/PinnedCategories/PinnedCategories';
+import {updateCategoryInput} from '../../gql/categories-mutation';
 
 const {Search} = Input;
 
@@ -81,6 +83,10 @@ export const ProductsUpdate: FC = () => {
             const {fileImage, filePath, ...rest} = photo;
             return rest;
         });
+        const categoriesWithoutExtra: updateCategoryInput[] = categories.map(category => {
+            const {slug, products, ...rest} = category;
+            return rest;
+        });
         const response = await updateProductMutation({
             variables: {
                 updateProductInput: {
@@ -91,6 +97,7 @@ export const ProductsUpdate: FC = () => {
                     priceUAH: intPriceUAH,
                     description: description,
                     files: files,
+                    categories: categoriesWithoutExtra,
                 },
             },
         });
@@ -124,7 +131,7 @@ export const ProductsUpdate: FC = () => {
         const response = await getFilesQuery.refetch({
             getFilesInput: {
                 skip: 0,
-                take: 5,
+                take: 10,
                 likeOriginalName: value,
                 likeMimetype: 'image',
             },
@@ -166,7 +173,8 @@ export const ProductsUpdate: FC = () => {
         const response = await getCategoriesQuery.refetch({
             getCategoriesInput: {
                 skip: 0,
-                take: 5,
+                take: 10,
+                likeName: value,
             },
         });
         if (!response.errors) {
@@ -182,8 +190,11 @@ export const ProductsUpdate: FC = () => {
     const debouncedSearchCategoriesHandler = useCallback(debounce(nextValue => onSearchCategoryHandler(nextValue), 500), []);
     const searchCategoriesHandler = (value: string) => debouncedSearchCategoriesHandler(value);
 
-    if (!productSlug || getProductQuery.error)
+    if (!productSlug)
         return <Error/>;
+
+    if (getProductQuery.error)
+        message.error(getProductQuery.error.message);
 
     if (getProductQuery.loading)
         return <Loading/>;
@@ -272,28 +283,25 @@ export const ProductsUpdate: FC = () => {
             >
                 <WysiwygEditor text={description} setText={setDescription}/>
             </Form.Item>
-            {/*<Form.Item*/}
-            {/*    label="Categories"*/}
-            {/*>*/}
-            {/*    <div className={s.photosAdd}>*/}
-            {/*        <AutoComplete*/}
-            {/*            options={searchedCategoryNames}*/}
-            {/*            placeholder="Search in categories"*/}
-            {/*            onSearch={searchCategoriesHandler}*/}
-            {/*            onSelect={selectCategoryHandler}*/}
-            {/*        />*/}
-            {/*        <div className={s.wrapperLoading}>*/}
-            {/*            {getCategoryByName.loading && <Loading/>}*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</Form.Item>*/}
-            {/*{categories.length > 0 && (*/}
-            {/*    <Form.Item>*/}
-            {/*        <PinnedCategories loading={getProductQuery.loading || getCategoryByName.loading}*/}
-            {/*                          categories={categories}*/}
-            {/*                          setCategories={setCategories}/>*/}
-            {/*    </Form.Item>*/}
-            {/*)}*/}
+            <Form.Item
+                label="Categories"
+            >
+                <AutoComplete
+                    options={searchedCategoryNames}
+                    onSearch={searchCategoriesHandler}
+                    onSelect={selectCategoryHandler}
+                >
+                    <Search placeholder="Search categories" enterButton
+                            loading={getCategoriesQuery.loading || getCategoryByName.loading}/>
+                </AutoComplete>
+            </Form.Item>
+            {categories.length > 0 && (
+                <Form.Item>
+                    <PinnedCategories loading={getCategoriesQuery.loading || getCategoryByName.loading}
+                                      categories={categories}
+                                      setCategories={setCategories}/>
+                </Form.Item>
+            )}
             <Form.List name="characteristics">
                 {(fields, {add, remove}) => (
                     <>

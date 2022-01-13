@@ -1,0 +1,35 @@
+.photosAndMainInfo {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.carousel {
+    width: 256px;
+}
+
+
+.image {
+    object-fit: cover;
+}
+
+.cards {
+    display: flex;
+    gap: 10px;
+    justify-content: stretch;
+}
+
+.card {
+    width: 50%;
+}
+
+.priceAndAddToBasket {
+    margin: 20px 0 0 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.price{
+    font-size: 18px;
+}

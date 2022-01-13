@@ -1,4 +1,4 @@
-import {forwardRef, Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Order, OrderStatus} from './order.entity';
@@ -8,7 +8,6 @@ import {ProductInOrder} from './product-in-order.entity';
 import {GetOrdersInput} from './dto/get-orders.input';
 import {GetOrdersResponse} from './dto/get-orders.response';
 import {CustomerProductsService} from '../products/customer.products.service';
-import {Product} from '../products/product.entity';
 
 @Injectable()
 export class CustomerOrdersService {
@@ -81,14 +80,8 @@ export class CustomerOrdersService {
         return await this.ordersRepository.findOneOrFail(id);
     }
 
-    async getProductsInOrderHitOfSales(): Promise<Product[]> {
-        const productsInOrder = await this.productInOrderRepository.findAndCount();
-        console.log(productsInOrder);
-        return [];
-    }
-
     async cancelAsync(orderId: number, userId: number): Promise<Order> {
-        const order = await this.getByIdAsync(orderId);
+        let order = await this.getByIdAsync(orderId);
         if (order.userId !== userId)
             throw new Error('You can not cancel not your order');
 
@@ -105,6 +98,7 @@ export class CustomerOrdersService {
         }
 
         order.orderStatus = OrderStatus.canceled;
-        return await this.ordersRepository.save(order);
+        order = await this.ordersRepository.save(order);
+        return await this.getByIdAsync(order.id);
     }
 }

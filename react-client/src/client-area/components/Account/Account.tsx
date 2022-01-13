@@ -35,7 +35,7 @@ import {
 import {Order, OrderStatus} from '../../../types/types';
 import {CANCEL_ORDER_MUTATION, CancelOrderData, CancelOrderVars} from '../../gql/orders-mutation';
 import {useForm} from 'antd/es/form/Form';
-import {logout} from '../../../redux/auth-reducer';
+import {login, logout} from '../../../redux/auth-reducer';
 import {FormOutlined} from '@ant-design/icons';
 import {Navigate} from 'react-router-dom';
 
@@ -90,6 +90,7 @@ export const Account: FC = () => {
             },
         });
         if (response.data && !response.errors) {
+            dispatch(login(response.data.updateMe))
             message.success('Personal data successfully updates');
         } else {
             response.errors?.forEach(error => message.error(error.message));
@@ -184,8 +185,8 @@ export const Account: FC = () => {
     if (getMyOrdersQuery.error)
         return <Error/>;
 
-    if(!isAuth)
-        return <Navigate to={'/auth/login'}/>
+    if (!isAuth)
+        return <Navigate to={'/auth/login'}/>;
 
     if (getMyOrdersQuery.loading)
         return <Loading/>;
@@ -312,7 +313,7 @@ export const Account: FC = () => {
                                                 },
                                             ]}
                                         >
-                                            <Input placeholder="Password" type={'password'}/>
+                                            <Input placeholder="New password" type={'password'}/>
                                         </Form.Item>
                                     </Form>
                                 </Modal>
@@ -321,7 +322,7 @@ export const Account: FC = () => {
                     </Card>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Orders" key="2">
-                    <Collapse expandIconPosition={'right'}>
+                    <Collapse expandIconPosition={'right'} className={s.orders}>
                         {myOrdersObj?.orders?.map(order => (
                             <Collapse.Panel header={<OrderHeader order={order}/>} key={order.id}>
                                 <table className="infoTable">

@@ -24,7 +24,10 @@ export const ProductCard: FC<Props> = ({product}) => {
                 <Link to={`/products/${product.slug}`} className={s.name}>{product.name}</Link>
                 <Carousel className={s.carousel}>
                     {product.files?.map(file => (
-                        <Avatar key={file.id} shape={'square'} size={128} src={file.fileImage} alt={file.fileName}/>
+                        <div className={s.wrapperImage}>
+                            <Avatar className={s.image} key={file.id} shape={'square'} size={128} src={file.fileImage}
+                                    alt={file.fileName}/>
+                        </div>
                     ))}
                 </Carousel>
             </div>

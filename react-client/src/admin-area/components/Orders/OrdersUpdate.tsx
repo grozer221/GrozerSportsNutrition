@@ -32,6 +32,7 @@ import {GET_ORDER_QUERY, GetOrderData, GetOrderVars} from '../../gql/orders-quer
 import {UPDATE_ORDER_MUTATION, UpdateOrderData, UpdateOrderVars} from '../../gql/orders-mutation';
 import {Error} from '../Error/Error';
 import {Loading} from '../../../common-area/components/Loading/Loading';
+import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
 
 export const OrdersUpdate = () => {
     const params = useParams();
@@ -204,6 +205,7 @@ export const OrdersUpdate = () => {
         return <Loading/>;
 
     const order = getOrderQuery.data?.getOrder;
+    console.log(selectedWarehouse);
     return (
         <div>
             <Form
@@ -219,6 +221,7 @@ export const OrdersUpdate = () => {
                     phoneNumber: order?.phoneNumber,
                     address: order?.address,
                     city: order?.deliveryCityName,
+                    warehouse: order?.deliveryWarehouse,
                     shippingMethod: order?.shippingMethod,
                     orderStatus: order?.orderStatus,
                 }}
@@ -299,8 +302,10 @@ export const OrdersUpdate = () => {
                                     label="Warehouse"
                                     rules={[{required: true, message: 'Please select your warehouse!'}]}
                                 >
-                                    <Select loading={warehousesLoading} defaultValue={selectedWarehouse}
-                                            onChange={value => setSelectedWarehouse(value as any)}>
+                                    <Select loading={warehousesLoading}
+                                            onChange={value => setSelectedWarehouse(value as any)}
+                                            value={selectedWarehouse}
+                                    >
                                         {warehouses.map(warehouse => (
                                             <Select.Option
                                                 key={warehouse.Description}
@@ -346,7 +351,7 @@ export const OrdersUpdate = () => {
                 >
                     <Select>
                         {(Object.keys(OrderStatus) as Array<keyof typeof OrderStatus>).map((key, i) => (
-                            <Select.Option value={key} key={i}>{key}</Select.Option>
+                            <Select.Option value={key} key={i}>{getStringFromCamelCase(key)}</Select.Option>
                         ))}
                     </Select>
                 </Form.Item>

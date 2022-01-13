@@ -203,6 +203,7 @@ input GetFilesInput {
 input GetCategoriesInput {
   take: Int!
   skip: Int!
+  likeName: String!
 }
 
 type Mutation {
@@ -282,6 +283,7 @@ input CreateProductInput {
   description: String!
   characteristics: [CharacteristicInputType!]
   files: [UpdateFileInput!]!
+  categories: [UpdateCategoryInput!]!
 }
 
 input CharacteristicInputType {
@@ -298,6 +300,13 @@ input UpdateFileInput {
   id: Int!
 }
 
+input UpdateCategoryInput {
+  isShown: Boolean
+  name: String
+  description: String
+  id: Int!
+}
+
 input UpdateProductInput {
   isShown: Boolean
   name: String
@@ -306,6 +315,7 @@ input UpdateProductInput {
   description: String
   characteristics: [CharacteristicInputType!]
   files: [UpdateFileInput!]
+  categories: [UpdateCategoryInput!]
   id: Int!
 }
 
@@ -354,23 +364,4 @@ input CreateCategoryInput {
   isShown: Boolean!
   name: String!
   description: String!
-  products: [UpdateProductWithoutFilesInput!]!
-}
-
-input UpdateProductWithoutFilesInput {
-  isShown: Boolean
-  name: String
-  quantity: Float
-  priceUAH: Float
-  description: String
-  characteristics: [CharacteristicInputType!]
-  id: Int!
-}
-
-input UpdateCategoryInput {
-  isShown: Boolean
-  name: String
-  description: String
-  products: [UpdateProductWithoutFilesInput!]
-  id: Int!
 }

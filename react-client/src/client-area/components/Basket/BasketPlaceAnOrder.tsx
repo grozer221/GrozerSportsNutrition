@@ -18,7 +18,7 @@ import {useMutation} from '@apollo/client';
 import {CREATE_ORDER_MUTATION, CreateOrderData, CreateOrderVars} from '../../gql/orders-mutation';
 import {s_getProductsInBasket} from '../../../redux/basket.selectors';
 import {gqlLinks} from '../../../common-area/gql/client';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 
 const formItemLayout = {
     labelCol: {
@@ -120,6 +120,10 @@ export const BasketPlaceAnOrder = () => {
         setSelectedCity(option);
         dispatch(loadWarehouses(option.deliveryCity));
     };
+
+    if (!productsInBasket.length) {
+        return <Navigate to={'/'}/>;
+    }
 
     return (
         <div>

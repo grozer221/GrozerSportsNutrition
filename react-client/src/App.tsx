@@ -11,11 +11,13 @@ import {AuthLogin} from './admin-area/components/Auth/AuthLogin';
 import 'antd/dist/antd.css';
 import './App.css';
 import {gqlLinks} from './common-area/gql/client';
+import {getStringFromCamelCase} from './utils/getStringFromCamelCase';
 
 export const App: FC = () => {
         const dispatch = useDispatch();
         const meQuery = useQuery<MeData, MeVars>(ME_QUERY, {context: {gqlLink: gqlLinks.customer}});
         const [isInitialised, setIsInitialised] = useState(false);
+    console.log(getStringFromCamelCase('abcdEfghIgh'));
 
         useEffect(() => {
             if (meQuery.data && !meQuery.error) {

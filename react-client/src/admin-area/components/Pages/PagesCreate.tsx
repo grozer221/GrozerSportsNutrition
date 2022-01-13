@@ -15,7 +15,6 @@ export const PagesCreate: FC = () => {
     const onFinish = async (values: {
         name: string,
     }) => {
-        debugger
         const response = await createPage({
             variables: {
                 createPageInput: {

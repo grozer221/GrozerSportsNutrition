@@ -1,17 +1,13 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { UpdateProductWithoutFilesInput } from '../../products/dto/update-product.input';
+import {Field, InputType} from '@nestjs/graphql';
 
 @InputType()
 export class CreateCategoryInput {
-	@Field(() => Boolean)
-	isShown: boolean;
+    @Field(() => Boolean)
+    isShown: boolean;
 
-	@Field()
-	name: string;
+    @Field()
+    name: string;
 
-	@Field()
-	description: string;
-
-	@Field(() => [UpdateProductWithoutFilesInput])
-	products: UpdateProductWithoutFilesInput[];
+    @Field()
+    description: string;
 }

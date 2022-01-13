@@ -8,6 +8,7 @@ export type GetCategoriesVars = { getCategoriesInput: getCategoriesInput }
 export type getCategoriesInput = {
     take: number,
     skip: number,
+    likeName: string,
 }
 
 export const GET_CATEGORIES_QUERY = gql`

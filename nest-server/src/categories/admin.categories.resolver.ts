@@ -40,7 +40,7 @@ export class AdminCategoriesResolver {
     async getCategories(
         @Args('getCategoriesInput', { type: () => GetCategoriesInput }) getCategoriesInput: GetCategoriesInput,
     ): Promise<GetCategoriesResponse> {
-        return await this.categoriesService.getAsync(getCategoriesInput.take, getCategoriesInput.skip);
+        return await this.categoriesService.getAsync(getCategoriesInput);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)

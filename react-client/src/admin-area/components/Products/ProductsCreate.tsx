@@ -12,13 +12,22 @@ import {
     GetFilesData,
     GetFilesVars,
 } from '../../gql/files-query';
-import {Characteristic, FileType} from '../../../types/types';
+import {Category, Characteristic, FileType} from '../../../types/types';
 import {PinnedUploadedFiles} from '../../../common-area/components/PinnedUploadedFiles/PinnedUploadedFiles';
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {sizeFormItem} from '../../styles/sizeFormItem';
 import {gqlLinks} from '../../../common-area/gql/client';
-import {createFileInput, updateFileInput} from '../../gql/files-mutation';
+import {
+    GET_CATEGORIES_QUERY,
+    GET_CATEGORY_BY_NAME_QUERY,
+    GetCategoriesData,
+    GetCategoriesVars,
+    GetCategoryByNameData,
+    GetCategoryByNameVars,
+} from '../../gql/categories-query';
+import {PinnedCategories} from '../../../common-area/components/PinnedCategories/PinnedCategories';
+import {updateCategoryInput} from '../../gql/categories-mutation';
 
 const {Search} = Input;
 
@@ -32,6 +41,12 @@ export const ProductsCreate: FC = () => {
     const [isShown, setIsShown] = useState<boolean>(true);
     const [description, setDescription] = useState<string>('');
 
+    const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(GET_CATEGORIES_QUERY, {context: {gqlLink: gqlLinks.admin}});
+    const getCategoryByName = useQuery<GetCategoryByNameData, GetCategoryByNameVars>(GET_CATEGORY_BY_NAME_QUERY, {context: {gqlLink: gqlLinks.admin}});
+    const [searchedCategoryNames, setSearchedCategoryNames] = useState<{ value: string }[]>([]);
+    const [categories, setCategories] = useState([] as Category[]);
+
+
     const onFinish = async (values: {
         name: string,
         quantity: string,
@@ -42,9 +57,13 @@ export const ProductsCreate: FC = () => {
         const intPriceUAH = parseInt(values.priceUAH);
         const characteristics = values.characteristics || [];
         const photosWithoutExtra = photos.map(photo => {
-            const {filePath, fileImage,...rest} = photo
-            return rest
-        })
+            const {filePath, fileImage, ...rest} = photo;
+            return rest;
+        });
+        const categoriesWithoutExtra: updateCategoryInput[] = categories.map(category => {
+            const {slug, products, ...rest} = category;
+            return rest;
+        });
         const createProductsVars: CreateProductVars = {
             createProductInput: {
                 ...values,
@@ -54,6 +73,7 @@ export const ProductsCreate: FC = () => {
                 description: description,
                 characteristics: characteristics,
                 files: photosWithoutExtra,
+                categories: categoriesWithoutExtra,
             },
         };
         console.log(createProductsVars);
@@ -106,6 +126,48 @@ export const ProductsCreate: FC = () => {
             response.errors?.forEach(error => message.error(error.message));
         }
     };
+
+
+    const selectCategoryHandler = async (value: string) => {
+        if (categories.some(category => category.name === value)) {
+            message.warning('You already added this category');
+            return;
+        }
+        const response = await getCategoryByName.refetch({
+            name: value,
+        });
+        if (!response.errors) {
+            setCategories([...categories, response.data.getCategoryByName]);
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
+    };
+
+    const onSearchCategoryHandler = async (value: string) => {
+        if (value.trim() === '') {
+            setSearchedCategoryNames([]);
+            return;
+        }
+        const response = await getCategoriesQuery.refetch({
+            getCategoriesInput: {
+                skip: 0,
+                take: 10,
+                likeName: value,
+            },
+        });
+        if (!response.errors) {
+            setSearchedCategoryNames(response.data.getCategories.categories.map(category => ({value: category.name})));
+            if (!response.data.getCategories.categories.length) {
+                message.warning('Categories with current name not found');
+            }
+        } else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
+    };
+
+    const debouncedSearchCategoriesHandler = useCallback(debounce(nextValue => onSearchCategoryHandler(nextValue), 500), []);
+    const searchCategoriesHandler = (value: string) => debouncedSearchCategoriesHandler(value);
+
 
     return (
         <Form name="createProduct" onFinish={onFinish}>
@@ -213,6 +275,25 @@ export const ProductsCreate: FC = () => {
                     </>
                 )}
             </Form.List>
+            <Form.Item
+                label="Categories"
+            >
+                <AutoComplete
+                    options={searchedCategoryNames}
+                    onSearch={searchCategoriesHandler}
+                    onSelect={selectCategoryHandler}
+                >
+                    <Search placeholder="Search categories" enterButton
+                            loading={getCategoriesQuery.loading || getCategoryByName.loading}/>
+                </AutoComplete>
+            </Form.Item>
+            {categories.length > 0 && (
+                <Form.Item>
+                    <PinnedCategories loading={getCategoriesQuery.loading || getCategoryByName.loading}
+                                      categories={categories}
+                                      setCategories={setCategories}/>
+                </Form.Item>
+            )}
             <Form.Item>
                 <Button type="primary" htmlType={'submit'}
                         loading={createProductOption.loading || getFilesQuery.loading || getFileByName.loading}>

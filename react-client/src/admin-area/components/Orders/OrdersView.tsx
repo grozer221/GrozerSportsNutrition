@@ -9,6 +9,7 @@ import {GET_ORDER_QUERY, GetOrderData, GetOrderVars} from '../../gql/orders-quer
 import s from './OrdersView.module.css';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
 import {ProductInOrder} from '../../../types/types';
+import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
 
 export const OrdersView: FC = () => {
     const params = useParams();
@@ -136,7 +137,7 @@ export const OrdersView: FC = () => {
                         <tr>
                             <td>Order status:</td>
                             <td>
-                                <span>{order?.orderStatus}</span>
+                                <span>{order?.orderStatus && getStringFromCamelCase(order.orderStatus)}</span>
                             </td>
                         </tr>
                         <tr>

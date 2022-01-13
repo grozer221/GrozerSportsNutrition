@@ -18,7 +18,6 @@ import {
     UpdateCategoryData,
     UpdateCategoryVars,
 } from '../../gql/categories-mutation';
-import {updateProductWithoutFilesInput} from '../../gql/products-mutation';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {Loading} from '../../../common-area/components/Loading/Loading';
 
@@ -31,7 +30,7 @@ export const CategoriesIndex: FC = () => {
     const getCategoriesQuery = useQuery<GetCategoriesData, GetCategoriesVars>(
         GET_CATEGORIES_QUERY,
         {
-            variables: {getCategoriesInput: {skip: pageSkip, take: pageTake}},
+            variables: {getCategoriesInput: {skip: pageSkip, take: pageTake, likeName: ''}},
             context: {gqlLink: gqlLinks.admin},
         },
     );
@@ -57,23 +56,18 @@ export const CategoriesIndex: FC = () => {
     const onRemove = async (slug: string) => {
         const response = await removeCategory({variables: {slug: slug}});
         if (!response.errors)
-            await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake}});
+            await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake, likeName: ''}});
         else
             response.errors.forEach(error => message.error(error.message));
     };
 
     const toggleIsShownHandler = async (category: Category, flag: boolean) => {
-        const {slug, ...rest} = category;
+        const {slug, products, ...rest} = category;
         rest.isShown = flag;
-        const productsWithoutFiles: updateProductWithoutFilesInput[] = rest.products?.map(product => {
-            const {files, slug, ...restProduct} = product;
-            return restProduct;
-        });
         const response = await updateCategory({
             variables: {
                 updateCategoryInput: {
                     ...rest,
-                    products: productsWithoutFiles,
                 },
             },
         });
@@ -146,7 +140,7 @@ export const CategoriesIndex: FC = () => {
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
                             setSkipTake(pageSkip);
-                            await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake}});
+                            await getCategoriesQuery.refetch({getCategoriesInput: {skip: pageSkip, take: pageTake, likeName: ''}});
                         },
                     }}
                     rowKey={'id'}

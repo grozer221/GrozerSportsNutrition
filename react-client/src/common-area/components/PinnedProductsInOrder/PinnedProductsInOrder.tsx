@@ -57,7 +57,7 @@ export const PinnedProductsInOrder: React.FC<Props> = ({loading}) => {
             title: 'Price',
             dataIndex: 'priceUAH',
             key: 'priceUAH',
-            render: (text: any, productInBasket: ProductInBasket) => <span>{productInBasket.product.priceUAH}</span>,
+            render: (text: any, productInBasket: ProductInBasket) => <span>{productInBasket.product.priceUAH} UAH</span>,
         },
         {
             title: 'Quantity',
@@ -78,6 +78,12 @@ export const PinnedProductsInOrder: React.FC<Props> = ({loading}) => {
                     </button>
                 </div>
             ),
+        },
+        {
+            title: 'Total price',
+            dataIndex: 'totalPrice',
+            key: 'totalPrice',
+            render: (text: any, productInBasket: ProductInBasket) => <span>{productInBasket.product.priceUAH * productInBasket.productQuantity} UAH</span>,
         },
         {
             title: 'Actions',

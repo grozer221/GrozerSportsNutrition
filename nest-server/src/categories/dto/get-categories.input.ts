@@ -11,4 +11,7 @@ export class GetCategoriesInput {
     @Min(0)
     @Field(() => Int)
     skip: number;
+
+    @Field()
+    likeName: string;
 }

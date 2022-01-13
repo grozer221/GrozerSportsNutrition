@@ -1,4 +1,3 @@
-export const getAuthorizationHeader = () => {
-    console.log('getAuthorizationHeader');
+export const getAuthorizationHeader = (): string => {
     return localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
 };
