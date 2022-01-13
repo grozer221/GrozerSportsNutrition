@@ -22,7 +22,7 @@ export class Category {
   @Field()
   slug: string;
 
-  @Column()
+  @Column('text')
   @Field()
   description: string;
 

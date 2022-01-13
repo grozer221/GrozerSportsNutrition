@@ -12,7 +12,7 @@ export class ProductInOrder {
     @Field(() => Int)
     id: number;
 
-    @ManyToOne(() => Product, product => product.productsInOrder)
+    @ManyToOne(() => Product, product => product.productsInOrder, {onDelete: 'CASCADE'})
     @Field(() => Product)
     product: Product;
 

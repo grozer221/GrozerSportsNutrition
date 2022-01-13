@@ -9,6 +9,7 @@ import {rolesConstants} from '../roles/roles.constants';
 import {UpdateMeInput} from '../auth/dto/update-me.input';
 import {UpdateEmailInput} from '../auth/dto/update-email.input';
 import {hashPassword} from '../utils/hashPassword';
+import {GetUsersResponse} from './dto/get-users.response';
 
 @Injectable()
 export class AdminUsersService {
@@ -25,8 +26,13 @@ export class AdminUsersService {
         return await this.usersRepository.save(user);
     }
 
-    async getAsync(take: number, skip: number): Promise<User[]> {
-        return await this.usersRepository.find({take, skip});
+    async getAsync(take: number, skip: number): Promise<GetUsersResponse> {
+        const getUsersResponse = new GetUsersResponse();
+        const users = await this.usersRepository.find({take, skip});
+        const usersCount = await this.usersRepository.find();
+        getUsersResponse.users = users;
+        getUsersResponse.total = usersCount.length;
+        return getUsersResponse;
     }
 
     async getByIdAsync(id: number): Promise<User> {
@@ -41,7 +47,7 @@ export class AdminUsersService {
     }
 
     async getByEmailAsync(email: string): Promise<User> {
-        return await this.usersRepository.findOne({
+        return await this.usersRepository.findOneOrFail({
             where: {email},
         });
     }

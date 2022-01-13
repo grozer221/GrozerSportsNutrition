@@ -112,6 +112,11 @@ type User {
   orders: [Order!]!
 }
 
+type GetUsersResponse {
+  users: [User!]!
+  total: Int!
+}
+
 type AuthResponse {
   user: User!
   accessToken: String!
@@ -148,15 +153,15 @@ type GetOrdersResponse {
 
 type Query {
   me: AuthResponse!
-  getUsers(getUsersInput: GetUsersInput!): [User!]!
-  getUser(id: Int!): User!
+  getUsers(getUsersInput: GetUsersInput!): GetUsersResponse!
+  getUser(email: String!): User!
   getRoles(getRolesInput: GetRolesInput!): [Role!]!
   getRole(id: Int!): Role!
+  getPages: [Page!]!
+  getPage(slug: String!): Page!
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
   getProduct(slug: String!): Product!
   getProductByName(name: String!): Product!
-  getPages: [Page!]!
-  getPage(slug: String!): Page!
   getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
   getOrder(id: Int!): Order!
   getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
@@ -207,13 +212,13 @@ type Mutation {
   updateEmail(updateEmailInput: UpdateEmailInput!): String!
   updatePassword(updatePasswordInput: UpdatePasswordInput!): AuthResponse!
   confirmationEmail(token: String!): AuthResponse!
-  createProduct(createProductInput: CreateProductInput!): Product!
-  updateProduct(updateProductInput: UpdateProductInput!): Product!
-  removeProduct(slug: String!): Boolean!
   createPage(createPageInput: CreatePageInput!): Page!
   updatePage(updatePageInput: UpdatePageInput!): Page!
   updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
   removePage(slug: String!): Boolean!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  removeProduct(slug: String!): Boolean!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): Boolean!
@@ -251,6 +256,24 @@ input UpdatePasswordInput {
   newPassword: String!
 }
 
+input CreatePageInput {
+  isShown: Boolean!
+  name: String!
+  text: String!
+}
+
+input UpdatePageInput {
+  isShown: Boolean
+  name: String
+  text: String
+  id: Int!
+  sorting: Int!
+}
+
+input UpdatePagesInput {
+  updatePagesInput: [UpdatePageInput!]!
+}
+
 input CreateProductInput {
   isShown: Boolean!
   name: String!
@@ -284,24 +307,6 @@ input UpdateProductInput {
   characteristics: [CharacteristicInputType!]
   files: [UpdateFileInput!]
   id: Int!
-}
-
-input CreatePageInput {
-  isShown: Boolean!
-  name: String!
-  text: String!
-}
-
-input UpdatePageInput {
-  isShown: Boolean
-  name: String
-  text: String
-  id: Int!
-  sorting: Int!
-}
-
-input UpdatePagesInput {
-  updatePagesInput: [UpdatePageInput!]!
 }
 
 input CreateOrderInput {

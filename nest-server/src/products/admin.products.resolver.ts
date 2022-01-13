@@ -30,6 +30,8 @@ export class AdminProductsResolver {
         return await this.adminProductsService.getCategoriesByProductId(product.id);
     }
 
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => GetProductsResponse)
     async getProducts(
         @Args('getProductsInput', { type: () => GetProductsInput }) getProductsInput: GetProductsInput,
@@ -37,11 +39,15 @@ export class AdminProductsResolver {
         return await this.adminProductsService.getAsync(getProductsInput.take, getProductsInput.skip, getProductsInput.likeName);
     }
 
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => Product)
     async getProduct(@Args('slug', { type: () => String }) slug: string): Promise<Product> {
         return await this.adminProductsService.getBySlugAsync(slug);
     }
 
+    @Roles(RoleName.moderator, RoleName.admin)
+    @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => Product)
     async getProductByName(@Args('name', { type: () => String }) name: string): Promise<Product> {
         return await this.adminProductsService.getByNameAsync(name);

@@ -9,7 +9,7 @@ import {AuthModule} from './auth/auth.module';
 import {RolesModule} from './roles/roles.module';
 import {AdminProductsModule} from './products/admin.products.module';
 import {FilesModule} from './files/files.module';
-import {CategoriesModule} from './categories/categories.module';
+import {AdminCategoriesModule} from './categories/admin.categories.module';
 import {CustomerPagesModule} from './pages/customer.pages.module';
 import {AdminOrdersModule} from './orders/admin.orders.module';
 import {MailModule} from './mail/mail.module';
@@ -33,11 +33,11 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
                 AdminPagesModule,
                 AdminProductsModule,
                 AdminOrdersModule,
-
                 AdminUsersModule,
+
                 RolesModule,
                 FilesModule,
-                CategoriesModule,
+                AdminCategoriesModule,
             ],
             debug: true,
         }),
@@ -87,11 +87,11 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
         AdminPagesModule,
         AdminProductsModule,
         AdminOrdersModule,
-
         AdminUsersModule,
+
         RolesModule,
         FilesModule,
-        CategoriesModule,
+        AdminCategoriesModule,
     ],
     providers: [
         AppService,

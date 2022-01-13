@@ -126,3 +126,42 @@ export const GET_PRODUCT_BY_NAME_QUERY = gql`
         }
     }
 `;
+
+
+export type GetProductsHitOfSalesData = { getProductsHitOfSales: Product[] }
+export type GetProductsHitOfSalesVars = {}
+
+export const GET_PRODUCTS_HIT_OF_SALES_QUERY = gql`
+    query GetProductsHitOfSales {
+        getProductsHitOfSales {
+            id
+            isShown
+            name
+            slug
+            quantity
+            priceUAH
+            description
+            characteristics {
+                name
+                value
+            }
+            files {
+                id
+                originalName
+                mimetype
+                destination
+                fileName
+                filePath
+                fileImage
+                size
+            }
+            categories {
+                id
+                isShown
+                name
+                description
+                slug
+            }
+        }
+    }
+`;

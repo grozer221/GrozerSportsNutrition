@@ -39,4 +39,9 @@ export class CustomerProductsResolver {
     async getProductByName(@Args('name', {type: () => String}) name: string): Promise<Product> {
         return await this.customerProductsService.getByNameAsync(name);
     }
+
+    @Query(() => [Product])
+    async getProductsHitOfSales(): Promise<Product[]> {
+        return await this.customerProductsService.getProductsHitOfSales();
+    }
 }

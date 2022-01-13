@@ -105,3 +105,8 @@ a {
 .infoTable tr td:last-child > *{
     border-bottom: 2px dotted gray;
 }
+
+
+.bold{
+    font-weight: bold;
+}

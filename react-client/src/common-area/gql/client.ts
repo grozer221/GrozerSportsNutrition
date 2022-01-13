@@ -1,7 +1,7 @@
 import {ApolloClient, ApolloLink, HttpLink, InMemoryCache} from '@apollo/client';
 import {baseURL} from '../../admin-area/api/api';
 import {schema} from '../../schema';
-import {getAuthorizationHeader} from '../../authorizationHeader';
+import {getAuthorizationHeader} from '../../utils/authorizationHeader';
 
 export const gqlLinks = {
     customer: 'graphqlCustomer',

@@ -20,6 +20,7 @@ import {
 } from '../../gql/categories-mutation';
 import {updateProductWithoutFilesInput} from '../../gql/products-mutation';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {Loading} from '../../../common-area/components/Loading/Loading';
 
 export const CategoriesIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
@@ -115,6 +116,12 @@ export const CategoriesIndex: FC = () => {
             ),
         },
     ];
+
+    if (getCategoriesQuery.error)
+        message.error(getCategoriesQuery.error.message);
+
+    if (getCategoriesQuery.loading)
+        return <Loading/>;
 
     return (
         <>

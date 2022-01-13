@@ -22,6 +22,15 @@ export class AdminOrdersService {
     }
 
     async createAsync(createOrderInput: CreateOrderInput, currentUser: User): Promise<Order> {
+        for (const key in createOrderInput.createProductInOrder) {
+            const createProductInOrderInput = createOrderInput.createProductInOrder[key];
+            const product = await this.adminProductsService.getByIdAsync(createProductInOrderInput.productId);
+            if (product.quantity < createProductInOrderInput.productQuantity)
+                throw new Error(`Product ${product.name} out of stock in the amount of ${createProductInOrderInput.productQuantity} units. Available only ${product.quantity}`);
+            product.quantity -= createProductInOrderInput.productQuantity;
+            await this.adminProductsService.updateAsync(product);
+        }
+
         let order = this.ordersRepository.create({...createOrderInput, userId: currentUser.id});
         order = await this.ordersRepository.save(order);
         let totalPrice = 0;
@@ -55,6 +64,8 @@ export class AdminOrdersService {
     }
 
     async updateAsync(updateOrderInput: UpdateOrderInput): Promise<Order> {
+
+
         let order = this.ordersRepository.create({...updateOrderInput});
         let totalPrice = 0;
         const productsInOrder = await this.productInOrderRepository.find({where: {orderId: updateOrderInput.id}});

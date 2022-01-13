@@ -12,7 +12,7 @@ export type createProductInput = {
     priceUAH: number,
     description: string,
     characteristics: Characteristic[],
-    files: FileType[],
+    files: updateFileInput[],
 }
 
 export const CREATE_PRODUCT_MUTATION = gql`

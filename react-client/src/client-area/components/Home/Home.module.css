@@ -1,0 +1,17 @@
+.hitOfSalesWrapper{
+    border: 2px solid #FF5722;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.hitOfSalesTitle{
+    margin: -1px -1px 0 -1px;
+    text-transform: uppercase;
+    background-color: #FF5722;
+    text-align: center;
+    font-weight: 1000;
+}
+
+.hitOfSalesProductItem{
+    width: 300px;
+}

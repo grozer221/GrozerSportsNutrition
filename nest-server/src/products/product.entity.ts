@@ -43,7 +43,7 @@ export class Product {
     @Field(() => Number)
     priceUAH: number;
 
-    @Column()
+    @Column('text')
     @Field()
     description: string;
 

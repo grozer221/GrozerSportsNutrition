@@ -45,20 +45,15 @@ export class AdminProductsService {
 
     async getAsync(take: number, skip: number, likeName: string): Promise<GetProductsResponse> {
         const getProductsResponse = new GetProductsResponse();
-        const products = await this.productsRepository.find({
+        const [products, productsTotal] = await this.productsRepository.findAndCount({
             where: {
                 name: Like(`%${likeName}%`),
             },
             take: take,
             skip: skip,
         });
-        const productsCount = await this.productsRepository.find({
-            where: {
-                name: Like(`%${likeName}%`),
-            },
-        });
         getProductsResponse.products = products;
-        getProductsResponse.total = productsCount.length;
+        getProductsResponse.total = productsTotal;
         return getProductsResponse;
     }
 

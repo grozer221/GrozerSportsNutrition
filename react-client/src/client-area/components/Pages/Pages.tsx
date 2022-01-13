@@ -3,11 +3,11 @@ import {useQuery} from '@apollo/client';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {s_getAuthData, s_getIsAuth} from '../../../redux/auth-selectors';
-import {RoleName} from '../../../types/types';
 import s from './Pages.module.css';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {GET_PAGES_QUERY, GetPagesData, GetPagesVars} from '../../gql/pages-query';
 import {logout} from '../../../redux/auth-reducer';
+import {isModeratorOrAdmin} from '../../../utils/authorization';
 
 export const Pages: FC = () => {
     const getPagesQuery = useQuery<GetPagesData, GetPagesVars>(GET_PAGES_QUERY,
@@ -23,7 +23,7 @@ export const Pages: FC = () => {
                 {getPagesQuery.data?.getPages.map(page => (
                     <Link key={page.id} to={`/pages/${page.slug}`} className={s.page}>{page.name}</Link>
                 ))}
-                {authData?.user.roles.some(r => r.name === RoleName.moderator || r.name === RoleName.admin)
+                {authData && isModeratorOrAdmin(authData.user)
                 && <Link to={`/admin`} className={s.page}>Admin Panel</Link>
                 }
             </div>

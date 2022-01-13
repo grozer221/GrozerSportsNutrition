@@ -76,7 +76,7 @@ export const BasketPlaceAnOrder = () => {
         let newAddress = values.address;
         if (shippingMethod === 'warehouse')
             newAddress = values.city + ' ' + values.warehouse;
-        const response = await createOrderMutation({
+        createOrderMutation({
             variables: {
                 createOrderInput: {
                     ...restValues,
@@ -90,14 +90,15 @@ export const BasketPlaceAnOrder = () => {
                     })),
                 },
             },
-        });
-        if (!response.errors) {
-            dispatch(actions.clearState());
-            message.success('Order successfully created');
-            navigate('/');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        })
+            .then(response => {
+                dispatch(actions.clearState());
+                message.success('Order successfully created');
+                navigate('/');
+            })
+            .catch(error => {
+                message.error(error.message);
+            });
     };
 
     const onSearchCityHandler = async (value: string) => {

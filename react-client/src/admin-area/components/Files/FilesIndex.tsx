@@ -215,7 +215,6 @@ export const FilesIndex: FC = () => {
                     }}
                 />
             </div>
-            ;
         </>
     );
 };

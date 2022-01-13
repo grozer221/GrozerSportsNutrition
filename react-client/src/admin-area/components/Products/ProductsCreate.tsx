@@ -18,6 +18,7 @@ import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {sizeFormItem} from '../../styles/sizeFormItem';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {createFileInput, updateFileInput} from '../../gql/files-mutation';
 
 const {Search} = Input;
 
@@ -40,6 +41,10 @@ export const ProductsCreate: FC = () => {
         const intQuantity = parseInt(values.quantity);
         const intPriceUAH = parseInt(values.priceUAH);
         const characteristics = values.characteristics || [];
+        const photosWithoutExtra = photos.map(photo => {
+            const {filePath, fileImage,...rest} = photo
+            return rest
+        })
         const createProductsVars: CreateProductVars = {
             createProductInput: {
                 ...values,
@@ -48,7 +53,7 @@ export const ProductsCreate: FC = () => {
                 priceUAH: intPriceUAH,
                 description: description,
                 characteristics: characteristics,
-                files: photos,
+                files: photosWithoutExtra,
             },
         };
         console.log(createProductsVars);

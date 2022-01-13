@@ -10,7 +10,7 @@ import { productsConstants } from '../products/products.constants';
 import { Product } from '../products/product.entity';
 
 @Injectable()
-export class CategoriesService {
+export class AdminCategoriesService {
   constructor(
       @InjectRepository(Category) private categoryRepository: Repository<Category>,
   ) {

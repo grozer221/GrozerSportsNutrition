@@ -1,7 +1,7 @@
 import {useMutation, useQuery} from '@apollo/client';
 import {AutoComplete, Button, Form, Input, message, Space, Switch} from 'antd';
 import React, {FC, useCallback, useEffect, useState} from 'react';
-import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {UPDATE_PRODUCT_MUTATION, UpdateProductData, UpdateProductVars} from '../../gql/products-mutation';
 import {GET_PRODUCT_QUERY, GetProductData, GetProductVars} from '../../gql/products-query';
 import {Loading} from '../../../common-area/components/Loading/Loading';
@@ -43,7 +43,7 @@ export const ProductsUpdate: FC = () => {
             context: {gqlLink: gqlLinks.admin},
         },
     );
-    const [updateProduct] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
+    const [updateProductMutation, updateProductMutationOptions] = useMutation<UpdateProductData, UpdateProductVars>(UPDATE_PRODUCT_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const navigate = useNavigate();
     const [isShown, setIsShown] = useState<boolean>(false);
     const [description, setDescription] = useState<string>('');
@@ -81,7 +81,7 @@ export const ProductsUpdate: FC = () => {
             const {fileImage, filePath, ...rest} = photo;
             return rest;
         });
-        const response = await updateProduct({
+        const response = await updateProductMutation({
             variables: {
                 updateProductInput: {
                     ...values,
@@ -325,7 +325,8 @@ export const ProductsUpdate: FC = () => {
                 )}
             </Form.List>
             <Form.Item>
-                <Button type="primary" htmlType={'submit'} loading={getProductQuery.loading || getFilesQuery.loading}>
+                <Button type="primary" htmlType={'submit'}
+                        loading={updateProductMutationOptions.loading || getProductQuery.loading || getFilesQuery.loading}>
                     Update
                 </Button>
             </Form.Item>

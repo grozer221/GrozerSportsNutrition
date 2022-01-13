@@ -21,7 +21,7 @@ export class Page {
     @Field()
     slug: string;
 
-    @Column()
+    @Column('text')
     @Field()
     text: string;
 

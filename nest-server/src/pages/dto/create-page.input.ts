@@ -9,7 +9,7 @@ export class CreatePageInput {
   @Field()
   name: string;
 
-  @Column()
+  @Column('text')
   @Field()
   text: string;
 }

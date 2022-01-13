@@ -15,6 +15,7 @@ export const ProductCard: FC<Props> = ({product}) => {
     const dispatch = useDispatch();
     const addToBasketHandler = () => {
         dispatch(actions.addProductToBasket(product));
+        message.success(`Product ${product.name} was added to basket`);
     };
 
     return (
