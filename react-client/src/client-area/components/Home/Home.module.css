@@ -1,9 +1,10 @@
-.hitOfSalesWrapper{
+.strongWrapper{
     border: 2px solid #FF5722;
     border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-.hitOfSalesTitle{
+.strongTitle{
     margin: -1px -1px 0 -1px;
     text-transform: uppercase;
     background-color: #FF5722;

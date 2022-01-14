@@ -15,9 +15,6 @@ export const Header = () => {
                     <div>Sports Nutrition</div>
                 </h1>
             </Link>
-            <div className={s.search}>
-                <input type="text" placeholder={'Search'}/>
-            </div>
             <div className={s.phoneNumber}>
                 <h3>(099) 999-99-99</h3>
                 <div>Free in Ukraine</div>

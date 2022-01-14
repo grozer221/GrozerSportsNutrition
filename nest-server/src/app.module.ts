@@ -6,9 +6,9 @@ import {join} from 'path';
 import {TypeOrmCoreModule} from '@nestjs/typeorm/dist/typeorm-core.module';
 import {ServeStaticModule} from '@nestjs/serve-static';
 import {AuthModule} from './auth/auth.module';
-import {RolesModule} from './roles/roles.module';
+import {AdminRolesModule} from './roles/admin.roles.module';
 import {AdminProductsModule} from './products/admin.products.module';
-import {FilesModule} from './files/files.module';
+import {AdminFilesModule} from './files/admin.files.module';
 import {AdminCategoriesModule} from './categories/admin.categories.module';
 import {CustomerPagesModule} from './pages/customer.pages.module';
 import {AdminOrdersModule} from './orders/admin.orders.module';
@@ -16,6 +16,7 @@ import {MailModule} from './mail/mail.module';
 import {AdminPagesModule} from './pages/admin.pages.module';
 import {CustomerProductsModule} from './products/customer.products.module';
 import {CustomerOrdersModule} from './orders/customer.orders.module';
+import {CustomerCategoriesModule} from './categories/customer.categories.module';
 
 @Module({
     imports: [
@@ -35,8 +36,8 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
                 AdminOrdersModule,
                 AdminUsersModule,
 
-                RolesModule,
-                FilesModule,
+                AdminRolesModule,
+                AdminFilesModule,
                 AdminCategoriesModule,
             ],
             debug: true,
@@ -55,6 +56,7 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
                 CustomerPagesModule,
                 CustomerProductsModule,
                 CustomerOrdersModule,
+                CustomerCategoriesModule,
             ],
         }),
         TypeOrmCoreModule.forRoot({
@@ -83,15 +85,16 @@ import {CustomerOrdersModule} from './orders/customer.orders.module';
         CustomerPagesModule,
         CustomerProductsModule,
         CustomerOrdersModule,
+        CustomerCategoriesModule,
 
         AdminPagesModule,
         AdminProductsModule,
         AdminOrdersModule,
-        AdminUsersModule,
-
-        RolesModule,
-        FilesModule,
         AdminCategoriesModule,
+
+        AdminUsersModule,
+        AdminRolesModule,
+        AdminFilesModule,
     ],
     providers: [
         AppService,

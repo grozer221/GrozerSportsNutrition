@@ -155,7 +155,7 @@ export const BasketPlaceAnOrder = () => {
                         },
                     ]}
                 >
-                    <Input placeholder={'E-mail'}/>
+                    <Input placeholder={'E-mail'} type={'email'}/>
                 </Form.Item>
                 <Form.Item
                     name="phoneNumber"

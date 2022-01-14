@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getAuthorizationHeader} from '../../utils/authorizationHeader';
+import {getAuthorizationHeader} from '../../utils/localStorageActions';
 
 export const baseURL = 'http://localhost:3001';
 // export const baseURL = window.location.protocol + '//' + window.location.host

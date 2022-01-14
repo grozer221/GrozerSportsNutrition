@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Button, Form, Input, message} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, Navigate, useNavigate} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {useMutation} from '@apollo/client';
 import s from './AuthRegister.module.css';
 import {s_getIsAuth} from '../../../redux/auth-selectors';
@@ -56,7 +56,16 @@ export const AuthRegister: FC = () => {
                 </h2>
                 <Form.Item
                     name="email"
-                    rules={[{required: true, message: 'Please input your Email!'}]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Email!',
+                        },
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
+                    ]}
                 >
                     <Input prefix={<UserOutlined className="site-form-item-icon"/>}
                            placeholder="Email" type={'email'}/>

@@ -159,8 +159,11 @@ type Query {
   getProduct(slug: String!): Product!
   getProductByName(name: String!): Product!
   getProductsHitOfSales: [Product!]!
+  getProductsNewest: [Product!]!
   getMyOrderById(id: Int!): Order!
   getMyOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
+  getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
+  getCategory(slug: String!): Category!
 }
 
 input GetProductsInput {
@@ -172,6 +175,12 @@ input GetProductsInput {
 input GetOrdersInput {
   take: Int!
   skip: Int!
+}
+
+input GetCategoriesInput {
+  take: Int!
+  skip: Int!
+  likeName: String!
 }
 
 type Mutation {

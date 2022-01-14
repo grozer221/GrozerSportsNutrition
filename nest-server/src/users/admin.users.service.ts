@@ -4,18 +4,19 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {RegisterInput} from '../auth/dto/register.input';
 import {Role, RoleName} from '../roles/role.entity';
-import {RolesService} from '../roles/roles.service';
+import {AdminRolesService} from '../roles/admin.roles.service';
 import {rolesConstants} from '../roles/roles.constants';
 import {UpdateMeInput} from '../auth/dto/update-me.input';
 import {UpdateEmailInput} from '../auth/dto/update-email.input';
 import {hashPassword} from '../utils/hashPassword';
 import {GetUsersResponse} from './dto/get-users.response';
+import {UpdateUserInput} from './dto/update-user.input';
 
 @Injectable()
 export class AdminUsersService {
     constructor(
         @InjectRepository(User) private usersRepository: Repository<User>,
-        private readonly rolesService: RolesService,
+        private readonly rolesService: AdminRolesService,
     ) {
     }
 
@@ -28,10 +29,9 @@ export class AdminUsersService {
 
     async getAsync(take: number, skip: number): Promise<GetUsersResponse> {
         const getUsersResponse = new GetUsersResponse();
-        const users = await this.usersRepository.find({take, skip});
-        const usersCount = await this.usersRepository.find();
+        const [users, usersCount] = await this.usersRepository.findAndCount({take, skip});
         getUsersResponse.users = users;
-        getUsersResponse.total = usersCount.length;
+        getUsersResponse.total = usersCount;
         return getUsersResponse;
     }
 
@@ -47,7 +47,7 @@ export class AdminUsersService {
     }
 
     async getByEmailAsync(email: string): Promise<User> {
-        return await this.usersRepository.findOneOrFail({
+        return await this.usersRepository.findOne({
             where: {email},
         });
     }
@@ -67,6 +67,10 @@ export class AdminUsersService {
         return await this.usersRepository.save(user);
     }
 
+    async updateAsync(updateUserInput: UpdateUserInput): Promise<User> {
+        return await this.usersRepository.save(updateUserInput);
+    }
+
     async updateByIdAsync(userId: number, updateMeInput: UpdateMeInput): Promise<User> {
         const user = await this.getByIdAsync(userId);
         return await this.usersRepository.save({...user, ...updateMeInput});
@@ -81,5 +85,10 @@ export class AdminUsersService {
         const user = await this.getByIdAsync(userId);
         const hashedPassword = await hashPassword(password);
         return await this.usersRepository.save({...user, password: hashedPassword});
+    }
+
+    async removeAsync(email: string) {
+        const user = await this.getByEmailAsync(email);
+        return await this.usersRepository.remove(user);
     }
 }

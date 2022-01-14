@@ -10,6 +10,7 @@ import s from './OrdersView.module.css';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
 import {ProductInOrder} from '../../../types/types';
 import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
+import {Error} from '../Error/Error';
 
 export const OrdersView: FC = () => {
     const params = useParams();
@@ -84,7 +85,7 @@ export const OrdersView: FC = () => {
     ];
 
     if (!orderId || getOrderQuery.error)
-        return <Navigate to={'../../error'}/>;
+        return <Error/>;
 
     if (getOrderQuery.loading)
         return <Loading/>;

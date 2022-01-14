@@ -13,6 +13,7 @@ const {Meta} = Card;
 
 export const FilesView: FC = () => {
     const params = useParams();
+    const fileId = params.id ? parseInt(params.id) : 0
     const getFileQuery = useQuery<GetFileData, GetFileVars>(
         GET_FILE_QUERY,
         {

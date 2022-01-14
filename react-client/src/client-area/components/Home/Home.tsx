@@ -4,8 +4,11 @@ import {useQuery} from '@apollo/client';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {
     GET_PRODUCTS_HIT_OF_SALES_QUERY,
+    GET_PRODUCTS_NEWEST_QUERY,
     GetProductsHitOfSalesData,
     GetProductsHitOfSalesVars,
+    GetProductsNewestData,
+    GetProductsNewestVars,
 } from '../../gql/products-query';
 import {Loading} from '../../../common-area/components/Loading/Loading';
 import {message} from 'antd';
@@ -19,23 +22,43 @@ export const Home: FC = () => {
         },
     );
 
+    const getProductsNewestQuery = useQuery<GetProductsNewestData, GetProductsNewestVars>(GET_PRODUCTS_NEWEST_QUERY,
+        {
+            context: {gqlLink: gqlLinks.customer},
+        },
+    );
+
     if (getProductsHitOfSalesQuery.error) {
         message.error(getProductsHitOfSalesQuery.error.message);
     }
 
-    if (getProductsHitOfSalesQuery.loading)
+    if (getProductsNewestQuery.error) {
+        message.error(getProductsNewestQuery.error.message);
+    }
+
+    if (getProductsHitOfSalesQuery.loading || getProductsNewestQuery.loading)
         return <Loading/>;
 
-    if (getProductsHitOfSalesQuery.data)
+    if (getProductsHitOfSalesQuery.data && getProductsNewestQuery.data)
         return (
             <div>
-                <div className={s.hitOfSalesWrapper}>
-                    <div className={s.hitOfSalesTitle}>
+                <div className={s.strongWrapper}>
+                    <div className={s.strongTitle}>
                         <h2 className={'bold'}>Hit of sales</h2>
                     </div>
                     <Carousel show={3.5} slide={3} swiping={true}>
                         {getProductsHitOfSalesQuery.data.getProductsHitOfSales.map(productHitOfSalesQuery => (
                             <ProductCard product={productHitOfSalesQuery}/>
+                        ))}
+                    </Carousel>
+                </div>
+                <div className={s.strongWrapper}>
+                    <div className={s.strongTitle}>
+                        <h2 className={'bold'}>Newest</h2>
+                    </div>
+                    <Carousel show={3.5} slide={3} swiping={true}>
+                        {getProductsNewestQuery.data.getProductsNewest.map(productNewest => (
+                            <ProductCard product={productNewest}/>
                         ))}
                     </Carousel>
                 </div>

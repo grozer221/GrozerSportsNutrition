@@ -61,7 +61,16 @@ export const AuthLogin: FC = () => {
                 </h2>
                 <Form.Item
                     name="email"
-                    rules={[{required: true, message: 'Please input your Email!'}]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Email!'
+                        },
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
+                        ]}
                 >
                     <Input onInput={resetErrors} prefix={<UserOutlined className="site-form-item-icon"/>}
                            placeholder="Email" type={'email'}/>

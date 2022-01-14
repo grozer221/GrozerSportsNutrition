@@ -74,7 +74,7 @@ export const OrdersUpdate = () => {
             setShippingMethod(order.shippingMethod);
             setSelectedCity({value: order.deliveryCityName, deliveryCity: order.deliveryCityCode});
             setSelectedWarehouse(order.deliveryWarehouse);
-            dispatch(basketActions.setProductsToBasket(order.productsInOrder, order.totalPrice));
+            dispatch(basketActions.setProductsToBasket(order.productsInOrder));
             dispatch(loadWarehouses(order.deliveryCityCode));
         }
     }, [getOrderQuery.data?.getOrder]);
@@ -245,7 +245,7 @@ export const OrdersUpdate = () => {
                         },
                     ]}
                 >
-                    <Input placeholder={'E-mail'}/>
+                    <Input placeholder={'E-mail'} type={'email'}/>
                 </Form.Item>
                 <Form.Item
                     name="phoneNumber"

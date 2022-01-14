@@ -41,6 +41,13 @@ export const CREATE_PRODUCT_MUTATION = gql`
                 size
                 originalName
             }
+            categories {
+                id
+                isShown
+                name
+                description
+                slug
+            }
         }
     }
 `;
@@ -77,6 +84,13 @@ export const UPDATE_PRODUCT_MUTATION = gql`
                 fileName
                 size
                 originalName
+            }
+            categories {
+                id
+                isShown
+                name
+                description
+                slug
             }
         }
     }

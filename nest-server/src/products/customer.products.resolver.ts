@@ -44,4 +44,9 @@ export class CustomerProductsResolver {
     async getProductsHitOfSales(): Promise<Product[]> {
         return await this.customerProductsService.getProductsHitOfSales();
     }
+
+    @Query(() => [Product])
+    async getProductsNewest(): Promise<Product[]> {
+        return await this.customerProductsService.getProductsNewest();
+    }
 }

@@ -4,24 +4,25 @@ import {ClientLayout} from './client-area/components/Layout/ClientLayout';
 import {useQuery} from '@apollo/client';
 import {ME_QUERY, MeData, MeVars} from './common-area/gql/auth-query';
 import {useDispatch} from 'react-redux';
-import {actions, login} from './redux/auth-reducer';
+import {login} from './redux/auth-reducer';
 import {Loading} from './common-area/components/Loading/Loading';
 import {AdminLayout} from './admin-area/components/Layout/AdminLayout';
 import {AuthLogin} from './admin-area/components/Auth/AuthLogin';
 import 'antd/dist/antd.css';
 import './App.css';
 import {gqlLinks} from './common-area/gql/client';
-import {getStringFromCamelCase} from './utils/getStringFromCamelCase';
+import {actions} from './redux/basket-reducer';
+import {getBasketFromLocalStorage} from './utils/localStorageActions';
 
 export const App: FC = () => {
         const dispatch = useDispatch();
         const meQuery = useQuery<MeData, MeVars>(ME_QUERY, {context: {gqlLink: gqlLinks.customer}});
         const [isInitialised, setIsInitialised] = useState(false);
-    console.log(getStringFromCamelCase('abcdEfghIgh'));
 
         useEffect(() => {
             if (meQuery.data && !meQuery.error) {
                 dispatch(login(meQuery.data.me));
+                dispatch(actions.setProductsToBasket(getBasketFromLocalStorage()))
                 setIsInitialised(true);
             }
             if (meQuery.error) {

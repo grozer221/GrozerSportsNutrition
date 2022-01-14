@@ -13,6 +13,7 @@ import {MyMenu} from '../MyMenu/MyMenu';
 import {ProductsController} from '../Products/ProductsController';
 import {BasketController} from '../Basket/BasketController';
 import {Account} from '../Account/Account';
+import {CategoriesController} from '../Categories/CategoriesController';
 
 export const ClientLayout: FC = () => {
     return (
@@ -37,6 +38,7 @@ export const ClientLayout: FC = () => {
                 <Routes>
                     <Route path={'/'} element={<Home/>}/>
                     <Route path={'/products/*'} element={<ProductsController/>}/>
+                    <Route path={'/categories/*'} element={<CategoriesController/>}/>
                     <Route path={'/basket/*'} element={<BasketController/>}/>
                     <Route path={'/confirmation-email/:token'} element={<ConfirmationEmail/>}/>
                     <Route path={'/pages/:slug'} element={<PagesView/>}/>

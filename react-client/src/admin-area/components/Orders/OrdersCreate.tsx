@@ -191,7 +191,7 @@ export const OrdersCreate = () => {
                         },
                     ]}
                 >
-                    <Input placeholder={'E-mail'}/>
+                    <Input placeholder={'E-mail'} type={'email'}/>
                 </Form.Item>
                 <Form.Item
                     name="phoneNumber"

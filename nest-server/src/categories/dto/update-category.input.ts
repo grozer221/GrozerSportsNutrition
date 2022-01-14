@@ -6,7 +6,3 @@ export class UpdateCategoryInput extends PartialType(CreateCategoryInput) {
 	@Field(() => Int)
 	id: number;
 }
-
-// @InputType()
-// export class UpdateCategoryWithoutProductsInput extends OmitType(UpdateCategoryInput, ['products'] as const) {
-// }

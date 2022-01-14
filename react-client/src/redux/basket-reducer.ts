@@ -1,5 +1,6 @@
 import {BaseThunkType, InferActionsTypes} from './redux-store';
 import {Product, ProductInBasket} from '../types/types';
+import {setBasketToLocalStorage} from '../utils/localStorageActions';
 
 let initialState = {
     loading: false,
@@ -15,16 +16,20 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                 loading: action.loading,
             };
         case 'SET_PRODUCTS_TO_BASKET': {
-            return {
+            let totalPrice = 0;
+            action.productsInBasket.forEach(productInBasket => totalPrice += productInBasket.product.priceUAH * productInBasket.productQuantity);
+            const returnState = {
                 ...state,
                 productsInBasket: action.productsInBasket,
-                totalPrice: action.totalPrice,
+                totalPrice: totalPrice,
             };
+            setBasketToLocalStorage(returnState.productsInBasket);
+            return returnState;
         }
         case 'ADD_PRODUCT_TO_BASKET': {
             const newTotalPrice = state.totalPrice + action.product.priceUAH;
-            if (state.productsInBasket.some(productInBasket => productInBasket.product === action.product))
-                return {
+            if (state.productsInBasket.some(productInBasket => productInBasket.product === action.product)) {
+                var returnState = {
                     ...state,
                     productsInBasket: state.productsInBasket.map(productInBasket =>
                         productInBasket.product === action.product
@@ -35,15 +40,19 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                             : productInBasket),
                     totalPrice: newTotalPrice,
                 };
-            return {
-                ...state,
-                productsInBasket: [...state.productsInBasket, {product: action.product, productQuantity: 1}],
-                totalPrice: newTotalPrice,
-            };
+            } else {
+                returnState = {
+                    ...state,
+                    productsInBasket: [...state.productsInBasket, {product: action.product, productQuantity: 1}],
+                    totalPrice: newTotalPrice,
+                };
+            }
+            setBasketToLocalStorage(returnState.productsInBasket);
+            return returnState;
         }
         case 'INCREMENT_PRODUCT_IN_BASKET': {
             const newTotalPrice = state.totalPrice + action.productInBasket.product.priceUAH;
-            return {
+            const returnState = {
                 ...state,
                 productsInBasket: state.productsInBasket.map(productInBasket =>
                     productInBasket === action.productInBasket
@@ -54,13 +63,15 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                         : productInBasket),
                 totalPrice: newTotalPrice,
             };
+            setBasketToLocalStorage(returnState.productsInBasket);
+            return returnState;
         }
         case 'DECREMENT_PRODUCT_IN_BASKET': {
             if (action.productInBasket.productQuantity === 1)
-                return state;
+                var returnState = state;
 
             const newTotalPrice = state.totalPrice - action.productInBasket.product.priceUAH;
-            return {
+            returnState = {
                 ...state,
                 productsInBasket: state.productsInBasket.map(productInBasket =>
                     productInBasket === action.productInBasket
@@ -71,22 +82,28 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
                         : productInBasket),
                 totalPrice: newTotalPrice,
             };
+            setBasketToLocalStorage(returnState.productsInBasket);
+            return returnState;
         }
         case 'REMOVE_PRODUCT_FROM_BASKET': {
             const newTotalPrice = state.totalPrice - (action.productInBasket.product.priceUAH * action.productInBasket.productQuantity);
-            return {
+            const returnState = {
                 ...state,
                 productsInBasket: state.productsInBasket.filter(productInBasket => productInBasket !== action.productInBasket),
                 totalPrice: newTotalPrice,
             };
+            setBasketToLocalStorage(returnState.productsInBasket);
+            return returnState;
         }
         case 'CLEAR_STATE': {
-            return {
+            const returnState = {
                 ...state,
                 loading: false,
                 productsInBasket: [] as ProductInBasket[],
                 totalPrice: 0,
             };
+            setBasketToLocalStorage(returnState.productsInBasket);
+            return returnState;
         }
         default:
             return state;
@@ -98,10 +115,9 @@ export const actions = {
         type: 'SET_LOADING',
         loading,
     } as const),
-    setProductsToBasket: (productsInBasket: ProductInBasket[], totalPrice: number) => ({
+    setProductsToBasket: (productsInBasket: ProductInBasket[]) => ({
         type: 'SET_PRODUCTS_TO_BASKET',
         productsInBasket,
-        totalPrice,
     } as const),
     addProductToBasket: (product: Product) => ({
         type: 'ADD_PRODUCT_TO_BASKET',

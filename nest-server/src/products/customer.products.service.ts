@@ -84,6 +84,10 @@ export class CustomerProductsService {
         let productsHitOfSales: { product: Product, quantity: number }[] = [];
         const productsInOrder = await this.productInOrderRepository.find();
         for (const key in productsInOrder) {
+            const product = await this.productsRepository.findOneOrFail(productsInOrder[key].productId);
+            if (!product.isShown)
+                continue;
+
             const order = await this.ordersRepository.findOneOrFail(productsInOrder[key].orderId);
             if (order.orderStatus === OrderStatus.canceled)
                 continue;
@@ -98,20 +102,26 @@ export class CustomerProductsService {
                         : productHitOfSales;
                 });
             } else {
-                const product = await this.productsRepository.findOneOrFail(productsInOrder[key].productId);
                 productsHitOfSales.push({
                     product: product,
                     quantity: productsInOrder[key].productQuantity,
                 });
             }
         }
-        console.log(productsHitOfSales);
         productsHitOfSales.sort((a, b) => b.quantity - a.quantity);
-        console.log(productsHitOfSales);
         return productsHitOfSales.map((productHitOfSales, i) => {
-            if (i > 5)
+            if (i > 10)
                 return;
             return productHitOfSales.product;
+        });
+    }
+
+    async getProductsNewest(): Promise<Product[]> {
+        return await this.productsRepository.find({
+            where: {isShown: true},
+            order: {createdAt: 'DESC'},
+            take: 10,
+            skip: 0,
         });
     }
 }

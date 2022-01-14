@@ -155,7 +155,7 @@ type Query {
   me: AuthResponse!
   getUsers(getUsersInput: GetUsersInput!): GetUsersResponse!
   getUser(email: String!): User!
-  getRoles(getRolesInput: GetRolesInput!): [Role!]!
+  getRoles: [Role!]!
   getRole(id: Int!): Role!
   getPages: [Page!]!
   getPage(slug: String!): Page!
@@ -164,20 +164,15 @@ type Query {
   getProductByName(name: String!): Product!
   getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
   getOrder(id: Int!): Order!
-  getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
-  getFile(id: Int!): File!
-  getFileByName(fileName: String!): File!
   getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
   getCategory(slug: String!): Category!
   getCategoryByName(name: String!): Category!
+  getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
+  getFile(id: Int!): File!
+  getFileByName(fileName: String!): File!
 }
 
 input GetUsersInput {
-  take: Int!
-  skip: Int!
-}
-
-input GetRolesInput {
   take: Int!
   skip: Int!
 }
@@ -193,17 +188,17 @@ input GetOrdersInput {
   skip: Int!
 }
 
+input GetCategoriesInput {
+  take: Int!
+  skip: Int!
+  likeName: String!
+}
+
 input GetFilesInput {
   take: Int!
   skip: Int!
   likeOriginalName: String!
   likeMimetype: String!
-}
-
-input GetCategoriesInput {
-  take: Int!
-  skip: Int!
-  likeName: String!
 }
 
 type Mutation {
@@ -213,6 +208,8 @@ type Mutation {
   updateEmail(updateEmailInput: UpdateEmailInput!): String!
   updatePassword(updatePasswordInput: UpdatePasswordInput!): AuthResponse!
   confirmationEmail(token: String!): AuthResponse!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(email: String!): Boolean!
   createPage(createPageInput: CreatePageInput!): Page!
   updatePage(updatePageInput: UpdatePageInput!): Page!
   updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
@@ -223,12 +220,12 @@ type Mutation {
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): Boolean!
-  createFile(createFileInput: CreateFileInput!): File!
-  updateFile(updateFileInput: UpdateFileInput!): File!
-  removeFile(id: Int!): Boolean!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   removeCategory(slug: String!): Boolean!
+  createFile(createFileInput: CreateFileInput!): File!
+  updateFile(updateFileInput: UpdateFileInput!): File!
+  removeFile(id: Int!): Boolean!
 }
 
 input LoginInput {
@@ -255,6 +252,19 @@ input UpdateEmailInput {
 input UpdatePasswordInput {
   oldPassword: String!
   newPassword: String!
+}
+
+input UpdateUserInput {
+  id: Float!
+  email: String!
+  firstName: String!
+  lastName: String!
+  roles: [UpdateRoleInput!]!
+}
+
+input UpdateRoleInput {
+  id: Float!
+  name: RoleName!
 }
 
 input CreatePageInput {
@@ -352,16 +362,16 @@ input UpdateOrderInput {
   orderStatus: OrderStatus!
 }
 
+input CreateCategoryInput {
+  isShown: Boolean!
+  name: String!
+  description: String!
+}
+
 input CreateFileInput {
   originalName: String!
   mimetype: String!
   destination: String!
   fileName: String!
   size: Int!
-}
-
-input CreateCategoryInput {
-  isShown: Boolean!
-  name: String!
-  description: String!
 }

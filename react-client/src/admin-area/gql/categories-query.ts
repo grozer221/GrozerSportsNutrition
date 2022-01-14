@@ -47,7 +47,6 @@ export const GET_CATEGORIES_QUERY = gql`
             total
         }
     }
-
 `;
 
 

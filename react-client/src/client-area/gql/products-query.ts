@@ -165,3 +165,42 @@ export const GET_PRODUCTS_HIT_OF_SALES_QUERY = gql`
         }
     }
 `;
+
+
+export type GetProductsNewestData = { getProductsNewest: Product[] }
+export type GetProductsNewestVars = {}
+
+export const GET_PRODUCTS_NEWEST_QUERY = gql`
+    query GetProductsNewest {
+        getProductsNewest {
+            id
+            isShown
+            name
+            slug
+            quantity
+            priceUAH
+            description
+            characteristics {
+                name
+                value
+            }
+            files {
+                id
+                originalName
+                mimetype
+                destination
+                fileName
+                filePath
+                fileImage
+                size
+            }
+            categories {
+                id
+                isShown
+                name
+                description
+                slug
+            }
+        }
+    }
+`;

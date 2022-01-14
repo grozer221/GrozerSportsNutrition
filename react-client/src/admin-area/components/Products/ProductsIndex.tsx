@@ -62,7 +62,7 @@ export const ProductsIndex: FC = () => {
             const {fileImage, filePath, ...rest} = file;
             return rest;
         });
-        const categoriesWithoutExtra: updateCategoryInput[] = categories.map(category => {
+        const categoriesWithoutExtra: updateCategoryInput[] = categories?.map(category => {
             const {slug, products, ...rest} = category;
             return rest;
         });
@@ -76,7 +76,7 @@ export const ProductsIndex: FC = () => {
             },
         });
         if (!response.errors) {
-            const newProducts = productsObj.products.map(product => (product.id == response.data?.updateProduct.id ? response.data.updateProduct : product));
+            const newProducts = productsObj.products.map(product => product.id == response.data?.updateProduct.id ? response.data.updateProduct : product);
             setProductsObj({products: newProducts, total: productsObj.total});
         } else {
             response.errors?.forEach(error => message.error(error.message));

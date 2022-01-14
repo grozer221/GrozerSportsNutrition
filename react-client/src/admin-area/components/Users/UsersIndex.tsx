@@ -1,4 +1,4 @@
-import {useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import React, {FC, useState} from 'react';
 import {Loading} from '../../../common-area/components/Loading/Loading';
 import {GET_USERS_QUERY, GetUsersData, GetUsersVars} from '../../gql/users-query';
@@ -7,8 +7,13 @@ import {Divider, message, Table, Tag} from 'antd';
 import {User} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './UsersIndex.module.css';
+import {REMOVE_USER_MUTATION, RemoveUserData, RemoveUserVars} from '../../gql/users-mutation';
+import {isAdmin} from '../../../utils/authorization';
+import {useSelector} from 'react-redux';
+import {s_getAuthData} from '../../../redux/auth-selectors';
 
 export const UsersIndex: FC = () => {
+    const authData = useSelector(s_getAuthData);
     const [pageTake, setPageTake] = useState(10);
     const [pageSkip, setSkipTake] = useState(0);
     const getUserQuery = useQuery<GetUsersData, GetUsersVars>(
@@ -18,6 +23,19 @@ export const UsersIndex: FC = () => {
             context: {gqlLink: gqlLinks.admin},
         },
     );
+    const [removeUser, removeUserOptions] = useMutation<RemoveUserData, RemoveUserVars>(REMOVE_USER_MUTATION,
+        {context: {gqlLink: gqlLinks.admin}},
+    );
+
+
+    const onRemove = async (email: string) => {
+        const response = await removeUser({variables: {email: email}});
+        if (response.data)
+            await getUserQuery.refetch({getUsersInput: {skip: pageSkip, take: pageTake}});
+        else {
+            response.errors?.forEach(error => message.error(error.message));
+        }
+    };
 
     const columns = [
         {
@@ -57,10 +75,15 @@ export const UsersIndex: FC = () => {
             title: 'Actions',
             dataIndex: 'actions',
             key: 'actions',
-            render: (text: any, user: User) => (
-                <ButtonsVUR viewUrl={`${user.email}`} updateUrl={`update/${user.email}`}
-                    /*onRemove={() => onRemove(page.slug)}*//>
-            ),
+            render: (text: any, user: User) => {
+                if (authData && isAdmin(authData?.user) && user.id !== authData?.user.id) {
+                    return <ButtonsVUR viewUrl={`${user.email}`} updateUrl={`update/${user.email}`}
+                                       onRemove={() => onRemove(user.email)}/>;
+                } else {
+                    return <ButtonsVUR viewUrl={`${user.email}`}/>;
+                }
+            },
+
         },
     ];
 
@@ -81,7 +104,7 @@ export const UsersIndex: FC = () => {
             </div>
             <Divider/>
             <Table
-                loading={getUserQuery.loading}
+                loading={getUserQuery.loading || removeUserOptions.loading}
                 columns={columns}
                 dataSource={getUserQuery.data?.getUsers.users}
                 pagination={{

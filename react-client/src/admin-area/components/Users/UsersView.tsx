@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
 import {Loading} from '../../../common-area/components/Loading/Loading';
-import {message, Tag} from 'antd';
+import {Tag} from 'antd';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {Error} from '../Error/Error';
 import {GET_USER_QUERY, GetUserData, GetUserVars} from '../../gql/users-query';
@@ -19,12 +19,8 @@ export const UsersView: FC = () => {
         },
     );
 
-    if (!userEmail)
+    if (!userEmail || getUserQuery.error)
         return <Error/>;
-
-    if (getUserQuery.error) {
-        message.error(getUserQuery.error);
-    }
 
     if (getUserQuery.loading)
         return <Loading/>;

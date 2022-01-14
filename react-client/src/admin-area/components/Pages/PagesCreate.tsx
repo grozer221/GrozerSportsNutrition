@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {CREATE_PAGE_MUTATION, CreatePageData, CreatePageVars} from '../../gql/pages-mutation';
 import {WysiwygEditor} from '../../../common-area/components/WysiwygEditor/WysiwygEditor';
 import {gqlLinks} from '../../../common-area/gql/client';
+import {sizeFormItem} from '../../styles/sizeFormItem';
 
 export const PagesCreate: FC = () => {
     const [createPage, createPageOption] = useMutation<CreatePageData, CreatePageVars>(CREATE_PAGE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
@@ -32,7 +33,11 @@ export const PagesCreate: FC = () => {
     };
 
     return (
-        <Form name="createPage" onFinish={onFinish}>
+        <Form
+            name="createPage"
+            onFinish={onFinish}
+            {...sizeFormItem}
+        >
             <Form.Item
                 name="isShown"
                 label="Is shown"

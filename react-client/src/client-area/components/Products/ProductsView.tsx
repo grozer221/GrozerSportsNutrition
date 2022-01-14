@@ -19,7 +19,7 @@ export const ProductsView: FC = () => {
         GET_PRODUCT_QUERY,
         {
             variables: {slug: productSlug},
-            context: {gqlLink: gqlLinks.admin},
+            context: {gqlLink: gqlLinks.customer},
         },
     );
     const dispatch = useDispatch();
