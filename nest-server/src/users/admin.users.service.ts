@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {User} from './user.entity';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {Like, Repository} from 'typeorm';
 import {RegisterInput} from '../auth/dto/register.input';
 import {Role, RoleName} from '../roles/role.entity';
 import {AdminRolesService} from '../roles/admin.roles.service';
@@ -11,6 +11,9 @@ import {UpdateEmailInput} from '../auth/dto/update-email.input';
 import {hashPassword} from '../utils/hashPassword';
 import {GetUsersResponse} from './dto/get-users.response';
 import {UpdateUserInput} from './dto/update-user.input';
+import {GetUsersInput} from './dto/get-users.input';
+import {ordersConstants} from '../orders/orders.constants';
+import {Order} from '../orders/order.entity';
 
 @Injectable()
 export class AdminUsersService {
@@ -27,9 +30,19 @@ export class AdminUsersService {
         return await this.usersRepository.save(user);
     }
 
-    async getAsync(take: number, skip: number): Promise<GetUsersResponse> {
+    async getAsync(getUsersInput: GetUsersInput): Promise<GetUsersResponse> {
         const getUsersResponse = new GetUsersResponse();
-        const [users, usersCount] = await this.usersRepository.findAndCount({take, skip});
+        const [users, usersCount] = await this.usersRepository.findAndCount({
+            where: [
+                {id: Like(`%${getUsersInput.like}%`)},
+                {email: Like(`%${getUsersInput.like}%`)},
+                {firstName: Like(`%${getUsersInput.like}%`)},
+                {lastName: Like(`%${getUsersInput.like}%`)},
+            ],
+            take: getUsersInput.take,
+            skip: getUsersInput.skip,
+            order: {createdAt: 'DESC'},
+        });
         getUsersResponse.users = users;
         getUsersResponse.total = usersCount;
         return getUsersResponse;
@@ -90,5 +103,12 @@ export class AdminUsersService {
     async removeAsync(email: string) {
         const user = await this.getByEmailAsync(email);
         return await this.usersRepository.remove(user);
+    }
+
+    async getOrdersByUserIdAsync(userId: number): Promise<Order[]> {
+        const user = await this.usersRepository.findOneOrFail(userId, {
+            relations: [ordersConstants.tableName],
+        });
+        return user.orders;
     }
 }

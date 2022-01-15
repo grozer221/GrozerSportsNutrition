@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added update users and saving basket in local storage">
+    <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added search in orders">
       <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/admin.files.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/admin.files.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/admin.files.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/admin.files.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/files/dto/get-files.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/files/dto/get-files.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/dto/login.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/dto/login.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/auth/dto/register.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/auth/dto/register.input.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/admin.orders.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/src/orders/dto/get-orders.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/orders/dto/get-orders.input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/admin.products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/admin.users.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.resolver.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/dto/get-users.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/dto/get-users.input.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Files/FilesIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Home/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersIndex.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/gql/files-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/gql/files-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin-area/gql/orders-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/gql/orders-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/gql/users-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/gql/users-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Account/Account.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Account/Account.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/components/Products/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Products/ProductCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client-area/gql/orders-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/gql/orders-query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/getStringFromCamelCase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/getStringFromCamelCase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +159,8 @@
       <workItem from="1642150656867" duration="1682000" />
       <workItem from="1642170577256" duration="12808000" />
       <workItem from="1642231829050" duration="2139000" />
-      <workItem from="1642248999749" duration="3117000" />
+      <workItem from="1642248999749" duration="4712000" />
+      <workItem from="1642269623105" duration="9417000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>
@@ -256,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642184434516</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="added search in orders">
+      <created>1642254656618</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1642254656618</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,6 +317,7 @@
     <MESSAGE value="added pinning categories to products in admin panel and products view page on customer side" />
     <MESSAGE value="added pinning categories to products in admin panel, products view page on customer side and fixed some bugs" />
     <MESSAGE value="added update users and saving basket in local storage" />
-    <option name="LAST_COMMIT_MESSAGE" value="added update users and saving basket in local storage" />
+    <MESSAGE value="added search in orders" />
+    <option name="LAST_COMMIT_MESSAGE" value="added search in orders" />
   </component>
 </project>

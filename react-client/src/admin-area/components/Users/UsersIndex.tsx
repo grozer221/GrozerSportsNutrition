@@ -1,25 +1,35 @@
 import {useMutation, useQuery} from '@apollo/client';
-import React, {FC, useState} from 'react';
-import {Loading} from '../../../common-area/components/Loading/Loading';
+import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {GET_USERS_QUERY, GetUsersData, GetUsersVars} from '../../gql/users-query';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {Divider, message, Table, Tag} from 'antd';
-import {User} from '../../../types/types';
+import {Order, User} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './UsersIndex.module.css';
 import {REMOVE_USER_MUTATION, RemoveUserData, RemoveUserVars} from '../../gql/users-mutation';
 import {isAdmin} from '../../../utils/authorization';
 import {useSelector} from 'react-redux';
 import {s_getAuthData} from '../../../redux/auth-selectors';
+import Search from 'antd/es/input/Search';
+import debounce from 'lodash.debounce';
+import {ColumnsType} from 'antd/es/table';
+import {getStringFromCamelCase, getStringFromDate} from '../../../utils/getStringFromCamelCase';
 
 export const UsersIndex: FC = () => {
     const authData = useSelector(s_getAuthData);
     const [pageTake, setPageTake] = useState(10);
-    const [pageSkip, setSkipTake] = useState(0);
+    const [pageSkip, setPageSkip] = useState(0);
+    const [searchLike, setSearchLike] = useState('');
     const getUserQuery = useQuery<GetUsersData, GetUsersVars>(
         GET_USERS_QUERY,
         {
-            variables: {getUsersInput: {skip: pageSkip, take: pageTake}},
+            variables: {
+                getUsersInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    like: searchLike,
+                },
+            },
             context: {gqlLink: gqlLinks.admin},
         },
     );
@@ -31,7 +41,13 @@ export const UsersIndex: FC = () => {
     const onRemove = async (email: string) => {
         const response = await removeUser({variables: {email: email}});
         if (response.data)
-            await getUserQuery.refetch({getUsersInput: {skip: pageSkip, take: pageTake}});
+            await getUserQuery.refetch({
+                getUsersInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    like: searchLike,
+                },
+            });
         else {
             response.errors?.forEach(error => message.error(error.message));
         }
@@ -87,8 +103,22 @@ export const UsersIndex: FC = () => {
         },
     ];
 
-    if (getUserQuery.loading)
-        return <Loading/>;
+    const onSearchUsersHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+        const newPageSkip = 0;
+        const newSearchLike = e.target.value;
+        setPageSkip(newPageSkip);
+        setSearchLike(newSearchLike);
+        await getUserQuery.refetch({
+            getUsersInput: {
+                skip: newPageSkip,
+                take: pageTake,
+                like: newSearchLike,
+            },
+        });
+    };
+
+    const debouncedSearchUsersHandler = useCallback(debounce(nextValue => onSearchUsersHandler(nextValue), 500), []);
+    const searchUsersHandler = (e: ChangeEvent<HTMLInputElement>) => debouncedSearchUsersHandler(e);
 
     if (getUserQuery.error) {
         message.error(getUserQuery.error);
@@ -100,7 +130,9 @@ export const UsersIndex: FC = () => {
                 <div className="wrapperHeader">
                     <header>Users</header>
                 </div>
-                <strong>search</strong>
+                <Search placeholder="Search users" className={'search'}
+                        onChange={searchUsersHandler} enterButton
+                        loading={getUserQuery.loading}/>
             </div>
             <Divider/>
             <Table
@@ -111,11 +143,12 @@ export const UsersIndex: FC = () => {
                     total: getUserQuery.data?.getUsers.total,
                     onChange: async (pageNumber: number) => {
                         const pageSkip = (pageNumber - 1) * pageTake;
-                        setSkipTake(pageSkip);
+                        setPageSkip(pageSkip);
                         await getUserQuery.refetch({
                             getUsersInput: {
                                 skip: pageSkip,
                                 take: pageTake,
+                                like: searchLike,
                             },
                         });
                     },

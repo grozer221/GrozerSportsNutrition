@@ -119,7 +119,6 @@ export const CategoriesView: FC = () => {
                     </tr>
                     </tbody>
                 </table>
-                <Card title="Description" className={s.description}>{category && parse(category?.description)}</Card>
                 <Table
                     title={() => <div className={s.productsTitle}>Products</div>}
                     loading={removeCategoryOptions.loading}
@@ -142,6 +141,7 @@ export const CategoriesView: FC = () => {
                     //     },
                     // }}
                 />
+                <Card title="Description" className={s.description}>{category && parse(category?.description)}</Card>
             </>
         );
     }

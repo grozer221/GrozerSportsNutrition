@@ -233,7 +233,7 @@ export const BasketPlaceAnOrder = () => {
                     )
                 }
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">Create</Button>
+                    <Button type="primary" htmlType="submit" loading={createOrderMutationOption.loading}>Create</Button>
                 </Form.Item>
             </Form>
         </div>

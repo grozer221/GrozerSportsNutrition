@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
-import {Like, Repository} from 'typeorm';
+import {In, Like, Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Order} from './order.entity';
+import {Order, OrderStatus} from './order.entity';
 import {CreateOrderInput} from './dto/create-order.input';
 import {GetOrdersResponse} from './dto/get-orders.response';
 import {GetOrdersInput} from './dto/get-orders.input';
@@ -49,18 +49,21 @@ export class AdminOrdersService {
 
     async getAsync(getOrdersInput: GetOrdersInput): Promise<GetOrdersResponse> {
         const getOrdersResponse = new GetOrdersResponse();
+        const whereOrderStatus = getOrdersInput.orderStatus ? {orderStatus: getOrdersInput.orderStatus} : {orderStatus: In(Object.keys(OrderStatus) as Array<keyof typeof OrderStatus>)};
         const [orders, ordersCount] = await this.ordersRepository.findAndCount({
             where: [
-                {id: Like(`%${getOrdersInput.like}%`)},
-                {email: Like(`%${getOrdersInput.like}%`)},
-                {firstName: Like(`%${getOrdersInput.like}%`)},
-                {lastName: Like(`%${getOrdersInput.like}%`)},
-                {phoneNumber: Like(`%${getOrdersInput.like}%`)},
-                {address: Like(`%${getOrdersInput.like}%`)},
-                {createdAt: Like(`%${getOrdersInput.like}%`)},
+                {id: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+                {email: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+                {firstName: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+                {lastName: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+                {phoneNumber: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+                {address: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+                {createdAt: Like(`%${getOrdersInput.like}%`), ...whereOrderStatus},
+
             ],
             take: getOrdersInput.take,
             skip: getOrdersInput.skip,
+            order: {createdAt: 'DESC'},
         });
         getOrdersResponse.orders = orders;
         getOrdersResponse.total = ordersCount;

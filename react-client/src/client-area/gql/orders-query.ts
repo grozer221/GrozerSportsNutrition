@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {Order} from '../../types/types';
+import {Order, OrderStatus} from '../../types/types';
 
 
 export type GetMyOrdersData = { getMyOrders: getOrdersObject }
@@ -9,6 +9,8 @@ export type GetMyOrdersVars = { getOrdersInput: getOrdersInput }
 export type getOrdersInput = {
     take: number,
     skip: number,
+    like: string,
+    orderStatus: OrderStatus | null,
 }
 
 export const GET_MY_ORDERS_QUERY = gql`

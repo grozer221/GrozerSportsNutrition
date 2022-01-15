@@ -9,6 +9,7 @@ import {UseGuards} from '@nestjs/common';
 import {GqlAuthGuard} from '../auth/guards/gql-auth.guard';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {UpdateUserInput} from './dto/update-user.input';
+import {Order} from '../orders/order.entity';
 
 @Resolver(() => User)
 export class AdminUsersResolver {
@@ -20,13 +21,18 @@ export class AdminUsersResolver {
         return await this.adminUsersService.getRolesByUserIdAsync(user.id);
     }
 
+    @ResolveField(() => [Order])
+    async orders(@Parent() user: User): Promise<Order[]> {
+        return await this.adminUsersService.getOrdersByUserIdAsync(user.id);
+    }
+
     @Roles(RoleName.moderator, RoleName.admin)
     @UseGuards(GqlAuthGuard, RolesGuard)
     @Query(() => GetUsersResponse)
     async getUsers(
         @Args('getUsersInput', {type: () => GetUsersInput}) getUsersInput: GetUsersInput,
     ): Promise<GetUsersResponse> {
-        return await this.adminUsersService.getAsync(getUsersInput.take, getUsersInput.skip);
+        return await this.adminUsersService.getAsync(getUsersInput);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)

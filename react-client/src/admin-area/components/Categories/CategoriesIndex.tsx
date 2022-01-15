@@ -126,7 +126,6 @@ export const CategoriesIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <strong>search</strong>
             </div>
             <Divider/>
             <div>

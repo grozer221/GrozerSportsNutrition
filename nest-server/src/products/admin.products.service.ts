@@ -10,6 +10,7 @@ import {Category} from '../categories/category.entity';
 import {GetProductsResponse} from './dto/get-products.response';
 import {categoriesConstants} from '../categories/categories.constants';
 import {getSlug} from '../utils/get-slug';
+import {GetProductsInput} from './dto/get-products.input';
 
 @Injectable()
 export class AdminProductsService {
@@ -43,14 +44,14 @@ export class AdminProductsService {
         return await this.productsRepository.save(product);
     }
 
-    async getAsync(take: number, skip: number, likeName: string): Promise<GetProductsResponse> {
+    async getAsync(getProductsInput: GetProductsInput): Promise<GetProductsResponse> {
         const getProductsResponse = new GetProductsResponse();
         const [products, productsTotal] = await this.productsRepository.findAndCount({
             where: {
-                name: Like(`%${likeName}%`),
+                name: Like(`%${getProductsInput.likeName}%`),
             },
-            take: take,
-            skip: skip,
+            take: getProductsInput.take,
+            skip: getProductsInput.skip,
         });
         getProductsResponse.products = products;
         getProductsResponse.total = productsTotal;

@@ -2,7 +2,6 @@ import {useMutation, useQuery} from '@apollo/client';
 import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {GET_FILES_QUERY, GetFilesData, GetFilesVars} from '../../gql/files-query';
-import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Avatar, Button, Divider, message, Table} from 'antd';
 import {FileType} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
@@ -31,7 +30,6 @@ export const FilesIndex: FC = () => {
             context: {gqlLink: gqlLinks.admin},
         },
     );
-    const searchFilesQuery = useQuery<GetFilesData, GetFilesVars>(GET_FILES_QUERY, {context: {gqlLink: gqlLinks.admin}});
     const [removeFile, removeFileOptions] = useMutation<RemoveFileData, RemoveFileVars>(REMOVE_FILE_MUTATION, {context: {gqlLink: gqlLinks.admin}});
     const [selectedFiles, setSelectedFiles] = useState<FileType[]>([]);
     const uploadLoading = useSelector(s_getLoading);
@@ -42,25 +40,14 @@ export const FilesIndex: FC = () => {
         const response = await removeFile({variables: {id: id}});
         if (response.data && !response.errors) {
             dispatch(actions.setLoading(true));
-            if (searchFileName.trim() === '') {
-                await getFilesQuery.refetch({
-                    getFilesInput: {
-                        skip: pageSkip,
-                        take: pageTake,
-                        likeFileName: '',
-                        likeMimetype: '',
-                    },
-                });
-            } else {
-                await searchFilesQuery.refetch({
-                    getFilesInput: {
-                        skip: pageSkip,
-                        take: pageTake,
-                        likeFileName: searchFileName,
-                        likeMimetype: '',
-                    },
-                });
-            }
+            await getFilesQuery.refetch({
+                getFilesInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    likeFileName: searchFileName,
+                    likeMimetype: '',
+                },
+            });
             dispatch(actions.setLoading(false));
         } else {
             response.errors?.forEach(error => message.error(error.message));
@@ -114,29 +101,22 @@ export const FilesIndex: FC = () => {
     ];
 
     const onSearch = async (value: string) => {
-        setPageSkip(0);
+        const newPageSkip = 0;
+        setPageSkip(newPageSkip);
         setSearchFileName(value);
-        if (value.trim() === '')
-            return;
-
-        dispatch(actions.setLoading(true));
-        await searchFilesQuery.refetch({
+        await getFilesQuery.refetch({
             getFilesInput: {
-                skip: 0,
+                skip: newPageSkip,
                 take: pageTake,
                 likeFileName: value,
                 likeMimetype: '',
             },
         });
-        dispatch(actions.setLoading(false));
     };
 
 
     const debouncedSearch = useCallback(debounce(nextValue => onSearch(nextValue), 500), []);
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => debouncedSearch(e.target.value);
-
-    if (getFilesQuery.loading)
-        return <Loading/>;
 
     if (getFilesQuery.error) {
         message.error(getFilesQuery.error.message);
@@ -152,65 +132,30 @@ export const FilesIndex: FC = () => {
                     </Link>
                 </div>
                 <Search placeholder="Search" onChange={handleSearch} enterButton className="search"
-                        loading={searchFilesQuery.loading}/>
+                        loading={getFilesQuery.loading}/>
             </div>
             <Divider/>
             <div>
                 <Table
-                    loading={getFilesQuery.loading || removeFileOptions.loading || uploadLoading || searchFilesQuery.loading}
+                    loading={getFilesQuery.loading || removeFileOptions.loading || uploadLoading}
                     rowSelection={{...rowSelection}}
                     columns={columns}
-                    dataSource={searchFileName.trim() === ''
-                        ? getFilesQuery.data?.getFiles.files.map(file => ({key: file.id, ...file}))
-                        : searchFilesQuery.data?.getFiles.files.map(file => ({key: file.id, ...file}))
-                    }
+                    dataSource={getFilesQuery.data?.getFiles.files}
+                    rowKey={'id'}
                     pagination={{
-                        total: searchFileName.trim() === '' ? getFilesQuery.data?.getFiles.total : searchFilesQuery.data?.getFiles.total,
+                        total: getFilesQuery.data?.getFiles.total,
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
                             setPageSkip(pageSkip);
-                            if (searchFileName.trim() === '') {
-                                await getFilesQuery.refetch({
-                                    getFilesInput: {
-                                        skip: pageSkip,
-                                        take: pageTake,
-                                        likeFileName: searchFileName,
-                                        likeMimetype: '',
-                                    },
-                                });
-                            } else {
-                                await searchFilesQuery.refetch({
-                                    getFilesInput: {
-                                        skip: pageSkip,
-                                        take: pageTake,
-                                        likeFileName: searchFileName,
-                                        likeMimetype: '',
-                                    },
-                                });
-                            }
+                            await getFilesQuery.refetch({
+                                getFilesInput: {
+                                    skip: pageSkip,
+                                    take: pageTake,
+                                    likeFileName: searchFileName,
+                                    likeMimetype: '',
+                                },
+                            });
                         },
-                        // onShowSizeChange: async (pageNumber, pageSize) => {
-                        //     setPageTake(pageSize);
-                        //     if (searchFileName.trim() === '') {
-                        //         await refetch({
-                        //             getFilesInput: {
-                        //                 skip: (pageNumber - 1) * pageTake,
-                        //                 take: pageTake,
-                        //                 likeOriginalName: searchFileName,
-                        //                 likeMimetype: '',
-                        //             },
-                        //         });
-                        //     } else {
-                        //         await searchFilesQuery.refetch({
-                        //             getFilesInput: {
-                        //                 skip: (pageNumber - 1) * pageTake,
-                        //                 take: pageTake,
-                        //                 likeOriginalName: searchFileName,
-                        //                 likeMimetype: '',
-                        //             },
-                        //         });
-                        //     }
-                        // },
                     }}
                 />
             </div>

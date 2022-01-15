@@ -1,13 +1,13 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Button, Divider, message, Table} from 'antd';
+import {Button, Divider, message, Select, Table} from 'antd';
 import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Order} from '../../../types/types';
+import {all, Order, OrderStatus} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {GET_ORDERS_QUERY, GetOrdersData, GetOrdersVars} from '../../gql/orders-query';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
-import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
+import {getStringFromCamelCase, getStringFromDate} from '../../../utils/getStringFromCamelCase';
 import Search from 'antd/es/input/Search';
 import debounce from 'lodash.debounce';
 import {ColumnsType} from 'antd/es/table';
@@ -17,6 +17,7 @@ export const OrdersIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
     const [pageSkip, setPageSkip] = useState(0);
     const [searchLike, setSearchLike] = useState('');
+    const [orderStatus, setOrderStatus] = useState<OrderStatus | typeof all>(all);
     const getOrdersQuery = useQuery<GetOrdersData, GetOrdersVars>(
         GET_ORDERS_QUERY,
         {
@@ -25,6 +26,7 @@ export const OrdersIndex: FC = () => {
                     skip: pageSkip,
                     take: pageTake,
                     like: searchLike,
+                    orderStatus: orderStatus === all ? null : orderStatus,
                 },
             },
             context: {gqlLink: gqlLinks.admin},
@@ -43,6 +45,7 @@ export const OrdersIndex: FC = () => {
                     skip: pageSkip,
                     take: pageTake,
                     like: searchLike,
+                    orderStatus: orderStatus === all ? null : orderStatus,
                 },
             });
         else {
@@ -97,6 +100,12 @@ export const OrdersIndex: FC = () => {
             render: (text: any, order: Order) => <span>{order.totalPrice} UAH</span>,
         },
         {
+            title: 'Created at',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text: any, order: Order) => <span>{getStringFromDate(order.createdAt)}</span>,
+        },
+        {
             title: 'Actions',
             dataIndex: 'actions',
             key: 'actions',
@@ -108,15 +117,16 @@ export const OrdersIndex: FC = () => {
     ];
 
     const onSearchOrdersHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-        const newPageTake = 0;
+        const newPageSkip = 0;
         const newSearchLike = e.target.value;
-        setPageSkip(newPageTake);
+        setPageSkip(newPageSkip);
         setSearchLike(newSearchLike);
         const response = await getOrdersQuery.refetch({
             getOrdersInput: {
-                skip: newPageTake,
+                skip: newPageSkip,
                 take: pageTake,
                 like: newSearchLike,
+                orderStatus: orderStatus === all ? null : orderStatus,
             },
         });
         if (response.errors)
@@ -125,6 +135,20 @@ export const OrdersIndex: FC = () => {
 
     const debouncedSearchOrdersHandler = useCallback(debounce(nextValue => onSearchOrdersHandler(nextValue), 500), []);
     const searchOrdersHandler = (e: ChangeEvent<HTMLInputElement>) => debouncedSearchOrdersHandler(e);
+
+    const selectOrderStatusHandler = async (value: OrderStatus | typeof all) => {
+        const newPageSkip = 0;
+        setPageSkip(newPageSkip);
+        setOrderStatus(value);
+        await getOrdersQuery.refetch({
+            getOrdersInput: {
+                skip: newPageSkip,
+                take: pageTake,
+                like: searchLike,
+                orderStatus: value === all ? null : value,
+            },
+        });
+    };
 
     if (getOrdersQuery.error)
         message.error(getOrdersQuery.error.message);
@@ -138,9 +162,17 @@ export const OrdersIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <Search placeholder="Search in orders" className={'search'}
-                        onChange={searchOrdersHandler} enterButton
-                        loading={getOrdersQuery.loading}/>
+                <div className={s.filters}>
+                    <Select defaultValue={orderStatus} onChange={selectOrderStatusHandler}>
+                        <Select.Option value={all}>all</Select.Option>
+                        {(Object.keys(OrderStatus) as Array<keyof typeof OrderStatus>).map((key, i) => (
+                            <Select.Option value={key} key={i}>{getStringFromCamelCase(key)}</Select.Option>
+                        ))}
+                    </Select>
+                    <Search placeholder="Search orders" className={'search'}
+                            onChange={searchOrdersHandler} enterButton
+                            loading={getOrdersQuery.loading}/>
+                </div>
             </div>
             <Divider/>
             <div>
@@ -159,6 +191,7 @@ export const OrdersIndex: FC = () => {
                                     skip: pageSkip,
                                     take: pageTake,
                                     like: searchLike,
+                                    orderStatus: orderStatus === all ? null : orderStatus,
                                 },
                             });
                         },

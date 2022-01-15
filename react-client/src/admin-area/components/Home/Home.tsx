@@ -1,11 +1,10 @@
-import React, {FC} from "react";
-import {Link} from "react-router-dom";
-import s from './Home.module.css';
+import React, {FC} from 'react';
+import {Chart} from '../Charts/Chart';
 
 export const Home: FC = () => {
     return (
         <>
-            <div>HOME</div>
+            <Chart/>
         </>
     );
-}
+};

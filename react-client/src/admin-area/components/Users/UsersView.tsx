@@ -2,11 +2,15 @@ import React, {FC} from 'react';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
 import {Loading} from '../../../common-area/components/Loading/Loading';
-import {Tag} from 'antd';
+import {Table, Tag} from 'antd';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {Error} from '../Error/Error';
 import {GET_USER_QUERY, GetUserData, GetUserVars} from '../../gql/users-query';
 import s from './UsersView.module.css';
+import {ColumnsType} from 'antd/es/table';
+import {Order} from '../../../types/types';
+import {getStringFromCamelCase, getStringFromDate} from '../../../utils/getStringFromCamelCase';
+import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 
 export const UsersView: FC = () => {
     const params = useParams();
@@ -18,6 +22,61 @@ export const UsersView: FC = () => {
             context: {gqlLink: gqlLinks.admin},
         },
     );
+
+    const columns: ColumnsType<Order> = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text: any, order: Order) => <>#{order.id}</>,
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: 'FirstName',
+            dataIndex: 'firstName',
+            key: 'firstName',
+        },
+        {
+            title: 'LastName',
+            dataIndex: 'lastName',
+            key: 'lastName',
+        },
+        {
+            title: 'Phone number',
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
+        },
+        {
+            title: 'Order status',
+            dataIndex: 'orderStatus',
+            key: 'orderStatus',
+            render: (text: any, order: Order) => <span>{getStringFromCamelCase(order.orderStatus)}</span>,
+        },
+        {
+            title: 'Total price',
+            dataIndex: 'totalPrice',
+            key: 'totalPrice',
+            render: (text: any, order: Order) => <span>{order.totalPrice} UAH</span>,
+        },
+        {
+            title: 'Created at',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (text: any, order: Order) => <span>{getStringFromDate(order.createdAt)}</span>,
+        },
+        {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (text: any, order: Order) => (
+                <ButtonsVUR viewUrl={`../../orders/${order.id}`} updateUrl={`../../orders/update/${order.id}`}/>
+            ),
+        },
+    ];
 
     if (!userEmail || getUserQuery.error)
         return <Error/>;
@@ -62,6 +121,27 @@ export const UsersView: FC = () => {
                     )}
                     </tbody>
                 </table>
+                <Table
+                    columns={columns}
+                    dataSource={getUserQuery.data?.getUser.orders}
+                    // pagination={{
+                    //     total: getOrdersQuery.data?.getOrders.total,
+                    //     onChange: async (pageNumber: number) => {
+                    //         const pageSkip = (pageNumber - 1) * pageTake;
+                    //         setPageSkip(pageSkip);
+                    //         await getOrdersQuery.refetch({
+                    //             getOrdersInput: {
+                    //                 skip: pageSkip,
+                    //                 take: pageTake,
+                    //                 like: searchLike,
+                    //                 orderStatus: orderStatus === all ? null : orderStatus,
+                    //             },
+                    //         });
+                    //     },
+                    // }}
+                    pagination={false}
+                    rowKey={'id'}
+                />
             </div>
         </>
     );

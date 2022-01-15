@@ -1,6 +1,6 @@
 import {useMutation, useQuery} from '@apollo/client';
 import {Avatar, Button, Carousel, Divider, message, Switch, Table, Tag} from 'antd';
-import React, {FC, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Loading} from '../../../common-area/components/Loading/Loading';
 import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../gql/products-query';
@@ -18,10 +18,12 @@ import s from './ProductsIndex.module.css';
 import {updateFileInput} from '../../gql/files-mutation';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {updateCategoryInput} from '../../gql/categories-mutation';
+import Search from 'antd/es/input/Search';
+import debounce from 'lodash.debounce';
 
 export const ProductsIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
-    const [pageSkip, setSkipTake] = useState(0);
+    const [pageSkip, setPageSkip] = useState(0);
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(
         GET_PRODUCTS_QUERY,
         {
@@ -152,8 +154,24 @@ export const ProductsIndex: FC = () => {
         },
     ];
 
-    if (getProductsQuery.loading)
-        return <Loading/>;
+
+    const onSearchProductsHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+        const newPageTake = 0;
+        const newSearchLike = e.target.value;
+        setPageTake(newPageTake);
+        const response = await getProductsQuery.refetch({
+            getProductsInput: {
+                skip: newPageTake,
+                take: pageTake,
+                likeName: newSearchLike,
+            },
+        });
+        if (response.errors)
+            response.errors?.forEach(error => message.error(error.message));
+    };
+
+    const debouncedSearchProductHandler = useCallback(debounce(nextValue => onSearchProductsHandler(nextValue), 500), []);
+    const searchProductHandler = (e: ChangeEvent<HTMLInputElement>) => debouncedSearchProductHandler(e);
 
     if (getProductsQuery.error)
         message.error(getProductsQuery.error.message);
@@ -167,7 +185,9 @@ export const ProductsIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <strong>search</strong>
+                <Search placeholder="Search products" className={'search'}
+                        onChange={searchProductHandler} enterButton
+                        loading={getProductsQuery.loading}/>
             </div>
             <Divider/>
             <div>
@@ -180,7 +200,7 @@ export const ProductsIndex: FC = () => {
                         total: productsObj.total,
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
-                            setSkipTake(pageSkip);
+                            setPageSkip(pageSkip);
                             await getProductsQuery.refetch({
                                 getProductsInput: {
                                     skip: pageSkip,

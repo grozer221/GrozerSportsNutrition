@@ -36,7 +36,7 @@ export class AdminProductsResolver {
     async getProducts(
         @Args('getProductsInput', { type: () => GetProductsInput }) getProductsInput: GetProductsInput,
     ): Promise<GetProductsResponse> {
-        return await this.adminProductsService.getAsync(getProductsInput.take, getProductsInput.skip, getProductsInput.likeName);
+        return await this.adminProductsService.getAsync(getProductsInput);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)

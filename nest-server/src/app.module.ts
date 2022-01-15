@@ -68,7 +68,6 @@ import {CustomerCategoriesModule} from './categories/customer.categories.module'
             database: 'grozer-sports-nutrition',
             entities: ['dist/**/*.entity{.ts,.js}'],
             synchronize: true,
-            debug: true,
         }),
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'static'),

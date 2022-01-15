@@ -175,6 +175,7 @@ type Query {
 input GetUsersInput {
   take: Int!
   skip: Int!
+  like: String!
 }
 
 input GetProductsInput {
@@ -187,6 +188,7 @@ input GetOrdersInput {
   take: Int!
   skip: Int!
   like: String!
+  orderStatus: OrderStatus
 }
 
 input GetCategoriesInput {

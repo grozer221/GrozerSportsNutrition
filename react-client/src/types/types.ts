@@ -16,6 +16,7 @@ export type User = {
     firstName: string,
     lastName: string,
     roles: Role[],
+    orders: Order[],
 }
 
 export type Auth = {
@@ -127,6 +128,7 @@ export type ProductInOrder = {
     orderId: number;
 }
 
+export const all = 'all'
 
 // Nova Poshta types //
 export type City = {

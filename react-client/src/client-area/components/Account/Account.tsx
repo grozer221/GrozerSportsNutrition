@@ -52,6 +52,8 @@ export const Account: FC = () => {
                 getOrdersInput: {
                     skip: pageSkip,
                     take: pageTake,
+                    like: '',
+                    orderStatus: null,
                 },
             },
             context: {gqlLink: gqlLinks.customer},
@@ -90,7 +92,7 @@ export const Account: FC = () => {
             },
         });
         if (response.data && !response.errors) {
-            dispatch(login(response.data.updateMe))
+            dispatch(login(response.data.updateMe));
             message.success('Personal data successfully updates');
         } else {
             response.errors?.forEach(error => message.error(error.message));
@@ -397,6 +399,8 @@ export const Account: FC = () => {
                                         getOrdersInput: {
                                             skip: pageSkip,
                                             take: pageTake,
+                                            like: '',
+                                            orderStatus: null,
                                         },
                                     });
                                 }}
