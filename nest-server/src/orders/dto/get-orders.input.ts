@@ -11,4 +11,7 @@ export class GetOrdersInput {
     @Min(0)
     @Field(() => Int)
     skip: number;
+
+    @Field()
+    like: string;
 }

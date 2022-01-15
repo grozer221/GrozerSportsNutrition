@@ -132,7 +132,7 @@ export const ProductsUpdate: FC = () => {
             getFilesInput: {
                 skip: 0,
                 take: 10,
-                likeOriginalName: value,
+                likeFileName: value,
                 likeMimetype: 'image',
             },
         });

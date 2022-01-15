@@ -47,7 +47,7 @@ export class AdminFilesResolver {
     async getFiles(
         @Args('getFilesInput', { type: () => GetFilesInput }) getFilesInput: GetFilesInput,
     ): Promise<GetFilesResponse> {
-        return await this.filesService.getAsync(getFilesInput.take, getFilesInput.skip, getFilesInput.likeOriginalName, getFilesInput.likeMimetype);
+        return await this.filesService.getAsync(getFilesInput);
     }
 
     @Roles(RoleName.moderator, RoleName.admin)

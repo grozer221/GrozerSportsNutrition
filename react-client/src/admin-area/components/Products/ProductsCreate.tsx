@@ -94,7 +94,7 @@ export const ProductsCreate: FC = () => {
             getFilesInput: {
                 skip: 0,
                 take: 5,
-                likeOriginalName: value,
+                likeFileName: value,
                 likeMimetype: 'image',
             },
         });

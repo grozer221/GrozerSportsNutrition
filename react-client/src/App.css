@@ -110,3 +110,7 @@ a {
 .bold{
     font-weight: bold;
 }
+
+.search {
+    max-width: 600px;
+}

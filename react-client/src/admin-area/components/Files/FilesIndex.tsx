@@ -10,7 +10,6 @@ import {REMOVE_FILE_MUTATION, RemoveFileData, RemoveFileVars} from '../../gql/fi
 import {useDispatch, useSelector} from 'react-redux';
 import {actions} from '../../../redux/files-reducer';
 import {s_getLoading} from '../../../redux/files.selectors';
-import s from './FilesIndex.module.css';
 import debounce from 'lodash.debounce';
 import Search from 'antd/es/input/Search';
 import {gqlLinks} from '../../../common-area/gql/client';
@@ -25,7 +24,7 @@ export const FilesIndex: FC = () => {
                 getFilesInput: {
                     skip: pageSkip,
                     take: pageTake,
-                    likeOriginalName: '',
+                    likeFileName: '',
                     likeMimetype: '',
                 },
             },
@@ -48,7 +47,7 @@ export const FilesIndex: FC = () => {
                     getFilesInput: {
                         skip: pageSkip,
                         take: pageTake,
-                        likeOriginalName: '',
+                        likeFileName: '',
                         likeMimetype: '',
                     },
                 });
@@ -57,7 +56,7 @@ export const FilesIndex: FC = () => {
                     getFilesInput: {
                         skip: pageSkip,
                         take: pageTake,
-                        likeOriginalName: searchFileName,
+                        likeFileName: searchFileName,
                         likeMimetype: '',
                     },
                 });
@@ -125,7 +124,7 @@ export const FilesIndex: FC = () => {
             getFilesInput: {
                 skip: 0,
                 take: pageTake,
-                likeOriginalName: value,
+                likeFileName: value,
                 likeMimetype: '',
             },
         });
@@ -152,7 +151,7 @@ export const FilesIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <Search placeholder="Search" onChange={handleSearch} enterButton className={s.search}
+                <Search placeholder="Search" onChange={handleSearch} enterButton className="search"
                         loading={searchFilesQuery.loading}/>
             </div>
             <Divider/>
@@ -175,7 +174,7 @@ export const FilesIndex: FC = () => {
                                     getFilesInput: {
                                         skip: pageSkip,
                                         take: pageTake,
-                                        likeOriginalName: searchFileName,
+                                        likeFileName: searchFileName,
                                         likeMimetype: '',
                                     },
                                 });
@@ -184,7 +183,7 @@ export const FilesIndex: FC = () => {
                                     getFilesInput: {
                                         skip: pageSkip,
                                         take: pageTake,
-                                        likeOriginalName: searchFileName,
+                                        likeFileName: searchFileName,
                                         likeMimetype: '',
                                     },
                                 });

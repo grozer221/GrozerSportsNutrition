@@ -186,6 +186,7 @@ input GetProductsInput {
 input GetOrdersInput {
   take: Int!
   skip: Int!
+  like: String!
 }
 
 input GetCategoriesInput {
@@ -197,7 +198,7 @@ input GetCategoriesInput {
 input GetFilesInput {
   take: Int!
   skip: Int!
-  likeOriginalName: String!
+  likeFileName: String!
   likeMimetype: String!
 }
 

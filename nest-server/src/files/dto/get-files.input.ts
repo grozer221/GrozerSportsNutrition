@@ -5,15 +5,15 @@ import { Max, Min } from 'class-validator';
 export class GetFilesInput {
     @Min(1)
     @Max(20)
-    @Field(type => Int)
+    @Field(() => Int)
     take: number;
 
     @Min(0)
-    @Field(type => Int)
+    @Field(() => Int)
     skip: number;
 
     @Field()
-    likeOriginalName: string;
+    likeFileName: string;
 
     @Field()
     likeMimetype: string;

@@ -175,6 +175,7 @@ input GetProductsInput {
 input GetOrdersInput {
   take: Int!
   skip: Int!
+  like: String!
 }
 
 input GetCategoriesInput {

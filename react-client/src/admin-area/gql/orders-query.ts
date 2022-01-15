@@ -11,6 +11,7 @@ export type GetOrdersVars = { getOrdersInput: getOrdersInput }
 export type getOrdersInput = {
     take: number,
     skip: number,
+    like: string,
 }
 
 export const GET_ORDERS_QUERY = gql`

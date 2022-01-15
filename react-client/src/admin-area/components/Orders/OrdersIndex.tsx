@@ -1,22 +1,32 @@
 import {useMutation, useQuery} from '@apollo/client';
 import {Button, Divider, message, Table} from 'antd';
-import React, {FC, useState} from 'react';
+import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Order} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {GET_ORDERS_QUERY, GetOrdersData, GetOrdersVars} from '../../gql/orders-query';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
 import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
+import Search from 'antd/es/input/Search';
+import debounce from 'lodash.debounce';
+import {ColumnsType} from 'antd/es/table';
+import s from './OrdersIndex.module.css';
 
 export const OrdersIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
-    const [pageSkip, setSkipTake] = useState(0);
+    const [pageSkip, setPageSkip] = useState(0);
+    const [searchLike, setSearchLike] = useState('');
     const getOrdersQuery = useQuery<GetOrdersData, GetOrdersVars>(
         GET_ORDERS_QUERY,
         {
-            variables: {getOrdersInput: {skip: pageSkip, take: pageTake}},
+            variables: {
+                getOrdersInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    like: searchLike,
+                },
+            },
             context: {gqlLink: gqlLinks.admin},
         },
     );
@@ -28,7 +38,13 @@ export const OrdersIndex: FC = () => {
     const onRemove = async (orderId: number) => {
         const response = await removeOrder({variables: {id: orderId}});
         if (response.data)
-            await getOrdersQuery.refetch({getOrdersInput: {skip: pageSkip, take: pageTake}});
+            await getOrdersQuery.refetch({
+                getOrdersInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    like: searchLike,
+                },
+            });
         else {
             response.errors?.forEach(error => message.error(error.message));
         }
@@ -41,7 +57,7 @@ export const OrdersIndex: FC = () => {
         },
     };
 
-    const columns = [
+    const columns: ColumnsType<Order> = [
         {
             title: 'Id',
             dataIndex: 'id',
@@ -91,8 +107,24 @@ export const OrdersIndex: FC = () => {
         },
     ];
 
-    if (getOrdersQuery.loading)
-        return <Loading/>;
+    const onSearchOrdersHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+        const newPageTake = 0;
+        const newSearchLike = e.target.value;
+        setPageSkip(newPageTake);
+        setSearchLike(newSearchLike);
+        const response = await getOrdersQuery.refetch({
+            getOrdersInput: {
+                skip: newPageTake,
+                take: pageTake,
+                like: newSearchLike,
+            },
+        });
+        if (response.errors)
+            response.errors?.forEach(error => message.error(error.message));
+    };
+
+    const debouncedSearchOrdersHandler = useCallback(debounce(nextValue => onSearchOrdersHandler(nextValue), 500), []);
+    const searchOrdersHandler = (e: ChangeEvent<HTMLInputElement>) => debouncedSearchOrdersHandler(e);
 
     if (getOrdersQuery.error)
         message.error(getOrdersQuery.error.message);
@@ -106,7 +138,9 @@ export const OrdersIndex: FC = () => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-                <strong>search</strong>
+                <Search placeholder="Search in orders" className={'search'}
+                        onChange={searchOrdersHandler} enterButton
+                        loading={getOrdersQuery.loading}/>
             </div>
             <Divider/>
             <div>
@@ -119,11 +153,12 @@ export const OrdersIndex: FC = () => {
                         total: getOrdersQuery.data?.getOrders.total,
                         onChange: async (pageNumber: number) => {
                             const pageSkip = (pageNumber - 1) * pageTake;
-                            setSkipTake(pageSkip);
+                            setPageSkip(pageSkip);
                             await getOrdersQuery.refetch({
                                 getOrdersInput: {
                                     skip: pageSkip,
                                     take: pageTake,
+                                    like: searchLike,
                                 },
                             });
                         },

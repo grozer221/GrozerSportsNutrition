@@ -8,7 +8,7 @@ export type GetFilesVars = { getFilesInput: getFilesInput }
 type getFilesInput = {
     take: number,
     skip: number,
-    likeOriginalName: string,
+    likeFileName: string,
     likeMimetype: string,
 }
 

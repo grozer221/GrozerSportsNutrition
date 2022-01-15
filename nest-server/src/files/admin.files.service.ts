@@ -1,14 +1,15 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
-import { CreateFileInput } from './dto/create-file.input';
-import { UpdateFileInput } from './dto/update-file.input';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
-import { File } from './file.entity';
-import { GetFilesResponse } from './dto/get-files.response';
-import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
+import {Inject, Injectable, Scope} from '@nestjs/common';
+import {CreateFileInput} from './dto/create-file.input';
+import {UpdateFileInput} from './dto/update-file.input';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Like, Repository} from 'typeorm';
+import {File} from './file.entity';
+import {GetFilesResponse} from './dto/get-files.response';
+import {REQUEST} from '@nestjs/core';
+import {Request} from 'express';
+import {GetFilesInput} from './dto/get-files.input';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable({scope: Scope.REQUEST})
 export class AdminFilesService {
     origin: string;
 
@@ -42,24 +43,18 @@ export class AdminFilesService {
         return await this.filesRepository.save(file);
     }
 
-    async getAsync(take: number, skip: number, likeOriginalName: string, likeMimetype: string): Promise<GetFilesResponse> {
+    async getAsync(getFilesInput: GetFilesInput): Promise<GetFilesResponse> {
         const getFilesResponse = new GetFilesResponse();
-        const files = await this.filesRepository.find({
+        const [files, filesCount] = await this.filesRepository.findAndCount({
             where: {
-                originalName: Like(`%${likeOriginalName}%`),
-                mimetype: Like(`%${likeMimetype}%`),
+                fileName: Like(`%${getFilesInput.likeFileName}%`),
+                mimetype: Like(`%${getFilesInput.likeMimetype}%`),
             },
-            take: take,
-            skip: skip,
-        });
-        const filesCount = await this.filesRepository.find({
-            where: {
-                originalName: Like(`%${likeOriginalName}%`),
-                mimetype: Like(`%${likeMimetype}%`),
-            },
+            take: getFilesInput.take,
+            skip: getFilesInput.skip,
         });
         getFilesResponse.files = files;
-        getFilesResponse.total = filesCount.length;
+        getFilesResponse.total = filesCount;
         return getFilesResponse;
     }
 
@@ -77,7 +72,7 @@ export class AdminFilesService {
     }
 
     async getByNameAsync(fileName: string): Promise<File> {
-        return await this.filesRepository.findOneOrFail({ where: { fileName: fileName } });
+        return await this.filesRepository.findOneOrFail({where: {fileName: fileName}});
     }
 
     async updateAsync(updateFileInput: UpdateFileInput): Promise<File> {

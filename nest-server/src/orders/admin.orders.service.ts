@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {Repository} from 'typeorm';
+import {Like, Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Order} from './order.entity';
 import {CreateOrderInput} from './dto/create-order.input';
@@ -49,13 +49,21 @@ export class AdminOrdersService {
 
     async getAsync(getOrdersInput: GetOrdersInput): Promise<GetOrdersResponse> {
         const getOrdersResponse = new GetOrdersResponse();
-        const orders = await this.ordersRepository.find({
+        const [orders, ordersCount] = await this.ordersRepository.findAndCount({
+            where: [
+                {id: Like(`%${getOrdersInput.like}%`)},
+                {email: Like(`%${getOrdersInput.like}%`)},
+                {firstName: Like(`%${getOrdersInput.like}%`)},
+                {lastName: Like(`%${getOrdersInput.like}%`)},
+                {phoneNumber: Like(`%${getOrdersInput.like}%`)},
+                {address: Like(`%${getOrdersInput.like}%`)},
+                {createdAt: Like(`%${getOrdersInput.like}%`)},
+            ],
             take: getOrdersInput.take,
             skip: getOrdersInput.skip,
         });
-        const ordersCount = await this.ordersRepository.find();
         getOrdersResponse.orders = orders;
-        getOrdersResponse.total = ordersCount.length;
+        getOrdersResponse.total = ordersCount;
         return getOrdersResponse;
     }
 
