@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "start": "cd ./nest-server && nest start"
+    "start": "cd ./nest-server && npm run start:prod"
   }
 }
