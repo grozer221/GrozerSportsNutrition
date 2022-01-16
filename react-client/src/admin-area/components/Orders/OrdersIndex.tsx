@@ -7,7 +7,7 @@ import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {GET_ORDERS_QUERY, GetOrdersData, GetOrdersVars} from '../../gql/orders-query';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
-import {getStringFromCamelCase, getStringFromDate} from '../../../utils/getStringFromCamelCase';
+import {getStringFromCamelCase, getStringFromDate} from '../../../utils/stringActions';
 import Search from 'antd/es/input/Search';
 import debounce from 'lodash.debounce';
 import {ColumnsType} from 'antd/es/table';

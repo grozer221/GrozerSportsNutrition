@@ -147,3 +147,15 @@ export type Warehouse = {
     Number: string,
     CityDescription: string,
 }
+
+
+// Statistics //
+export type OrderStatistics = {
+    date: string;
+    ordersCount: number;
+}
+
+export type ProfitStatistics = {
+    date: string;
+    totalPrice: number;
+}

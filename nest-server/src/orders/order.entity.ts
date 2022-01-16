@@ -69,7 +69,7 @@ export class Order {
     @Field({nullable: true})
     deliveryWarehouse: string;
 
-    @Column('decimal', {default: 0})
+    @Column('float', {default: 0})
     @Field(() => Float)
     totalPrice: number;
 

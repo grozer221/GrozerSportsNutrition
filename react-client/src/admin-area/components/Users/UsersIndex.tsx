@@ -3,7 +3,7 @@ import React, {ChangeEvent, FC, useCallback, useState} from 'react';
 import {GET_USERS_QUERY, GetUsersData, GetUsersVars} from '../../gql/users-query';
 import {gqlLinks} from '../../../common-area/gql/client';
 import {Divider, message, Table, Tag} from 'antd';
-import {Order, User} from '../../../types/types';
+import {User} from '../../../types/types';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 import s from './UsersIndex.module.css';
 import {REMOVE_USER_MUTATION, RemoveUserData, RemoveUserVars} from '../../gql/users-mutation';
@@ -12,8 +12,6 @@ import {useSelector} from 'react-redux';
 import {s_getAuthData} from '../../../redux/auth-selectors';
 import Search from 'antd/es/input/Search';
 import debounce from 'lodash.debounce';
-import {ColumnsType} from 'antd/es/table';
-import {getStringFromCamelCase, getStringFromDate} from '../../../utils/getStringFromCamelCase';
 
 export const UsersIndex: FC = () => {
     const authData = useSelector(s_getAuthData);

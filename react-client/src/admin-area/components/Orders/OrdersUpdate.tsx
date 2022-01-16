@@ -32,7 +32,7 @@ import {GET_ORDER_QUERY, GetOrderData, GetOrderVars} from '../../gql/orders-quer
 import {UPDATE_ORDER_MUTATION, UpdateOrderData, UpdateOrderVars} from '../../gql/orders-mutation';
 import {Error} from '../Error/Error';
 import {Loading} from '../../../common-area/components/Loading/Loading';
-import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
+import {getStringFromCamelCase} from '../../../utils/stringActions';
 
 export const OrdersUpdate = () => {
     const params = useParams();

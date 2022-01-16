@@ -9,7 +9,7 @@ import {GET_ORDER_QUERY, GetOrderData, GetOrderVars} from '../../gql/orders-quer
 import s from './OrdersView.module.css';
 import {REMOVE_ORDER_MUTATION, RemoveOrderData, RemoveOrderVars} from '../../gql/orders-mutation';
 import {ProductInOrder} from '../../../types/types';
-import {getStringFromCamelCase} from '../../../utils/getStringFromCamelCase';
+import {getStringFromCamelCase} from '../../../utils/stringActions';
 import {Error} from '../Error/Error';
 
 export const OrdersView: FC = () => {

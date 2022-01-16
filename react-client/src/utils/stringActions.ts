@@ -12,3 +12,8 @@ export const getStringFromDate = (inputString: string): string => {
     const dateAndTime = inputString.split('T');
     return `${dateAndTime[0]} ${dateAndTime[1].substring(0, dateAndTime[1].length - 5)}`;
 };
+
+export const getStringDateFromDate = (inputString: string): string => {
+    const dateAndTime = inputString.split('T');
+    return `${dateAndTime[0]}`;
+};

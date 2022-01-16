@@ -151,6 +151,16 @@ type GetOrdersResponse {
   total: Int!
 }
 
+type OrderStatistics {
+  date: String
+  ordersCount: Int
+}
+
+type ProfitStatistics {
+  date: String
+  totalPrice: Float
+}
+
 type Query {
   me: AuthResponse!
   getPage(slug: String!): Page!

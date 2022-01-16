@@ -17,6 +17,7 @@ import {AdminPagesModule} from './pages/admin.pages.module';
 import {CustomerProductsModule} from './products/customer.products.module';
 import {CustomerOrdersModule} from './orders/customer.orders.module';
 import {CustomerCategoriesModule} from './categories/customer.categories.module';
+import {AdminStatisticsModule} from './statistics/admin.statistics.module';
 
 @Module({
     imports: [
@@ -39,6 +40,7 @@ import {CustomerCategoriesModule} from './categories/customer.categories.module'
                 AdminRolesModule,
                 AdminFilesModule,
                 AdminCategoriesModule,
+                AdminStatisticsModule,
             ],
             debug: true,
         }),
@@ -95,6 +97,7 @@ import {CustomerCategoriesModule} from './categories/customer.categories.module'
         AdminUsersModule,
         AdminRolesModule,
         AdminFilesModule,
+        AdminStatisticsModule,
     ],
     providers: [
         AppService,

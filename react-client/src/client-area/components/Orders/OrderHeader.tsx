@@ -4,7 +4,7 @@ import {FC} from 'react';
 import {Order} from '../../../types/types';
 import s from '../Account/Account.module.css';
 import {Avatar, Carousel} from 'antd';
-import {getStringFromDate} from '../../../utils/getStringFromCamelCase';
+import {getStringFromDate} from '../../../utils/stringActions';
 
 type Props = {
     order: Order

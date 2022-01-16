@@ -78,7 +78,6 @@ export class AdminOrdersService {
         let order = this.ordersRepository.create({...updateOrderInput});
         let totalPrice = 0;
         const productsInOrder = await this.productInOrderRepository.find({where: {orderId: updateOrderInput.id}});
-        console.log(productsInOrder);
         for (const key in productsInOrder)
             await this.productInOrderRepository.remove(productsInOrder[key]);
         for (const key in updateOrderInput.createProductInOrder) {

@@ -151,6 +151,16 @@ type GetOrdersResponse {
   total: Int!
 }
 
+type OrderStatistics {
+  date: String
+  ordersCount: Int
+}
+
+type ProfitStatistics {
+  date: String
+  totalPrice: Float
+}
+
 type Query {
   me: AuthResponse!
   getUsers(getUsersInput: GetUsersInput!): GetUsersResponse!
@@ -170,6 +180,8 @@ type Query {
   getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
   getFile(id: Int!): File!
   getFileByName(fileName: String!): File!
+  getOrdersStatistics: [OrderStatistics!]!
+  getProfitStatistics: [ProfitStatistics!]!
 }
 
 input GetUsersInput {

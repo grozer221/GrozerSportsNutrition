@@ -1,0 +1,11 @@
+.wrapperCharts {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapperChart{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

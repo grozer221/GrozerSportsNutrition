@@ -9,7 +9,7 @@ import {GET_USER_QUERY, GetUserData, GetUserVars} from '../../gql/users-query';
 import s from './UsersView.module.css';
 import {ColumnsType} from 'antd/es/table';
 import {Order} from '../../../types/types';
-import {getStringFromCamelCase, getStringFromDate} from '../../../utils/getStringFromCamelCase';
+import {getStringFromCamelCase, getStringFromDate} from '../../../utils/stringActions';
 import {ButtonsVUR} from '../ButtonsVUD/ButtonsVUR';
 
 export const UsersView: FC = () => {
