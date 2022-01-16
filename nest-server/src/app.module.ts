@@ -18,6 +18,20 @@ import {CustomerProductsModule} from './products/customer.products.module';
 import {CustomerOrdersModule} from './orders/customer.orders.module';
 import {CustomerCategoriesModule} from './categories/customer.categories.module';
 import {AdminStatisticsModule} from './statistics/admin.statistics.module';
+import {config} from 'dotenv';
+
+config();
+
+let connectionString = process.env.JAWSDB_URL || 'mysql://root:@localhost:3306/grozer-sports-nutrition'
+connectionString = connectionString.split("//")[1];
+const user = connectionString.split(':')[0];
+connectionString = connectionString.replace(user, "").substring(1);
+const password = connectionString.split('@')[0];
+connectionString = connectionString.replace(password, "").substring(1);
+const server = connectionString.split(':')[0];
+connectionString = connectionString.replace(server, "").substring(1);
+const port = connectionString.split('/')[0];
+const database = connectionString.split('/')[1];
 
 @Module({
     imports: [
@@ -63,11 +77,11 @@ import {AdminStatisticsModule} from './statistics/admin.statistics.module';
         }),
         TypeOrmCoreModule.forRoot({
             type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: '',
-            database: 'grozer-sports-nutrition',
+            host: server,
+            port: parseInt(port),
+            username: user,
+            password: password,
+            database: database,
             entities: ['dist/**/*.entity{.ts,.js}'],
             synchronize: true,
         }),

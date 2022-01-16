@@ -2,59 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a38c5833-f7cf-482c-939b-fe1f43553eb7" name="Changes" comment="added unique validation for product, categories and pages. added visualise products in orders in customer side">
-      <change afterPath="$PROJECT_DIR$/../nest-server/src/utils/order-by.enum.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Presentation.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../Presentation.pptx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Report.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Report.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/2.a95be28f.chunk.css" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/css/2.a95be28f.chunk.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.42a0663b.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/css/main.42a0663b.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.bf30845d.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.bf30845d.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/2.bf30845d.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.2eeadb67.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/main.2eeadb67.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/client/js/runtime-main.6c5ba1a6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/client/js/runtime-main.6c5ba1a6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/categories/admin.categories.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/categories/admin.categories.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/categories/category.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/categories/category.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/pages/admin.pages.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/pages/admin.pages.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/pages/page.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/pages/page.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/admin.products.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/customer.products.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/customer.products.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/customer.products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/customer.products.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/dto/get-products.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/dto/get-products.input.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/products/product.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/users/admin.users.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-admin.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/static/schema-customer.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nest-server/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Categories/CategoriesUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Layout/AdminLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Orders/OrdersUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Pages/PagesUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsCreate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Products/ProductsUpdate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersView.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersView.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/components/Users/UsersView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/Users/UsersView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin-area/gql/products-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/gql/products-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Account/Account.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Account/Account.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Account/Account.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Account/Account.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Basket/BasketPlaceAnOrder.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Layout/ClientLayout.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Products/ProductsIndex.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Products/ProductsIndex.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Products/ProductsIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Products/ProductsIndex.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/gql/products-query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/gql/products-query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common-area/gql/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common-area/gql/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +63,10 @@
       <recent name="D:\Projects\GrozerSportsNutrition\react-client\src\client-area\Auth" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.1.js">
+    <configuration name="1.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$USER_HOME$/Desktop/1.js" working-dir="$USER_HOME$/Desktop">
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -127,6 +79,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.1.js" />
         <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
@@ -184,7 +137,7 @@
       <workItem from="1642322883692" duration="9246000" />
       <workItem from="1642345900689" duration="4737000" />
       <workItem from="1642354339041" duration="81000" />
-      <workItem from="1642354597264" duration="8844000" />
+      <workItem from="1642354597264" duration="9788000" />
     </task>
     <task id="LOCAL-00001" summary="expanded product module">
       <created>1640632696621</created>
