@@ -52,6 +52,7 @@ export class AdminProductsService {
             },
             take: getProductsInput.take,
             skip: getProductsInput.skip,
+            order: {createdAt: 'DESC'},
         });
         getProductsResponse.products = products;
         getProductsResponse.total = productsTotal;

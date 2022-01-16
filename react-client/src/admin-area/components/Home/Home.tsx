@@ -103,6 +103,7 @@ export const Home: FC = () => {
                                            loading={getStatisticsQuery.loading}/>
                 </div>
             </div>
+            <header>New orders</header>
             <Table
                 loading={getOrdersQuery.loading}
                 columns={columns}

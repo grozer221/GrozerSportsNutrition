@@ -38,11 +38,13 @@ export const CategoriesView: FC = () => {
             {
                 title: 'Id',
                 dataIndex: 'id',
+                key: 'id',
                 render: (text: any, product: Product) => <>#{product.id}</>,
             },
             {
                 title: 'Image',
                 dataIndex: 'fileImage',
+                key: 'fileImage',
                 render: (text: any, product: Product) => (
                     <Carousel className={s.carousel}>
                         {product.files.map(file => (
@@ -57,17 +59,23 @@ export const CategoriesView: FC = () => {
             {
                 title: 'Name',
                 dataIndex: 'name',
+                key: 'name',
             },
             {
                 title: 'Quantity',
                 dataIndex: 'quantity',
+                key: 'quantity',
             },
             {
                 title: 'Price',
                 dataIndex: 'priceUAH',
+                key: 'priceUAH',
+                render: (text: any, product: Product) => <>{product.priceUAH} UAH</>,
             },
             {
                 title: 'Actions',
+                dataIndex: 'actions',
+                key: 'actions',
                 render: (text: any, product: Product) => (
                     <ButtonsVUR viewUrl={`../../products/${product.slug}`}/>
                 ),

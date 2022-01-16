@@ -36,6 +36,7 @@ export class AdminCategoriesService {
             take: getCategoriesInput.take,
             skip: getCategoriesInput.skip,
             where: {name: Like(`%${getCategoriesInput.likeName}%`)},
+            order: {createdAt: 'DESC'},
         });
         getCategoriesResponse.categories = categories;
         getCategoriesResponse.total = categoriesCount;

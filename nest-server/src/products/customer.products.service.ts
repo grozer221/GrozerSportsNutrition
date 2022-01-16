@@ -44,6 +44,7 @@ export class CustomerProductsService {
             },
             take: take,
             skip: skip,
+            order: {createdAt: 'DESC'},
         });
         getProductsResponse.products = products;
         getProductsResponse.total = productsTotal;

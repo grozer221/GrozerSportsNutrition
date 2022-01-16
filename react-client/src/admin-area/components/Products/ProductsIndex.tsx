@@ -4,7 +4,7 @@ import React, {ChangeEvent, FC, useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Loading} from '../../../common-area/components/Loading/Loading';
 import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../gql/products-query';
-import {Product} from '../../../types/types';
+import {Order, Product} from '../../../types/types';
 import {
     REMOVE_PRODUCT_MUTATION,
     RemoveProductData,
@@ -20,6 +20,7 @@ import {gqlLinks} from '../../../common-area/gql/client';
 import {updateCategoryInput} from '../../gql/categories-mutation';
 import Search from 'antd/es/input/Search';
 import debounce from 'lodash.debounce';
+import {ColumnsType} from 'antd/es/table';
 
 export const ProductsIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
@@ -85,7 +86,7 @@ export const ProductsIndex: FC = () => {
         }
     };
 
-    const columns = [
+    const columns: ColumnsType<Product> = [
         {
             title: 'Id',
             dataIndex: 'id',
@@ -142,6 +143,7 @@ export const ProductsIndex: FC = () => {
             title: 'Price',
             dataIndex: 'priceUAH',
             key: 'priceUAH',
+            render: (text: any, product: Product) => <>{product.priceUAH} UAH</>,
         },
         {
             title: 'Actions',

@@ -34,10 +34,6 @@ export class AdminFilesService {
             return this.origin + '/static/images/file.png';
     }
 
-    async getTotalAsync(): Promise<number> {
-        return await this.filesRepository.count();
-    }
-
     async addAsync(createFileInput: CreateFileInput): Promise<File> {
         const file = this.filesRepository.create(createFileInput);
         return await this.filesRepository.save(file);
@@ -52,6 +48,7 @@ export class AdminFilesService {
             },
             take: getFilesInput.take,
             skip: getFilesInput.skip,
+            order: {createdAt: 'DESC'},
         });
         getFilesResponse.files = files;
         getFilesResponse.total = filesCount;

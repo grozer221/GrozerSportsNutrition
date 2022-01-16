@@ -31,10 +31,10 @@ export const ClientLayout: FC = () => {
                     <MyMenu/>
                 </div>
             </div>
-            <div className={s.container}>
-                <div className={s.breadcrumb}>
-                    <MyBreadcrumb/>
-                </div>
+            <div className={[s.container, s.content].join(' ')}>
+                {/*<div className={s.breadcrumb}>*/}
+                {/*    <MyBreadcrumb/>*/}
+                {/*</div>*/}
                 <Routes>
                     <Route path={'/'} element={<Home/>}/>
                     <Route path={'/products/*'} element={<ProductsController/>}/>
