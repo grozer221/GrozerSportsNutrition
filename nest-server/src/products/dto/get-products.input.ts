@@ -1,5 +1,8 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
-import { Max, Min } from 'class-validator';
+import {Field, InputType, Int, registerEnumType} from '@nestjs/graphql';
+import {Max, Min} from 'class-validator';
+import {OrderBy} from '../../utils/order-by.enum';
+
+registerEnumType(OrderBy, {name: 'OrderBy'});
 
 @InputType()
 export class GetProductsInput {
@@ -14,4 +17,7 @@ export class GetProductsInput {
 
     @Field()
     likeName: string;
+
+    @Field()
+    orderBy: OrderBy;
 }

@@ -109,6 +109,6 @@ export class AdminUsersService {
         const user = await this.usersRepository.findOneOrFail(userId, {
             relations: [ordersConstants.tableName],
         });
-        return user.orders;
+        return user.orders.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : ((b.createdAt < a.createdAt) ? -1 : 0));
     }
 }

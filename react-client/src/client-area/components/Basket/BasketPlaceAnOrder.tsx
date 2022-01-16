@@ -53,6 +53,7 @@ export const BasketPlaceAnOrder = () => {
     const productsInBasket = useSelector(s_getProductsInBasket);
     const citiesError = useSelector(s_getCitiesError);
     const navigate = useNavigate();
+    const isAuth = useSelector(s_getAuthData);
 
     useEffect(() => {
         if (citiesError) {
@@ -91,7 +92,7 @@ export const BasketPlaceAnOrder = () => {
                 },
             },
         })
-            .then(response => {
+            .then(() => {
                 dispatch(actions.clearState());
                 message.success('Order successfully created');
                 navigate('/');
@@ -120,6 +121,9 @@ export const BasketPlaceAnOrder = () => {
         setSelectedCity(option);
         dispatch(loadWarehouses(option.deliveryCity));
     };
+
+    if (!isAuth)
+        return <Navigate to={'../../auth/login'}/>;
 
     if (!productsInBasket.length) {
         return <Navigate to={'/'}/>;

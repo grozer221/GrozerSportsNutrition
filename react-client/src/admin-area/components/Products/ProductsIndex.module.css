@@ -1,15 +1,13 @@
-.carousel{
+.carousel {
     width: 64px;
 }
 
-.image{
+.image {
     object-fit: cover;
 }
 
-.categories{
+.categories {
     display: flex;
     gap: 5px;
     flex-wrap: wrap;
 }
-
-

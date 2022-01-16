@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {AutoComplete, Button, Form, Input, Radio, Select} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
-import {ShippingMethod} from '../../../types/types';
+import {OrderBy, ShippingMethod} from '../../../types/types';
 import Search from 'antd/es/input/Search';
 import {
     s_getCities,
@@ -133,6 +133,7 @@ export const OrdersCreate = () => {
                 skip: 0,
                 take: 5,
                 likeName: value,
+                orderBy: OrderBy.newest,
             },
         });
         if (!response.errors) {

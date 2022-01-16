@@ -17,7 +17,7 @@ export class Page {
     @Field()
     name: string;
 
-    @Column()
+    @Column({unique: true})
     @Field()
     slug: string;
 

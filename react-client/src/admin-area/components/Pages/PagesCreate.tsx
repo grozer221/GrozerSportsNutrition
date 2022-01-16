@@ -16,7 +16,7 @@ export const PagesCreate: FC = () => {
     const onFinish = async (values: {
         name: string,
     }) => {
-        const response = await createPage({
+        createPage({
             variables: {
                 createPageInput: {
                     ...values,
@@ -24,12 +24,9 @@ export const PagesCreate: FC = () => {
                     text: text,
                 },
             },
-        });
-        if (response.data && !response.errors) {
-            navigate('..');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        })
+            .then(() => navigate('..'))
+            .catch(error => message.error(error.message));
     };
 
     return (

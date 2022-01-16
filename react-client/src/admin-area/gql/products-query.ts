@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {Product} from '../../types/types';
+import {OrderBy, Product} from '../../types/types';
 
 export type GetProductsData = { getProducts: getProductsObject }
 export type getProductsObject = { products: Product[], total: number }
@@ -8,7 +8,8 @@ export type GetProductsVars = { getProductsInput: getProductsInput }
 export type getProductsInput = {
     take: number,
     skip: number,
-    likeName: string
+    likeName: string,
+    orderBy: OrderBy,
 }
 
 export const GET_PRODUCTS_QUERY = gql`

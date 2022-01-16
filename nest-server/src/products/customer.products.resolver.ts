@@ -27,7 +27,7 @@ export class CustomerProductsResolver {
     async getProducts(
         @Args('getProductsInput', {type: () => GetProductsInput}) getProductsInput: GetProductsInput,
     ): Promise<GetProductsResponse> {
-        return await this.customerProductsService.getAsync(getProductsInput.take, getProductsInput.skip, getProductsInput.likeName);
+        return await this.customerProductsService.getAsync(getProductsInput);
     }
 
     @Query(() => Product)

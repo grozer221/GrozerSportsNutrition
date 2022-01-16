@@ -39,7 +39,7 @@ export const CategoriesUpdate: FC = () => {
         name: string,
     }) => {
         const intId = parseInt(values.id);
-        const response = await updateCategory({
+        updateCategory({
             variables: {
                 updateCategoryInput: {
                     ...values,
@@ -48,12 +48,9 @@ export const CategoriesUpdate: FC = () => {
                     description: description,
                 },
             },
-        });
-        if (response.data && !response.errors) {
-            navigate('..');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        })
+            .then(() => navigate('..'))
+            .catch(error => message.error(error.message));
     };
 
     if (!categorySlug || getCategoryQuery.error)

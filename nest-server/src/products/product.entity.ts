@@ -1,19 +1,20 @@
-import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import {Field, Int, ObjectType} from '@nestjs/graphql';
 import {
     Column,
     CreateDateColumn,
     Entity,
     JoinTable,
     ManyToMany,
-    ManyToOne, OneToMany,
+    ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { productsConstants } from './products.constants';
-import { File } from '../files/file.entity';
-import { User } from '../users/user.entity';
-import { Category } from '../categories/category.entity';
-import { Characteristic } from './characteristic.entity';
+import {productsConstants} from './products.constants';
+import {File} from '../files/file.entity';
+import {User} from '../users/user.entity';
+import {Category} from '../categories/category.entity';
+import {Characteristic} from './characteristic.entity';
 import {ProductInOrder} from '../orders/product-in-order.entity';
 
 @Entity(productsConstants.tableName)
@@ -23,7 +24,7 @@ export class Product {
     @Field(() => Int)
     id: number;
 
-    @Column('boolean', { default: true })
+    @Column('boolean', {default: true})
     @Field(() => Boolean)
     isShown: boolean;
 
@@ -31,7 +32,7 @@ export class Product {
     @Field()
     name: string;
 
-    @Column()
+    @Column({unique: true})
     @Field()
     slug: string;
 
@@ -51,7 +52,7 @@ export class Product {
         type: 'json',
         array: false,
     })
-    @Field(() => [Characteristic], { nullable: true })
+    @Field(() => [Characteristic], {nullable: true})
     characteristics: Characteristic[];
 
     @ManyToMany(() => File, file => file.products)
@@ -61,7 +62,7 @@ export class Product {
 
     @ManyToMany(() => Category, category => category.products)
     @JoinTable()
-    @Field(() => [Category], { nullable: true })
+    @Field(() => [Category], {nullable: true})
     categories: Category[];
 
     @ManyToOne(() => User, user => user.products)
@@ -70,9 +71,9 @@ export class Product {
     @OneToMany(() => ProductInOrder, productInOrder => productInOrder.product)
     productsInOrder: ProductInOrder[];
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+    @CreateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)'})
     createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    @UpdateDateColumn({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)'})
     updatedAt: Date;
 }

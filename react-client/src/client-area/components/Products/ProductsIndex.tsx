@@ -5,10 +5,14 @@ import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars}
 import {Loading} from '../../../common-area/components/Loading/Loading';
 import {ProductCard} from './ProductCard';
 import s from './ProductsIndex.module.css';
+import {OrderBy} from '../../../types/types';
+import {Select} from 'antd';
+import {getStringFromCamelCase} from '../../../utils/stringActions';
 
 export const ProductsIndex = () => {
     const [pageTake, setPageTake] = useState(12);
     const [pageSkip, setPageSkip] = useState(0);
+    const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.newest);
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY,
         {
             variables: {
@@ -16,6 +20,7 @@ export const ProductsIndex = () => {
                     take: pageTake,
                     skip: pageSkip,
                     likeName: '',
+                    orderBy: orderBy,
                 },
             },
             context: {gqlLink: gqlLinks.customer},
@@ -43,16 +48,39 @@ export const ProductsIndex = () => {
                     skip: newPageSkip,
                     take: pageTake,
                     likeName: '',
+                    orderBy: orderBy,
                 },
             });
         }
     };
 
+    const orderByChangeHandler = async (value: OrderBy) => {
+        const newPageSkip = 0;
+        setPageSkip(newPageSkip);
+        setOrderBy(value);
+        setProductsObj({products: [], total: 0});
+        await getProductsQuery.refetch({
+            getProductsInput: {
+                skip: newPageSkip,
+                take: pageSkip,
+                likeName: '',
+                orderBy: value,
+            },
+        });
+    };
+
     return (
-        <div className={s.products} onScroll={productsScrollHandler}>
-            {productsObj.products.map(product => (
-                <ProductCard product={product} key={product.id}/>
-            ))}
+        <div className={s.wrapperProducts} onScroll={productsScrollHandler}>
+            <Select defaultValue={orderBy} className={s.orderBy} onChange={orderByChangeHandler}>
+                {(Object.keys(OrderBy) as Array<keyof typeof OrderBy>).map((key, i) => (
+                    <Select.Option value={key} key={i}>{getStringFromCamelCase(key)}</Select.Option>
+                ))}
+            </Select>
+            <div className={s.products}>
+                {productsObj.products.map(product => (
+                    <ProductCard product={product} key={product.id}/>
+                ))}
+            </div>
             {getProductsQuery.loading && <Loading/>}
         </div>
     );

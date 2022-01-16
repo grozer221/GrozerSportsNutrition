@@ -122,6 +122,7 @@ export const UsersView: FC = () => {
                     </tbody>
                 </table>
                 <Table
+                    title={() => <div className={s.ordersTitle}>Orders</div>}
                     columns={columns}
                     dataSource={getUserQuery.data?.getUser.orders}
                     // pagination={{

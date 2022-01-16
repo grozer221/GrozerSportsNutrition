@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {useSelector} from 'react-redux';
-import {s_getIsAuth} from '../../../redux/auth-selectors';
-import {Layout} from 'antd';
+import {s_getAuthData, s_getIsAuth} from '../../../redux/auth-selectors';
+import {Layout, message} from 'antd';
 import {MyMenu} from '../MyMenu/MyMenu';
 import {MyBreadcrumb} from '../../../common-area/components/MyBreadcrumb/MyBreadcrumb';
 import {Navigate, Route, Routes} from 'react-router-dom';
@@ -15,14 +15,21 @@ import {FilesController} from '../Files/FilesController';
 import {Settings} from '../Settings/Settings';
 import {PagesController} from '../Pages/PagesController';
 import {OrdersController} from '../Orders/OrdersController';
+import {isModeratorOrAdmin} from '../../../utils/authorization';
 
 const {Content} = Layout;
 
 export const AdminLayout: FC = () => {
     const isAuth = useSelector(s_getIsAuth);
+    const authDate = useSelector(s_getAuthData);
 
     if (!isAuth)
         return <Navigate to={'/admin/auth/login'}/>;
+
+    if (authDate?.user && !isModeratorOrAdmin(authDate?.user)){
+        message.warning('Access forbidden')
+        return <Navigate to={'/'}/>;
+    }
 
     return (
         <Layout className={s.layout}>

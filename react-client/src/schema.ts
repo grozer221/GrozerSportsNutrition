@@ -1,6 +1,10 @@
 import {gql} from '@apollo/client';
 
 export const schema = gql`
+    # ------------------------------------------------------
+    # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+    # ------------------------------------------------------
+
     type Role {
         id: Int!
         name: RoleName!
@@ -47,11 +51,17 @@ export const schema = gql`
         lastName: String!
         phoneNumber: String!
         address: String!
+        deliveryCityCode: String
+        deliveryCityName: String
+        deliveryWarehouse: String
+        totalPrice: Float!
         shippingMethod: ShippingMethod!
         orderStatus: OrderStatus!
         user: User!
         userId: Int!
         productsInOrder: [ProductInOrder!]!
+        createdAt: DateTime!
+        updatedAt: DateTime!
     }
 
     enum ShippingMethod {
@@ -65,7 +75,13 @@ export const schema = gql`
         delivering
         waitingForTheCustomerAtThePickUpPoint
         completed
+        canceled
     }
+
+    """
+    A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+    """
+    scalar DateTime
 
     type ProductInOrder {
         id: Int!
@@ -97,6 +113,11 @@ export const schema = gql`
         lastName: String!
         roles: [Role!]!
         orders: [Order!]!
+    }
+
+    type GetUsersResponse {
+        users: [User!]!
+        total: Int!
     }
 
     type AuthResponse {
@@ -133,80 +154,97 @@ export const schema = gql`
         total: Int!
     }
 
+    type OrderStatistics {
+        date: String
+        ordersCount: Int
+    }
+
+    type ProfitStatistics {
+        date: String
+        totalPrice: Float
+    }
+
     type Query {
         me: AuthResponse!
-        getUsers(getUsersInput: GetUsersInput!): [User!]!
-        getUser(id: Int!): User!
-        getRoles(getRolesInput: GetRolesInput!): [Role!]!
+        getUsers(getUsersInput: GetUsersInput!): GetUsersResponse!
+        getUser(email: String!): User!
+        getRoles: [Role!]!
         getRole(id: Int!): Role!
+        getPages: [Page!]!
+        getPage(slug: String!): Page!
         getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
         getProduct(slug: String!): Product!
         getProductByName(name: String!): Product!
-        getPages: [Page!]!
-        getPage(slug: String!): Page!
         getOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
         getOrder(id: Int!): Order!
-        getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
-        getFile(id: Int!): File!
-        getFileByName(fileName: String!): File!
         getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
         getCategory(slug: String!): Category!
         getCategoryByName(name: String!): Category!
+        getFiles(getFilesInput: GetFilesInput!): GetFilesResponse!
+        getFile(id: Int!): File!
+        getFileByName(fileName: String!): File!
+        getOrdersStatistics: [OrderStatistics!]!
+        getProfitStatistics: [ProfitStatistics!]!
     }
 
     input GetUsersInput {
         take: Int!
         skip: Int!
-    }
-
-    input GetRolesInput {
-        take: Int!
-        skip: Int!
+        like: String!
     }
 
     input GetProductsInput {
         take: Int!
         skip: Int!
         likeName: String!
+        orderBy: String!
     }
 
     input GetOrdersInput {
         take: Int!
         skip: Int!
-    }
-
-    input GetFilesInput {
-        take: Int!
-        skip: Int!
-        likeOriginalName: String!
-        likeMimetype: String!
+        like: String!
+        orderStatus: OrderStatus
     }
 
     input GetCategoriesInput {
         take: Int!
         skip: Int!
+        likeName: String!
+    }
+
+    input GetFilesInput {
+        take: Int!
+        skip: Int!
+        likeFileName: String!
+        likeMimetype: String!
     }
 
     type Mutation {
         login(loginInput: LoginInput!): AuthResponse!
-        register(registerInput: RegisterInput!): AuthResponse!
-        confirmEmail(token: String!): AuthResponse!
-        createProduct(createProductInput: CreateProductInput!): Product!
-        updateProduct(updateProductInput: UpdateProductInput!): Product!
-        removeProduct(slug: String!): Boolean!
+        register(registerInput: RegisterInput!): String!
+        updateMe(updateMeInput: UpdateMeInput!): AuthResponse!
+        updateEmail(updateEmailInput: UpdateEmailInput!): String!
+        updatePassword(updatePasswordInput: UpdatePasswordInput!): AuthResponse!
+        confirmationEmail(token: String!): AuthResponse!
+        updateUser(updateUserInput: UpdateUserInput!): User!
+        removeUser(email: String!): Boolean!
         createPage(createPageInput: CreatePageInput!): Page!
         updatePage(updatePageInput: UpdatePageInput!): Page!
         updatePages(updatePagesInput: UpdatePagesInput!): [Page!]!
         removePage(slug: String!): Boolean!
+        createProduct(createProductInput: CreateProductInput!): Product!
+        updateProduct(updateProductInput: UpdateProductInput!): Product!
+        removeProduct(slug: String!): Boolean!
         createOrder(createOrderInput: CreateOrderInput!): Order!
         updateOrder(updateOrderInput: UpdateOrderInput!): Order!
         removeOrder(id: Int!): Boolean!
-        createFile(createFileInput: CreateFileInput!): File!
-        updateFile(updateFileInput: UpdateFileInput!): File!
-        removeFile(id: Int!): Boolean!
         createCategory(createCategoryInput: CreateCategoryInput!): Category!
         updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
         removeCategory(slug: String!): Boolean!
+        createFile(createFileInput: CreateFileInput!): File!
+        updateFile(updateFileInput: UpdateFileInput!): File!
+        removeFile(id: Int!): Boolean!
     }
 
     input LoginInput {
@@ -221,39 +259,31 @@ export const schema = gql`
         lastName: String!
     }
 
-    input CreateProductInput {
-        isShown: Boolean!
-        name: String!
-        quantity: Float!
-        priceUAH: Float!
-        description: String!
-        characteristics: [CharacteristicInputType!]
-        files: [UpdateFileInput!]!
+    input UpdateMeInput {
+        firstName: String!
+        lastName: String!
     }
 
-    input CharacteristicInputType {
-        name: String
-        value: String
+    input UpdateEmailInput {
+        email: String!
     }
 
-    input UpdateFileInput {
-        originalName: String
-        mimetype: String
-        destination: String
-        fileName: String
-        size: Int
-        id: Int!
+    input UpdatePasswordInput {
+        oldPassword: String!
+        newPassword: String!
     }
 
-    input UpdateProductInput {
-        isShown: Boolean
-        name: String
-        quantity: Float
-        priceUAH: Float
-        description: String
-        characteristics: [CharacteristicInputType!]
-        files: [UpdateFileInput!]
-        id: Int!
+    input UpdateUserInput {
+        id: Float!
+        email: String!
+        firstName: String!
+        lastName: String!
+        roles: [UpdateRoleInput!]!
+    }
+
+    input UpdateRoleInput {
+        id: Float!
+        name: RoleName!
     }
 
     input CreatePageInput {
@@ -274,19 +304,66 @@ export const schema = gql`
         updatePagesInput: [UpdatePageInput!]!
     }
 
+    input CreateProductInput {
+        isShown: Boolean!
+        name: String!
+        quantity: Float!
+        priceUAH: Float!
+        description: String!
+        characteristics: [CharacteristicInputType!]
+        files: [UpdateFileInput!]!
+        categories: [UpdateCategoryInput!]!
+    }
+
+    input CharacteristicInputType {
+        name: String
+        value: String
+    }
+
+    input UpdateFileInput {
+        originalName: String
+        mimetype: String
+        destination: String
+        fileName: String
+        size: Int
+        id: Int!
+    }
+
+    input UpdateCategoryInput {
+        isShown: Boolean
+        name: String
+        description: String
+        id: Int!
+    }
+
+    input UpdateProductInput {
+        isShown: Boolean
+        name: String
+        quantity: Float
+        priceUAH: Float
+        description: String
+        characteristics: [CharacteristicInputType!]
+        files: [UpdateFileInput!]
+        categories: [UpdateCategoryInput!]
+        id: Int!
+    }
+
     input CreateOrderInput {
         email: String!
         firstName: String!
         lastName: String!
         phoneNumber: String!
         address: String!
+        deliveryCityCode: String
+        deliveryCityName: String
+        deliveryWarehouse: String
         shippingMethod: ShippingMethod!
         createProductInOrder: [CreateProductInOrderInput!]!
     }
 
     input CreateProductInOrderInput {
-        productId: Float!
-        productQuantity: Float!
+        productId: Int!
+        productQuantity: Int!
     }
 
     input UpdateOrderInput {
@@ -295,10 +372,19 @@ export const schema = gql`
         lastName: String
         phoneNumber: String
         address: String
+        deliveryCityCode: String
+        deliveryCityName: String
+        deliveryWarehouse: String
         shippingMethod: ShippingMethod
         createProductInOrder: [CreateProductInOrderInput!]
         id: Int!
         orderStatus: OrderStatus!
+    }
+
+    input CreateCategoryInput {
+        isShown: Boolean!
+        name: String!
+        description: String!
     }
 
     input CreateFileInput {
@@ -309,29 +395,258 @@ export const schema = gql`
         size: Int!
     }
 
-    input CreateCategoryInput {
+    # ------------------------------------------------------
+    # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+    # ------------------------------------------------------
+
+    type Role {
+        id: Int!
+        name: RoleName!
+        color: String!
+        users: [User!]!
+    }
+
+    enum RoleName {
+        admin
+        moderator
+        customer
+    }
+
+    type User {
+        id: Int!
+        confirmedEmail: Boolean!
+        email: String!
+        firstName: String!
+        lastName: String!
+        roles: [Role!]!
+        orders: [Order!]!
+    }
+
+    type Order {
+        id: Int!
+        email: String!
+        firstName: String!
+        lastName: String!
+        phoneNumber: String!
+        address: String!
+        deliveryCityCode: String
+        deliveryCityName: String
+        deliveryWarehouse: String
+        totalPrice: Float!
+        shippingMethod: ShippingMethod!
+        orderStatus: OrderStatus!
+        user: User!
+        userId: Int!
+        productsInOrder: [ProductInOrder!]!
+        createdAt: DateTime!
+        updatedAt: DateTime!
+    }
+
+    enum ShippingMethod {
+        warehouse
+        courier
+    }
+
+    enum OrderStatus {
+        new
+        picking
+        delivering
+        waitingForTheCustomerAtThePickUpPoint
+        completed
+        canceled
+    }
+
+    type ProductInOrder {
+        id: Int!
+        product: Product!
+        productId: Int!
+        productQuantity: Int!
+        order: Order!
+        orderId: Int!
+    }
+
+    type Product {
+        id: Int!
         isShown: Boolean!
         name: String!
+        slug: String!
+        quantity: Float!
+        priceUAH: Float!
         description: String!
-        products: [UpdateProductWithoutFilesInput!]!
+        characteristics: [Characteristic!]
+        files: [File!]!
+        categories: [Category!]
     }
 
-    input UpdateProductWithoutFilesInput {
-        isShown: Boolean
+    type Characteristic {
         name: String
-        quantity: Float
-        priceUAH: Float
-        description: String
-        characteristics: [CharacteristicInputType!]
-        id: Int!
+        value: String
     }
 
-    input UpdateCategoryInput {
-        isShown: Boolean
-        name: String
-        description: String
-        products: [UpdateProductWithoutFilesInput!]
+    type File {
         id: Int!
+        originalName: String!
+        mimetype: String!
+        destination: String!
+        fileName: String!
+        filePath: String!
+        fileImage: String!
+        size: Int!
+        products: [Product!]!
     }
+
+    type Category {
+        id: Int!
+        isShown: Boolean!
+        name: String!
+        slug: String!
+        description: String!
+        products: [Product!]
+    }
+
+    """
+    A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+    """
+    scalar DateTime
+
+    type GetUsersResponse {
+        users: [User!]!
+        total: Int!
+    }
+
+    type AuthResponse {
+        user: User!
+        accessToken: String!
+    }
+
+    type GetProductsResponse {
+        products: [Product!]!
+        total: Int!
+    }
+
+    type GetFilesResponse {
+        files: [File!]!
+        total: Int!
+    }
+
+    type GetCategoriesResponse {
+        categories: [Category!]!
+        total: Int!
+    }
+
+    type Page {
+        id: Int!
+        isShown: Boolean!
+        name: String!
+        slug: String!
+        text: String!
+        sorting: Int!
+    }
+
+    type GetOrdersResponse {
+        orders: [Order!]!
+        total: Int!
+    }
+
+    type OrderStatistics {
+        date: String
+        ordersCount: Int
+    }
+
+    type ProfitStatistics {
+        date: String
+        totalPrice: Float
+    }
+
+    type Query {
+        me: AuthResponse!
+        getPage(slug: String!): Page!
+        getPages: [Page!]!
+        getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
+        getProduct(slug: String!): Product!
+        getProductByName(name: String!): Product!
+        getProductsHitOfSales: [Product!]!
+        getProductsNewest: [Product!]!
+        getMyOrderById(id: Int!): Order!
+        getMyOrders(getOrdersInput: GetOrdersInput!): GetOrdersResponse!
+        getCategories(getCategoriesInput: GetCategoriesInput!): GetCategoriesResponse!
+        getCategory(slug: String!): Category!
+    }
+
+    input GetProductsInput {
+        take: Int!
+        skip: Int!
+        likeName: String!
+        orderBy: String!
+    }
+
+    input GetOrdersInput {
+        take: Int!
+        skip: Int!
+        like: String!
+        orderStatus: OrderStatus
+    }
+
+    input GetCategoriesInput {
+        take: Int!
+        skip: Int!
+        likeName: String!
+    }
+
+    type Mutation {
+        login(loginInput: LoginInput!): AuthResponse!
+        register(registerInput: RegisterInput!): String!
+        updateMe(updateMeInput: UpdateMeInput!): AuthResponse!
+        updateEmail(updateEmailInput: UpdateEmailInput!): String!
+        updatePassword(updatePasswordInput: UpdatePasswordInput!): AuthResponse!
+        confirmationEmail(token: String!): AuthResponse!
+        createOrder(createOrderInput: CreateOrderInput!): Order!
+        cancelOrder(id: Int!): Order!
+    }
+
+    input LoginInput {
+        email: String!
+        password: String!
+    }
+
+    input RegisterInput {
+        email: String!
+        password: String!
+        firstName: String!
+        lastName: String!
+    }
+
+    input UpdateMeInput {
+        firstName: String!
+        lastName: String!
+    }
+
+    input UpdateEmailInput {
+        email: String!
+    }
+
+    input UpdatePasswordInput {
+        oldPassword: String!
+        newPassword: String!
+    }
+
+    input CreateOrderInput {
+        email: String!
+        firstName: String!
+        lastName: String!
+        phoneNumber: String!
+        address: String!
+        deliveryCityCode: String
+        deliveryCityName: String
+        deliveryWarehouse: String
+        shippingMethod: ShippingMethod!
+        createProductInOrder: [CreateProductInOrderInput!]!
+    }
+
+    input CreateProductInOrderInput {
+        productId: Int!
+        productQuantity: Int!
+    }
+
 `
 

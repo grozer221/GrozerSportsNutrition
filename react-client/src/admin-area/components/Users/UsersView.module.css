@@ -4,3 +4,8 @@
     gap: 5px;
     flex-wrap: wrap;
 }
+
+.ordersTitle {
+    font-size: 16px;
+    font-weight: 600;
+}

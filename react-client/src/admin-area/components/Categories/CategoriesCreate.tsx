@@ -18,7 +18,7 @@ export const CategoriesCreate: FC = () => {
     const onFinish = async (values: {
         name: string,
     }) => {
-        const response = await createCategory({
+        createCategory({
             variables: {
                 createCategoryInput: {
                     ...values,
@@ -26,12 +26,9 @@ export const CategoriesCreate: FC = () => {
                     description: description,
                 },
             },
-        });
-        if (!response.errors) {
-            navigate('..');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        })
+            .then(() => navigate('..'))
+            .catch(error => message.error(error.message));
     };
 
     return (

@@ -41,7 +41,7 @@ export const PagesUpdate: FC = () => {
     }) => {
         const intId = parseInt(values.id);
         const intSorting = parseInt(values.sorting);
-        const response = await updatePageMutation({
+        updatePageMutation({
             variables: {
                 updatePageInput: {
                     ...values,
@@ -51,12 +51,9 @@ export const PagesUpdate: FC = () => {
                     text: text,
                 },
             },
-        });
-        if (response.data && !response.errors) {
-            navigate('..');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        })
+            .then(() => navigate('..'))
+            .catch(error => message.error(error.message));
     };
 
     if (!pageSlug || getPageQuery.error)

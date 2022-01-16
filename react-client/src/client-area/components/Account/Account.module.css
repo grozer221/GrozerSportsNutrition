@@ -32,12 +32,33 @@
     border: none;
 }
 
-.changeEmailAndPass{
+.changeEmailAndPass {
     display: flex;
     justify-content: space-around;
     align-items: end;
 }
 
-.orders{
+.orders {
     margin-bottom: 10px;
+}
+
+.image {
+    object-fit: cover;
+}
+
+.carouselBig {
+    width: 64px;
+}
+
+.productsBig {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.productBig {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

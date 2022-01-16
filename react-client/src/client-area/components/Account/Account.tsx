@@ -37,7 +37,7 @@ import {CANCEL_ORDER_MUTATION, CancelOrderData, CancelOrderVars} from '../../gql
 import {useForm} from 'antd/es/form/Form';
 import {login, logout} from '../../../redux/auth-reducer';
 import {FormOutlined} from '@ant-design/icons';
-import {Navigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 
 export const Account: FC = () => {
     const authData = useSelector(s_getAuthData);
@@ -373,6 +373,28 @@ export const Account: FC = () => {
                                     </tr>
                                     </tbody>
                                 </table>
+                                <div className={s.productsBig}>
+                                    {order.productsInOrder.map(productInOrder => (
+                                        <div className={s.productBig}>
+                                            <Carousel autoplay className={s.carouselBig} key={productInOrder.id}>
+                                                {productInOrder?.product?.files.map(file => (
+                                                    <Avatar key={file.id} className={s.image} shape={'square'}
+                                                            src={file.fileImage}
+                                                            size={64}/>
+                                                ))}
+                                            </Carousel>
+                                            <div>
+                                                <div>
+                                                    <Link to={`../products/${productInOrder.product.slug}`}>
+                                                        {productInOrder.product.name}
+                                                    </Link>
+                                                </div>
+                                                <div>{productInOrder.product.priceUAH} UAH</div>
+                                                <div>{productInOrder.productQuantity} units</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                                 {order.orderStatus === OrderStatus.new && (
                                     <Popconfirm
                                         title="Are you sure to cancel this order?"

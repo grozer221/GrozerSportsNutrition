@@ -87,7 +87,7 @@ export const ProductsUpdate: FC = () => {
             const {slug, products, ...rest} = category;
             return rest;
         });
-        const response = await updateProductMutation({
+        updateProductMutation({
             variables: {
                 updateProductInput: {
                     ...values,
@@ -100,12 +100,9 @@ export const ProductsUpdate: FC = () => {
                     categories: categoriesWithoutExtra,
                 },
             },
-        });
-        if (response.data && !response.errors) {
-            navigate('..');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        })
+            .then(() => navigate('..'))
+            .catch(error => message.error(error.message));
     };
 
     const selectPhotoHandler = async (value: string) => {

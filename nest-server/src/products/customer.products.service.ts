@@ -11,6 +11,8 @@ import {UpdateProductInput} from './dto/update-product.input';
 import {getSlug} from '../utils/get-slug';
 import {ProductInOrder} from '../orders/product-in-order.entity';
 import {Order, OrderStatus} from '../orders/order.entity';
+import {GetProductsInput} from './dto/get-products.input';
+import {OrderBy} from '../utils/order-by.enum';
 
 @Injectable()
 export class CustomerProductsService {
@@ -35,20 +37,38 @@ export class CustomerProductsService {
         return product.categories.filter(category => category.isShown === true);
     }
 
-    async getAsync(take: number, skip: number, likeName: string): Promise<GetProductsResponse> {
+    async getAsync(getProductsInput: GetProductsInput): Promise<GetProductsResponse> {
         const getProductsResponse = new GetProductsResponse();
+        let order = {};
+        switch (getProductsInput.orderBy) {
+            case OrderBy.rating:
+                order = {createdAt: 'DESC'};
+                break;
+            case OrderBy.newest:
+                order = {createdAt: 'DESC'};
+                break;
+            case OrderBy.priceIncrease:
+                order = {priceUAH: 'ASC'};
+                break;
+            case OrderBy.priceDecrease:
+                order = {priceUAH: 'DESC'};
+                break;
+        }
+
         const [products, productsTotal] = await this.productsRepository.findAndCount({
             where: {
-                name: Like(`%${likeName}%`),
+                name: Like(`%${getProductsInput.likeName}%`),
                 isShown: true,
             },
-            take: take,
-            skip: skip,
-            order: {createdAt: 'DESC'},
+            take: getProductsInput.take,
+            skip: getProductsInput.skip,
+            order: order,
         });
         getProductsResponse.products = products;
         getProductsResponse.total = productsTotal;
         return getProductsResponse;
+        {
+        }
     }
 
     async getBySlugAsync(slug: string): Promise<Product> {
@@ -84,28 +104,28 @@ export class CustomerProductsService {
     async getProductsHitOfSales(): Promise<Product[]> {
         let productsHitOfSales: { product: Product, quantity: number }[] = [];
         const productsInOrder = await this.productInOrderRepository.find();
-        for (const key in productsInOrder) {
-            const product = await this.productsRepository.findOneOrFail(productsInOrder[key].productId);
+        for (const productInOrder of productsInOrder) {
+            const product = await this.productsRepository.findOneOrFail(productInOrder.productId);
             if (!product.isShown)
                 continue;
 
-            const order = await this.ordersRepository.findOneOrFail(productsInOrder[key].orderId);
+            const order = await this.ordersRepository.findOneOrFail(productInOrder.orderId);
             if (order.orderStatus === OrderStatus.canceled)
                 continue;
 
-            if (productsHitOfSales.some(productHitOfSales => productHitOfSales.product.id === productsInOrder[key].productId)) {
+            if (productsHitOfSales.some(productHitOfSales => productHitOfSales.product.id === productInOrder.productId)) {
                 productsHitOfSales = productsHitOfSales.map(productHitOfSales => {
-                    return productHitOfSales.product.id === productsInOrder[key].productId
+                    return productHitOfSales.product.id === productInOrder.productId
                         ? {
                             ...productHitOfSales,
-                            quantity: productHitOfSales.quantity + productsInOrder[key].productQuantity,
+                            quantity: productHitOfSales.quantity + productInOrder.productQuantity,
                         }
                         : productHitOfSales;
                 });
             } else {
                 productsHitOfSales.push({
                     product: product,
-                    quantity: productsInOrder[key].productQuantity,
+                    quantity: productInOrder.productQuantity,
                 });
             }
         }

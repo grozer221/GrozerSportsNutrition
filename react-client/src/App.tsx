@@ -26,6 +26,7 @@ export const App: FC = () => {
                 setIsInitialised(true);
             }
             if (meQuery.error) {
+                dispatch(actions.setProductsToBasket(getBasketFromLocalStorage()))
                 setIsInitialised(true);
             }
         }, [meQuery.data, meQuery.error]);

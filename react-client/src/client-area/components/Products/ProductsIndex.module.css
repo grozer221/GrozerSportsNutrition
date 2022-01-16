@@ -1,7 +1,18 @@
+.wrapperProducts{
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
 .products {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     height: 100%;
-    overflow-y: scroll;
 }
 
+.orderBy {
+    width: 200px;
+}

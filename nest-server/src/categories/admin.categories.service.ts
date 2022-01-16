@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Like, Repository} from 'typeorm';
+import {Like, Not, Repository} from 'typeorm';
 import {Category} from './category.entity';
 import {CreateCategoryInput} from './dto/create-category.input';
 import {GetCategoriesResponse} from './dto/get-categories.response';
@@ -25,6 +25,10 @@ export class AdminCategoriesService {
     }
 
     async addAsync(createCategoryInput: CreateCategoryInput): Promise<Category> {
+        const checkSlug = getSlug(createCategoryInput.name);
+        const checkProduct = await this.categoryRepository.findOne({where: {slug: checkSlug}});
+        if (checkProduct)
+            throw new Error('Category with current slug already exists');
         const category = this.categoryRepository.create(createCategoryInput);
         category.slug = getSlug(category.name);
         return await this.categoryRepository.save(category);
@@ -52,6 +56,10 @@ export class AdminCategoriesService {
     }
 
     async updateAsync(updateCategoryInput: UpdateCategoryInput): Promise<Category> {
+        const checkSlug = getSlug(updateCategoryInput.name);
+        const checkProduct = await this.categoryRepository.findOne({where: {slug: checkSlug, id: Not(updateCategoryInput.id)}});
+        if (checkProduct)
+            throw new Error('Category with current slug already exists');
         const category = this.categoryRepository.create(updateCategoryInput);
         category.slug = getSlug(category.name);
         return await this.categoryRepository.save(category);

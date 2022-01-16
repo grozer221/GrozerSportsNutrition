@@ -1,9 +1,9 @@
 import {useMutation, useQuery} from '@apollo/client';
-import {Avatar, Button, Carousel, Divider, message, Switch, Table, Tag} from 'antd';
+import {Avatar, Button, Carousel, Divider, message, Select, Switch, Table, Tag} from 'antd';
 import React, {ChangeEvent, FC, useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../gql/products-query';
-import {Product} from '../../../types/types';
+import {OrderBy, Product} from '../../../types/types';
 import {
     REMOVE_PRODUCT_MUTATION,
     RemoveProductData,
@@ -20,14 +20,24 @@ import {updateCategoryInput} from '../../gql/categories-mutation';
 import Search from 'antd/es/input/Search';
 import debounce from 'lodash.debounce';
 import {ColumnsType} from 'antd/es/table';
+import {getStringFromCamelCase} from '../../../utils/stringActions';
 
 export const ProductsIndex: FC = () => {
     const [pageTake, setPageTake] = useState(10);
     const [pageSkip, setPageSkip] = useState(0);
+    const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.newest);
+    const [searchLike, setSearchLike] = useState('');
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(
         GET_PRODUCTS_QUERY,
         {
-            variables: {getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}},
+            variables: {
+                getProductsInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    likeName: searchLike,
+                    orderBy: orderBy,
+                },
+            },
             context: {gqlLink: gqlLinks.admin},
         },
     );
@@ -44,7 +54,14 @@ export const ProductsIndex: FC = () => {
     const onRemove = async (slug: string) => {
         const response = await removeProduct({variables: {slug: slug}});
         if (response.data)
-            await getProductsQuery.refetch({getProductsInput: {skip: pageSkip, take: pageTake, likeName: ''}});
+            await getProductsQuery.refetch({
+                getProductsInput: {
+                    skip: pageSkip,
+                    take: pageTake,
+                    likeName: searchLike,
+                    orderBy: orderBy,
+                },
+            });
         else {
             response.errors?.forEach(error => message.error(error.message));
         }
@@ -157,14 +174,16 @@ export const ProductsIndex: FC = () => {
 
 
     const onSearchProductsHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-        const newPageTake = 0;
+        const newPageSkip = 0;
         const newSearchLike = e.target.value;
-        setPageTake(newPageTake);
+        setSearchLike(newSearchLike);
+        setPageSkip(newPageSkip);
         const response = await getProductsQuery.refetch({
             getProductsInput: {
-                skip: newPageTake,
+                skip: newPageSkip,
                 take: pageTake,
                 likeName: newSearchLike,
+                orderBy: orderBy,
             },
         });
         if (response.errors)
@@ -173,6 +192,21 @@ export const ProductsIndex: FC = () => {
 
     const debouncedSearchProductHandler = useCallback(debounce(nextValue => onSearchProductsHandler(nextValue), 500), []);
     const searchProductHandler = (e: ChangeEvent<HTMLInputElement>) => debouncedSearchProductHandler(e);
+
+    const orderByChangeHandler = async (value: OrderBy) => {
+        const newPageSkip = 0;
+        setPageSkip(newPageSkip);
+        setOrderBy(value);
+        setProductsObj({products: [], total: 0});
+        await getProductsQuery.refetch({
+            getProductsInput: {
+                skip: newPageSkip,
+                take: pageSkip,
+                likeName: searchLike,
+                orderBy: value,
+            },
+        });
+    };
 
     if (getProductsQuery.error)
         message.error(getProductsQuery.error.message);
@@ -192,6 +226,15 @@ export const ProductsIndex: FC = () => {
             </div>
             <Divider/>
             <div>
+                <Select style={{width: '200px', marginBottom: '10px'}}
+                        defaultValue={orderBy}
+                        className={s.orderBy}
+                        onChange={orderByChangeHandler}
+                >
+                    {(Object.keys(OrderBy) as Array<keyof typeof OrderBy>).map((key, i) => (
+                        <Select.Option value={key} key={i}>{getStringFromCamelCase(key)}</Select.Option>
+                    ))}
+                </Select>
                 <Table
                     loading={getProductsQuery.loading || removeProductOptions.loading || updateProductOptions.loading}
                     rowSelection={{...rowSelection}}
@@ -207,6 +250,7 @@ export const ProductsIndex: FC = () => {
                                     skip: pageSkip,
                                     take: pageTake,
                                     likeName: '',
+                                    orderBy: orderBy,
                                 },
                             });
                         },

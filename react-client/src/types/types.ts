@@ -73,8 +73,6 @@ export type Page = {
     sorting: number,
 }
 
-export type OrderByType = 'ASC' | 'DESC';
-
 export type FileName = {
     originalName: string,
     newName: string,
@@ -159,3 +157,12 @@ export type ProfitStatistics = {
     date: string;
     totalPrice: number;
 }
+
+
+export enum OrderBy {
+    newest ='newest',
+    rating ='rating',
+    priceIncrease ='priceIncrease',
+    priceDecrease ='priceDecrease',
+}
+

@@ -180,6 +180,7 @@ input GetProductsInput {
   take: Int!
   skip: Int!
   likeName: String!
+  orderBy: String!
 }
 
 input GetOrdersInput {

@@ -76,13 +76,9 @@ export const ProductsCreate: FC = () => {
                 categories: categoriesWithoutExtra,
             },
         };
-        console.log(createProductsVars);
-        const response = await createProduct({variables: createProductsVars});
-        if (response.data && !response.errors) {
-            navigate('..');
-        } else {
-            response.errors?.forEach(error => message.error(error.message));
-        }
+        createProduct({variables: createProductsVars})
+            .then(() => navigate('..'))
+            .catch(error => message.error(error.message));
     };
 
     const onSearch = async (value: string) => {
