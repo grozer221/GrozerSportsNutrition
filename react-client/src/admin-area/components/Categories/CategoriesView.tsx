@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useMutation, useQuery} from '@apollo/client';
 import {Loading} from '../../../common-area/components/Loading/Loading';
 import {Avatar, Card, Carousel, message, Table, Tag} from 'antd';
@@ -26,7 +26,7 @@ export const CategoriesView: FC = () => {
                 context: {gqlLink: gqlLinks.admin},
             });
         const [removeCategory, removeCategoryOptions] = useMutation<RemoveCategoryData, RemoveCategoryVars>(REMOVE_CATEGORY_MUTATION,
-            {context: {gqlLink: gqlLinks.admin}}
+            {context: {gqlLink: gqlLinks.admin}},
         );
 
         useEffect(() => {
@@ -102,7 +102,7 @@ export const CategoriesView: FC = () => {
             <>
                 <ButtonsVUR updateUrl={`../update/${categorySlug}`} onRemove={() => onRemove(categorySlug)}/>
                 <header>{category?.name}</header>
-                <table className='infoTable'>
+                <table className="infoTable">
                     <tbody>
                     <tr>
                         <td>Id:</td>

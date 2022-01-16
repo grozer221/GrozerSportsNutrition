@@ -2,9 +2,8 @@ import {useMutation, useQuery} from '@apollo/client';
 import {Avatar, Button, Carousel, Divider, message, Switch, Table, Tag} from 'antd';
 import React, {ChangeEvent, FC, useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Loading} from '../../../common-area/components/Loading/Loading';
 import {GET_PRODUCTS_QUERY, GetProductsData, getProductsObject, GetProductsVars} from '../../gql/products-query';
-import {Order, Product} from '../../../types/types';
+import {Product} from '../../../types/types';
 import {
     REMOVE_PRODUCT_MUTATION,
     RemoveProductData,

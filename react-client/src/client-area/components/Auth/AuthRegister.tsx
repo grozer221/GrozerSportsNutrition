@@ -43,70 +43,72 @@ export const AuthRegister: FC = () => {
         return <Navigate to={'/'}/>;
 
     return (
-        <div className={s.loginForm}>
-            <Form
-                name="loginForm"
-                initialValues={{remember: true}}
-                onFinish={onFinish}
-                form={form}
-            >
-                <h2 className={s.title}>
-                    <div>Grozer Sports Nutrition</div>
-                    <div className="badge">Register</div>
-                </h2>
-                <Form.Item
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Email!',
-                        },
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
-                    ]}
+        <div className={s.wrapperRegisterForm}>
+            <div className={s.registerForm}>
+                <Form
+                    name="registerForm"
+                    initialValues={{remember: true}}
+                    onFinish={onFinish}
+                    form={form}
                 >
-                    <Input prefix={<UserOutlined className="site-form-item-icon"/>}
-                           placeholder="Email" type={'email'}/>
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[{required: true, message: 'Please input your Password!'}]}
-                >
-                    <Input
-                        prefix={<LockOutlined className="site-form-item-icon"/>}
-                        type="password"
-                        placeholder="Password"
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="firstName"
-                    rules={[{required: true, message: 'Please input your FirstName!'}]}
-                >
-                    <Input
-                        prefix={<UserOutlined className="site-form-item-icon"/>}
-                        placeholder="FirstName"
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="lastName"
-                    rules={[{required: true, message: 'Please input your LastName!'}]}
-                >
-                    <Input
-                        prefix={<UserOutlined className="site-form-item-icon"/>}
-                        placeholder="LastName"
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Button loading={registerMutationOptions.loading} type="primary" htmlType="submit"
-                            className={s.submit}>
-                        Register
-                    </Button>
-                    <span className={s.white}>Or </span>
-                    <Link to={'../login'}>login now!</Link>
-                </Form.Item>
-            </Form>
+                    <h2 className={s.title}>
+                        <div>Grozer Sports Nutrition</div>
+                        <div className="badge">Register</div>
+                    </h2>
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Email!',
+                            },
+                            {
+                                type: 'email',
+                                message: 'The input is not valid E-mail!',
+                            },
+                        ]}
+                    >
+                        <Input prefix={<UserOutlined className="site-form-item-icon"/>}
+                               placeholder="Email" type={'email'}/>
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[{required: true, message: 'Please input your Password!'}]}
+                    >
+                        <Input
+                            prefix={<LockOutlined className="site-form-item-icon"/>}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="firstName"
+                        rules={[{required: true, message: 'Please input your FirstName!'}]}
+                    >
+                        <Input
+                            prefix={<UserOutlined className="site-form-item-icon"/>}
+                            placeholder="FirstName"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="lastName"
+                        rules={[{required: true, message: 'Please input your LastName!'}]}
+                    >
+                        <Input
+                            prefix={<UserOutlined className="site-form-item-icon"/>}
+                            placeholder="LastName"
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button loading={registerMutationOptions.loading} type="primary" htmlType="submit"
+                                className={s.submit}>
+                            Register
+                        </Button>
+                        <span className={s.white}>Or </span>
+                        <Link to={'../login'}>login now!</Link>
+                    </Form.Item>
+                </Form>
+            </div>
         </div>
     );
 };

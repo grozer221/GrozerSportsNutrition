@@ -47,64 +47,66 @@ export const AuthLogin: FC = () => {
         return <Navigate to={'/'}/>;
 
     return (
-        <div className={s.loginForm}>
-            <Form
-                name="loginForm"
-                initialValues={{remember: true}}
-                onFinish={onFinish}
-                form={form}
-            >
-                <h2 className={s.title}>
-                    <div>Grozer Sports Nutrition</div>
-                    <div className="badge">Login</div>
-                </h2>
-                <Form.Item
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Email!'
-                        },
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
+        <div className={s.wrapperLoginForm}>
+            <div className={s.loginForm}>
+                <Form
+                    name="loginForm"
+                    initialValues={{remember: true}}
+                    onFinish={onFinish}
+                    form={form}
+                >
+                    <h2 className={s.title}>
+                        <div>Grozer Sports Nutrition</div>
+                        <div className="badge">Login</div>
+                    </h2>
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Email!'
+                            },
+                            {
+                                type: 'email',
+                                message: 'The input is not valid E-mail!',
+                            },
                         ]}
-                >
-                    <Input onInput={resetErrors} prefix={<UserOutlined className="site-form-item-icon"/>}
-                           placeholder="Email" type={'email'}/>
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[{required: true, message: 'Please input your Password!'}]}
-                >
-                    <Input
-                        onInput={resetErrors}
-                        prefix={<LockOutlined className="site-form-item-icon"/>}
-                        type="password"
-                        placeholder="Password"
-                    />
-                </Form.Item>
-                <Form.Item name="rememberAndForgotPass">
-                    <Form.Item name="remember" valuePropName="checked" noStyle className={s.rememberMe}>
-                        <Checkbox onClick={resetErrors}>
-                            <span className={s.white}>Remember me</span>
-                        </Checkbox>
+                    >
+                        <Input onInput={resetErrors} prefix={<UserOutlined className="site-form-item-icon"/>}
+                               placeholder="Email" type={'email'}/>
                     </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[{required: true, message: 'Please input your Password!'}]}
+                    >
+                        <Input
+                            onInput={resetErrors}
+                            prefix={<LockOutlined className="site-form-item-icon"/>}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </Form.Item>
+                    <Form.Item name="rememberAndForgotPass">
+                        <Form.Item name="remember" valuePropName="checked" noStyle className={s.rememberMe}>
+                            <Checkbox onClick={resetErrors}>
+                                <span className={s.white}>Remember me</span>
+                            </Checkbox>
+                        </Form.Item>
 
-                    <Link className={s.forgotPass} to={''}>
-                        Forgot password
-                    </Link>
-                </Form.Item>
-                <Form.Item>
-                    <Button loading={loginMutationOptions.loading} type="primary" htmlType="submit"
-                            className={['login-form-button', s.submit].join(' ')}>
-                        Log in
-                    </Button>
-                    <span className={s.white}>Or </span>
-                    <Link to={'../register'}>register now!</Link>
-                </Form.Item>
-            </Form>
+                        <Link className={s.forgotPass} to={''}>
+                            Forgot password
+                        </Link>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button loading={loginMutationOptions.loading} type="primary" htmlType="submit"
+                                className={['login-form-button', s.submit].join(' ')}>
+                            Log in
+                        </Button>
+                        <span className={s.white}>Or </span>
+                        <Link to={'../register'}>register now!</Link>
+                    </Form.Item>
+                </Form>
+            </div>
         </div>
     );
 };

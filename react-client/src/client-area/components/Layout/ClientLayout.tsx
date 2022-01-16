@@ -17,7 +17,7 @@ import {CategoriesController} from '../Categories/CategoriesController';
 
 export const ClientLayout: FC = () => {
     return (
-        <>
+        <div className={s.documentWrapper}>
             <div className={s.wrapperPages}>
                 <div className={s.container}>
                     <Pages/>
@@ -44,9 +44,10 @@ export const ClientLayout: FC = () => {
                     <Route path={'/pages/:slug'} element={<PagesView/>}/>
                     <Route path={'/auth/*'} element={<AuthController/>}/>
                     <Route path={'/account'} element={<Account/>}/>
+                    <Route path={'/ya'} element={<div>ya</div>}/>
                     <Route path={'*'} element={<Error/>}/>
                 </Routes>
             </div>
-        </>
+        </div>
     );
 };
