@@ -1,1 +1,1 @@
-web: cd ./nest-server && npm start
+web: ./nest-server npm start
