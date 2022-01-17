@@ -10,7 +10,7 @@ import {Select} from 'antd';
 import {getStringFromCamelCase} from '../../../utils/stringActions';
 
 export const ProductsIndex = () => {
-    const [pageTake, setPageTake] = useState(12);
+    const [pageTake, setPageTake] = useState(16);
     const [pageSkip, setPageSkip] = useState(0);
     const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.newest);
     const getProductsQuery = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS_QUERY,

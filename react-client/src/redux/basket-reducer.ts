@@ -67,8 +67,12 @@ const basketReducer = (state = initialState, action: ActionsType): InitialStateT
             return returnState;
         }
         case 'DECREMENT_PRODUCT_IN_BASKET': {
-            if (action.productInBasket.productQuantity === 1)
+            console.log(action);
+            if (action.productInBasket.productQuantity === 1){
                 var returnState = state;
+                setBasketToLocalStorage(returnState.productsInBasket);
+                return returnState;
+            }
 
             const newTotalPrice = state.totalPrice - action.productInBasket.product.priceUAH;
             returnState = {

@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16aa11c0-26f0-436a-bc03-689688478cb8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../nest-server/src/mail/mail.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../nest-server/src/mail/mail.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/Home/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/Home/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client-area/components/MyMenu/MyMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client-area/components/MyMenu/MyMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin-area/components/MyMenu/MyMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/basket-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/basket-reducer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +50,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1642403716265</updated>
-      <workItem from="1642403718185" duration="552000" />
+      <workItem from="1642403718185" duration="1877000" />
     </task>
     <servers />
   </component>

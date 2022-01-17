@@ -71,11 +71,11 @@ export const MyMenu: FC = () => {
                         Pages
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="120" icon={<SettingOutlined/>}>
-                    <Link to={'/admin/settings'}>
-                        Settings
-                    </Link>
-                </Menu.Item>
+                {/*<Menu.Item key="120" icon={<SettingOutlined/>}>*/}
+                {/*    <Link to={'/admin/settings'}>*/}
+                {/*        Settings*/}
+                {/*    </Link>*/}
+                {/*</Menu.Item>*/}
                 <Menu.Item key="130" icon={<UserOutlined/>}>
                     <Link to={'/'}>Customer side</Link>
                 </Menu.Item>
