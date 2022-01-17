@@ -48,7 +48,7 @@ export const Home: FC = () => {
                     </div>
                     <Carousel show={3.5} slide={3} swiping={true}>
                         {getProductsHitOfSalesQuery.data.getProductsHitOfSales.map(productHitOfSalesQuery => (
-                            <ProductCard product={productHitOfSalesQuery}/>
+                            <ProductCard product={productHitOfSalesQuery} key={productHitOfSalesQuery.id}/>
                         ))}
                     </Carousel>
                 </div>
@@ -58,7 +58,7 @@ export const Home: FC = () => {
                     </div>
                     <Carousel show={3.5} slide={3} swiping={true}>
                         {getProductsNewestQuery.data.getProductsNewest.map(productNewest => (
-                            <ProductCard product={productNewest}/>
+                            <ProductCard product={productNewest} key={productNewest.id}/>
                         ))}
                     </Carousel>
                 </div>

@@ -42,7 +42,7 @@ export const MyMenu = () => {
                     <button className={[s.menuItem, s.dropdownButton].join(' ')}>Categories</button>
                     <div className={s.dropdownContent}>
                         {getCategoriesQuery.data?.getCategories.categories.map(category => (
-                            <Link to={`/categories/${category.slug}`}>{category.name}</Link>
+                            <Link to={`/categories/${category.slug}`} key={category.id}>{category.name}</Link>
                         ))}
                     </div>
                 </div>

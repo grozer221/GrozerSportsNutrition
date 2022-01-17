@@ -19,7 +19,7 @@ export class MailService {
 	}
 
 	async sendConfirmationEmail(user: User, token: string) {
-		const url = `${this.origin}/confirmEmail/${token}`;
+		const url = `${this.origin}/confirmation-email/${token}`;
 		await this.mailerService.sendMail({
 			to: user.email,
 			subject: 'Welcome to Grozer Sports Nutrition! Confirm your Email',
